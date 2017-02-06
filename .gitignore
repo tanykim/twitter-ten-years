@@ -1,3 +1,8 @@
+.DS_Store
+python-api/.idea
+python-api/settings.json
+python-api/dataset.json
+
 # Logs
 logs
 *.log

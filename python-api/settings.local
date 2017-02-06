@@ -1,0 +1,7 @@
+{
+  "consumer_key": "ENTER",
+  "consumer_secret": "ENTER",
+  "access_token": "ENTER",
+  "access_token_secret": "ENTER",
+  "ownder_id": "Twitter User ID as number, e.g., remove double-quotations here"
+}
