@@ -1,7 +1,11 @@
 .DS_Store
+
 python-api/.idea
+python-api/__pycache__
+python-api/output
+python-api/tweets
+python-api/tweets_sample
 python-api/settings.json
-python-api/dataset.json
 
 # Logs
 logs

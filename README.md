@@ -1,4 +1,4 @@
-# 10 yaers of Twitter
+# 10 years of Twitter
 Data analytics and visualization of my 10-year use of Twitter
 
 ## Data Analytics
