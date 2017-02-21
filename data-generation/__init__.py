@@ -64,7 +64,6 @@ def merge_tweets(data):
     print ('--adding new data to the existing file')
     with open('output/tweets_updated.json', encoding='utf-8') as data_file:
         previous_data = json.loads(data_file.read())
-
         for i, v in enumerate(data):
             previous_data.insert(i, v)
         save_process(previous_data)

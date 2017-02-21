@@ -1,0 +1,35 @@
+{
+  "name": "twitter-app",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "bootstrap-css-only": "^3.3.7",
+    "concurrently": "^3.3.0",
+    "enzyme": "^2.4.1",
+    "less": "^2.7.2",
+    "react-addons-test-utils": "^15.3.0",
+    "react-scripts": "^0.6.0"
+  },
+  "dependencies": {
+    "d3": "^4.5.1",
+    "express": "^4.14.1",
+    "moment": "^2.17.1",
+    "path": "^0.12.7",
+    "react": "^15.3.0",
+    "react-dom": "^15.3.0",
+    "react-redux": "^4.4.5",
+    "react-router": "^3.0.2",
+    "react-router-redux": "^4.0.8",
+    "redux": "^3.5.2",
+    "underscore": "^1.8.3"
+  },
+  "scripts": {
+    "build-css": "lessc src/styles/style.less src/styles/style.css",
+    "watch-css": "npm run build-css && less-watch-compiler src/styles src/styles style.less",
+    "start-js": "react-scripts start",
+    "start": "concurrently \"npm run watch-css\" \"npm run start-js\"",
+    "build": "npm run build-css && react-scripts build",
+    "eject": "react-scripts eject",
+    "test": "react-scripts test"
+  }
+}

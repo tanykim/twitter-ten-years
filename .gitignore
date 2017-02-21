@@ -1,12 +1,15 @@
 .DS_Store
 /.idea
 
-# python folder
+# Data Generation folder
 data-generation/.idea
 data-generation/__pycache__
 data-generation/output
 data-generation/tweets
 data-generation/settings.json
+
+# Webapp Folder
+webapp/src/styles/*.css
 
 # Logs
 logs
