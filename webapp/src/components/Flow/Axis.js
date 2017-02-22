@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import * as d3 from 'd3';
+import React, { Component } from 'react'
+import * as d3 from 'd3'
 
 class Axis extends Component {
   componentDidMount() {
@@ -14,7 +14,6 @@ class Axis extends Component {
     d3.select('#axis-y')
       .call(d3.axisLeft(this.props.y));
   }
-
   render() {
     const dim = this.props.dim;
     return (
@@ -30,4 +29,5 @@ class Axis extends Component {
     );
   }
 }
-export default Axis;
+
+export default Axis

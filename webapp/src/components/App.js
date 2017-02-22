@@ -1,27 +1,28 @@
-import React, { Component } from 'react';
-import Menu from './Menu';
-import Flow from './Flow';
-import Footer from './Footer';
-import { Link } from 'react-router';
-
-console.log('--------app.js');
+import React, { Component } from 'react'
+import { setPage, setTimeRange } from '../actions'
 
 class App extends Component {
+  setDataforPage(page) {
+    this.context.store.dispatch(setPage(page));
+    this.context.store.dispatch(setTimeRange());
+  }
+  componentWillMount() {
+    this.setDataforPage(this.props.params.page);
+  }
+  componentWillReceiveProps(nextProps){
+    this.setDataforPage(nextProps.location.pathname);
+  }
   render() {
-    const page = this.props.params.page;
     return (
       <div>
-        <div className="row header">
-          <div className="col-xs-12">
-            <Link to="/"> Home </Link>
-            <Menu page={page}/>
-          </div>
-        </div>
-        { page === 'flow' && <Flow />}
-        <Footer />
+        {this.props.children}
       </div>
     );
   }
+}
+
+App.contextTypes = {
+  store: React.PropTypes.object
 }
 
 export default App;

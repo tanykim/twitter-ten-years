@@ -1,19 +1,38 @@
 @import '../../node_modules/bootstrap-css-only/css/bootstrap.css';
 
-.menu {
-  .home {
-    font-size: 1.5em;
+.menu-home {
+  font-size: 1.5em;
+  span {
     margin-right: 1em;
   }
-  .page {
-    margin-right: 1.2em;
-  }
+}
+
+.menu-header {
   .selected {
     font-weight: bold;
+    margin-right: 1em;
+  }
+  .normal {
     margin-right: 1em;
   }
 }
 
 .header {
   background-color: #efefef;
+}
+
+.lines {
+  .normal, .selected, .highlighted {
+    fill: none;
+  }
+  .normal {
+    stroke: black;
+  }
+  .selected {
+    stroke: red;
+  }
+  .highlighted {
+    stroke: blue;
+    stroke-width: 3px;
+  }
 }

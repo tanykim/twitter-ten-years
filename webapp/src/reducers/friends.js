@@ -1,6 +1,6 @@
-import _ from 'underscore';
-import moment from 'moment';
-import Friends from './../data/friends.json';
+import _ from 'underscore'
+import moment from 'moment'
+import Friends from './../data/friends.json'
 
 let maxCountByMax = 0;
 
@@ -13,26 +13,37 @@ function getCountByMonth(data) {
   });
 }
 
-//state friends - used in flow
-console.log('--------------friends.js');
+let generated = null;
 
-const friends = (obj = Friends, action) => {
-  // console.log(action.type, action.menu);
-  // if (action.type === 'SET_MENU' && action.menu === 'flow') {
-    const mentions = _.map(obj, function(d, id) {
+const friends = (state = {}, action) => {
+  if (action.type === 'SET_PAGE' && action.page === 'flow' && _.isNull(generated)) {
+    const mentions = _.map(Friends, function(d, id) {
       return {id: id, points: getCountByMonth(d[0]), selected: false};
     });
     const max = maxCountByMax;
-    const byCount = _.sortBy(_.map(obj, function(d, id) {
+    const byCount = _.sortBy(_.map(Friends, function(d, id) {
       return [d[1], d[0].length]
     }), function(d) {
       return d[1]
     }).reverse().slice(0, 10);
-    console.log(byCount);
+    generated = state;
+    console.log(max);
     return {mentions, max, byCount};
-  // } else {
-  //   return {};
-  // }
-};
+  } else {
+    return state;
+  }
+}
 
-export default friends;
+// const highlightedFriend = (state = -1, action) => {
+//   console.log(action.type, action.id);
+//   if (action.type === 'HIGHLIGHT_FLOW_LINE' && action.id > -1) {
+//     console.log(action.id);
+//     return action.id;
+//   } else {
+//     return state;
+//   }
+// }
+
+// export { friends, highlightedFriend }
+
+export default friends

@@ -1,14 +1,10 @@
-import { combineReducers } from 'redux';
-import menuSetter from './menuSetter';
-import timeRange from './timeRange';
-import friends from './friends';
+import { combineReducers } from 'redux'
+import timeRange from './timeRange'
+// import { friends, highlightedFriend } from './friends'
+import friends from './friends'
 
-
-console.log('--------reducers index.js');
-const twitterApp = combineReducers({
-  menuSetter,
-  friends,
-  timeRange
+export default combineReducers({
+  timeRange,
+  friends
+  // highlightedFriend
 })
-
-export default twitterApp
