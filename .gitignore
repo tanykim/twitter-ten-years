@@ -6,6 +6,7 @@ data-generation/.idea
 data-generation/__pycache__
 data-generation/output
 data-generation/tweets
+data-generation/tweets_sample
 data-generation/settings.json
 
 # Webapp Folder

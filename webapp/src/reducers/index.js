@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux'
 import timeRange from './timeRange'
 // import { friends, highlightedFriend } from './friends'
-import friends from './friends'
+import { flow, selectedFriend } from './flow'
 
 export default combineReducers({
   timeRange,
-  friends
+  flow,
+  selectedFriend
   // highlightedFriend
 })

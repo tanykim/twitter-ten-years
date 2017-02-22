@@ -7,7 +7,7 @@ const timeRange = (state = [], action) => {
   if (action.type === 'SET_TIME_RANGE' && !generated) {
     const start = moment(Profile['signed_up_at'], 'YYYY-MM-DD HH:mm:ss');
     const end = start.clone().add(10, 'years');
-    console.log(start, end);
+    // console.log(start, end);
     generated = true;
     return [start, end];
   } else {

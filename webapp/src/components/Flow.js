@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import Graph from './Flow/Graph';
+import React, { Component } from 'react'
+import FlowStates from '../containers/FlowStates'
+// import Graph from './Flow/Graph'
 
 class Flow extends Component {
   render () {
@@ -7,11 +8,11 @@ class Flow extends Component {
       <div className="row">
         <div className="col-xs-12">
           Talking to Friends
-          <Graph />
+          <FlowStates />
         </div>
       </div>
     );
   }
 }
 
-export default Flow;
+export default Flow

@@ -1,5 +1,7 @@
 @import '../../node_modules/bootstrap-css-only/css/bootstrap.css';
+@import '../../node_modules/react-select/dist/react-select.css';
 
+@highlight: blue;
 .menu-home {
   font-size: 1.5em;
   span {
@@ -26,13 +28,23 @@
     fill: none;
   }
   .normal {
-    stroke: black;
+    stroke: rgba(0, 0, 0, 0.2);
   }
   .selected {
     stroke: red;
+    stroke-width: 3px;
   }
   .highlighted {
-    stroke: blue;
+    stroke: @highlight;
     stroke-width: 3px;
+  }
+}
+
+.flow-stats {
+  position: absolute;
+  top: 20px;
+  left: 80px;
+  .hover-summary {
+    color: @highlight;
   }
 }

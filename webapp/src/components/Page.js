@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Menu from './Menu';
-import Flow from './Flow';
-import Footer from './Footer';
 import { Link } from 'react-router';
+import Menu from './Menu';
+import Footer from './Footer';
+import FlowStates from '../containers/FlowStates';
 
 class Page extends Component {
   render() {
@@ -15,7 +15,7 @@ class Page extends Component {
             <Menu page={menu}/>
           </div>
         </div>
-        { menu === 'flow' && <Flow />}
+        { menu === 'flow' && <FlowStates />}
         <Footer />
       </div>
     );
