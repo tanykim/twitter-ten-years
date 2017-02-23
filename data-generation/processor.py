@@ -3,11 +3,10 @@ from bs4 import BeautifulSoup
 def get_mentioned_users(new_time_list, tweets):
     mentioned_users = {}
     for idx, t in enumerate(tweets):
-        users = t['mentions_to']
-        status_id = t['id']
-        created_at = new_time_list[idx]
-        for u in users:
-            user_id = u['id']
+        if 'mention' in t.keys():
+            status_id = t['id']
+            created_at = new_time_list[idx]
+            user_id = t['mention']['id']
             mention = dict(at=created_at, id=status_id, text=t['text'])
 
             # add the general mentioned user list
@@ -20,7 +19,7 @@ def get_mentioned_users(new_time_list, tweets):
                 mentioned_users[user_id]['mentions'].insert(loc, mention)
             else:
                 mentioned_users[user_id] = dict(
-                    screen_name=u['screen_name'],
+                    screen_name=t['mention']['screen_name'],
                     mentions=[mention]
                 )
     minimized = {}
@@ -42,21 +41,22 @@ def get_tweet_data_from_api(s):
     if 'quoted_status' in s.keys():
         is_quote = True
 
-    mentions = []
-    for v in s['entities']['user_mentions']:
-        mentions.append(dict(id=v['id'], screen_name=v['screen_name']))
-    if mentions is []:
-        if 'in_reply_to_user_id' in s.keys():
-            mentions = [dict(id=s['in_reply_to_user_id'],
-                             screen_name=s['in_reply_to_screen_name']
-                             )]
-    mentions_to = mentions if mentions is not [] else []
+    # mention = {}
 
-    return dict(created_at=str(s['created_at']),
+    # for v in s['entities']['user_mentions']:
+    #     mentions.append(dict(id=v['id'], screen_name=v['screen_name']))
+    # if mentions is []:
+    #     if 'in_reply_to_user_id' in s.keys():
+    #         mentions = [dict(id=s['in_reply_to_user_id'],
+    #                          screen_name=s['in_reply_to_screen_name']
+    #                          )]
+    # mentions_to = mentions if mentions is not [] else []
+
+
+    result = dict(created_at=str(s['created_at']),
                 id=s['id'],
                 source=source,
                 text=s['text'],
-                mentions_to=mentions_to,
                 media=media,
                 is_retweet=is_retweet,
                 is_quote=is_quote,
@@ -64,6 +64,11 @@ def get_tweet_data_from_api(s):
                 lang=s['lang'],
                 favorite_count=s['favorite_count']
                 )
+    if s['in_reply_to_user_id'] is not None:
+        result['mention'] = dict(id=s['in_reply_to_user_id'],
+                                 screen_name=s['in_reply_to_screen_name']
+                                 )
+    return result
 
 def get_tweet_data(s):
     return dict(created_at= s['created_at'], id=s['id'])
@@ -73,7 +78,7 @@ def minimized_tweets(new_time_list, tweets):
     for idx, t in enumerate(tweets):
         minimized.append(dict(
             id=new_time_list[idx], # 0
-            to=len(t['mentions_to']), # 1
+            to=t['mention']['screen_name'] if 'mention' in t.keys() else '', # 1
             # map(lambda x: x['screen_name'], t['mentions_to']), # 1
             media=t['media'],# 2
             urls=t['urls'], # 3

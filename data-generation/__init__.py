@@ -4,7 +4,7 @@ import os
 import js_reader
 import api_caller
 import file_writer
-# import status_lookup
+import status_lookup
 import time_converter
 import processor
 from datetime import datetime
@@ -108,8 +108,11 @@ else:
         file_writer.write_json('tweets_from_file', tweets)
 
     # Get twitter status info from the initial tweet ID object
-    # comment out the next lines after each data point is complete
-    # status_lookup.main(api, tweets)
-    with open('output/tweets_updated.json', encoding='utf-8') as data_file:
-        previous_data = json.loads(data_file.read())
-        save_process(previous_data)
+    # comment out the next line after each data point is complete
+    status_lookup.main(api, tweets)
+
+    # comment the following lines if you're still looking up info for tweets from files
+
+    # with open('output/tweets_updated.json', encoding='utf-8') as data_file:
+    #     previous_data = json.loads(data_file.read())
+    #     save_process(previous_data)

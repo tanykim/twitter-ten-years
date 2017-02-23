@@ -45,7 +45,7 @@ def main(api, source):
     # needed_call_count = math.ceil(len(source) / max_tweets)
 
     needed_call_count = 1
-    start_id = 19
+    start_id = 0
     #one less in start_id 2, 5
 
     all_tweets = []
