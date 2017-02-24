@@ -1,10 +1,11 @@
+// THIS SERVER IS NEEDED FOR DEPLOYMENT, NOT DEVELOPMENT
+
 var express = require('express');
 var path = require('path');
 var app = express();
 
 // Define the port to run on
 app.set('port', 3000);
-
 app.use(express.static(path.join(__dirname, 'build')));
 
 // Listen for requests

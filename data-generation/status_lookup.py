@@ -8,10 +8,11 @@ def call_API(api, ids):
     statuses = api.statuses_lookup(id_=ids, trim_user=1)
     tweets_by_call = []
     for obj in statuses:
-        s = obj.__dict__
-        tweet = processor.get_tweet_data_from_api( s )
-        tweets_by_call.append( tweet )
-    tweets_by_call.sort( key=lambda x: x['id'], reverse=True )
+        s = obj.__dict__['_json']
+        # tweet = processor.get_tweet_data_from_api(s)
+        # tweets_by_call.append(tweet)
+        tweets_by_call.append(s)
+    tweets_by_call.sort(key=lambda x: x['id'], reverse=True)
     return tweets_by_call
 
 def update_tweeets_info(api, data, call_limit, tweet_limit):
@@ -60,12 +61,14 @@ def main(api, source):
 
     print ('--updated ', len(all_tweets_list), 'tweets')
 
-    if start_id > 0:
-        with open('output/tweets_updated.json', encoding='utf-8') as data_file:
-            previous_data = json.loads(data_file.read())
-            for t in all_tweets_list:
-                previous_data.append(t)
-            file_writer.write_json('tweets_updated', previous_data)
-            print ('--wrote', len(previous_data), 'tweets done with', start_id)
-    else:
-        file_writer.write_json('tweets_updated', all_tweets_list)
+    file_writer.write_json('from_api/' + str(call_limit * tweet_limit * (start_id + 1)), all_tweets_list)
+
+    # if start_id > 0:
+    #     with open('output/tweets_updated.json', encoding='utf-8') as data_file:
+    #         previous_data = json.loads(data_file.read())
+    #         for t in all_tweets_list:
+    #             previous_data.append(t)
+    #         file_writer.write_json('tweets_updated', previous_data)
+    #         print ('--wrote', len(previous_data), 'tweets done with', start_id)
+    # else:
+    #     file_writer.write_json('tweets_updated', all_tweets_list)

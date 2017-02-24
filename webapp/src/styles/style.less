@@ -2,6 +2,8 @@
 @import '../../node_modules/react-select/dist/react-select.css';
 
 @highlight: blue;
+@selected: red;
+
 .menu-home {
   font-size: 1.5em;
   span {
@@ -31,13 +33,19 @@
     stroke: rgba(0, 0, 0, 0.2);
   }
   .selected {
-    stroke: red;
+    stroke: @selected;
     stroke-width: 3px;
   }
   .highlighted {
     stroke: @highlight;
     stroke-width: 3px;
   }
+}
+
+.flow-dots {
+  stroke: @selected;
+  stroke-width: 2;
+  fill: white;
 }
 
 .flow-stats {

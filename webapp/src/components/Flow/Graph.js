@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import * as d3 from 'd3'
 import Axis from './Axis'
 import Lines from './Lines'
+import Dots from './Dots'
 
 class Graph extends Component {
 
@@ -27,6 +28,7 @@ class Graph extends Component {
         <g transform={`translate(${this.margin.left}, ${this.margin.top})`}>
           <Axis x={this.x} y={this.y} dim={this.dim} {...this.props}/>
           <Lines x={this.x} y={this.y} {...this.props} />
+          <Dots x={this.x} y={this.y} friend={this.props.friend} />
         </g>
       </svg>
     );

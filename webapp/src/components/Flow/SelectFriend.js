@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Select from 'react-select'
 import { connect } from 'react-redux'
-import { selectFriend } from '../actions'
+import { selectFriend } from '../../actions'
 
 class SelectFriend extends Component {
   constructor(props) {

@@ -23,18 +23,18 @@ const flow = (state = {}, action) => {
         points: getCountByMonth(d[0]),
         first: {text: d[2], at: d[0][d[0].length - 1]},
         count: d[0].length,
-        id: id
+        id: +id
       };
     });
     const max = maxCountByMax;
-    const byCount = _.sortBy(_.map(Friends, function(d, id) {
+    const byCount = _.sortBy(_.map(Friends, function(d) {
       return [d[1], d[0].length]
     }), function(d) {
       return d[1]
     }).reverse().slice(0, 10);
     //for react-select option
-    const friends = _.sortBy(_.map(Friends, function(d, key) {
-      return { value: key, label: `@${d[1]}`, count: d[0].length };
+    const friends = _.sortBy(_.map(Friends, function(d, id) {
+      return { value: +id, label: `@${d[1]}`, count: d[0].length };
     }), function(d) {
       return d.count * -1;
     });
@@ -47,9 +47,7 @@ const flow = (state = {}, action) => {
   }
 }
 
-// let selected = -1;
-
-const selectedFriend = (state = '0', action) => {
+const selectedFriend = (state = 0, action) => {
   if (action.type === 'SET_FLOW_FRIEND_ID') {
     console.log(action.id);
     return action.id;
