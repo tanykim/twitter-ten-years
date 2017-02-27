@@ -18,7 +18,6 @@ class SelectFriend extends Component {
         value={this.state.selectedVal}
         options={this.props.friends}
         onChange={(e) => {
-          console.log(e);
           this.setState({selectedVal: e.value});
           console.log(this.state.selectedVal, e.label);
           return this.props.dispatch(selectFriend(e.value))

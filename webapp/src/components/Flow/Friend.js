@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
-import _ from 'underscore'
 
 class Friend extends Component {
   render () {
     const friend = this.props.friend;
     return (
       <div className="friend-stats">
-        {!_.isUndefined(friend) && `@${friend.name} - sent ${friend.count} mentions`}
+        {friend &&
+          `@${friend.name} - sent ${friend.count} mentions for ${friend.duration} days
+          ranking in count: ${friend.ranking.count} / ${this.props.lines.length}
+          ranking in duration: ${friend.ranking.duration} / ${this.props.lines.length}`
+        }
       </div>
     );
   }

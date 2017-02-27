@@ -7,7 +7,7 @@ import Dots from './Dots'
 class Graph extends Component {
 
   componentWillMount () {
-    const containerW = document.getElementById('root').clientWidth;
+    const containerW = document.getElementById('graph-full').clientWidth - 30;
     this.margin = {top: 10, right: 20, bottom: 40, left: 40};
     const timeDomain = this.props.range.map((t) => t.startOf('month'));
     const countDomain = [0, this.props.max];

@@ -3,12 +3,6 @@ import * as d3 from 'd3'
 
 class Axis extends Component {
   componentDidMount() {
-    this.renderAxis();
-  }
-  componentDidUpdate() {
-    this.renderAxis();
-  }
-  renderAxis() {
     d3.select('#axis-x')
       .call(d3.axisBottom(this.props.x));
     d3.select('#axis-y')

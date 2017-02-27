@@ -3,13 +3,14 @@ import SelectFriend from './SelectFriend'
 import Stats from './Stats'
 import Graph from './Graph'
 import Friend from './Friend'
-import { getFriendObj } from '../../processors/filter'
+import Histogram from './Histogram'
+import { getFriendObj } from '../../processors/calculator'
 
 class FlowWrapper extends Component {
 
   componentWillUpdate(nextProps) {
     if (nextProps.selectedFriend > 0) {
-      this.friend = getFriendObj(nextProps.lines, nextProps.selectedFriend);
+      this.friend = getFriendObj(this.props.lines, this.props.ranking, nextProps.selectedFriend);
     }
   }
 
@@ -25,6 +26,14 @@ class FlowWrapper extends Component {
         </div>
         <div className="col-xs-12">
           <Friend {...this.props} friend={this.friend} />
+        </div>
+        <div className="col-xs-12 col-lg-6">
+          <div> Number of sent mentions </div>
+          <Histogram {...this.props} type="count" friend={this.friend} />
+        </div>
+        <div className="col-xs-12 col-lg-6">
+          <div> Duration of communication (Days) </div>
+          <Histogram {...this.props} type="duration" friend={this.friend} />
         </div>
       </div>
     );
