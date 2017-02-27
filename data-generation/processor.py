@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 def get_mentioned_users(new_time_list, tweets):
     mentioned_users = {}
@@ -28,38 +29,39 @@ def get_mentioned_users(new_time_list, tweets):
         minimized[key] = [list(map(lambda x:x['at'], m)), val['screen_name'], m[len(m) - 1]['text']]
     return minimized
 
-def get_tweet_data_from_api(s):
-    # created_at = time_converter.update_timezone(str(s['created_at']), location_info)
-    source = str(BeautifulSoup(s['source'], 'html.parser'))
+def get_tweet_data(s, isDirectAPI):
+
+    #API status lookup and timeline returns different time format
+    if isDirectAPI is True:
+        created_at = str(s['created_at'])
+    else:
+        reformmated = datetime.strptime(s['created_at'], '%a %b %d %H:%M:%S %z %Y')
+        created_at = datetime.strftime(reformmated, '%Y-%m-%d %H:%M:%S')
+
+    if isDirectAPI is True:
+        source = str(BeautifulSoup(s['source'], 'html.parser'))
+    else:
+        source = BeautifulSoup(s['source'], 'html.parser').a.text
     media = 'none'
     is_retweet = False
     is_quote = False
+    is_reply = False
     if 'media' in s['entities'].keys():
         media = list(map( lambda x: str(x['type']), s['extended_entities']['media']))
     if 'retweeted_status' in s.keys():
         is_retweet = True
     if 'quoted_status' in s.keys():
         is_quote = True
-
-    # mention = {}
-
-    # for v in s['entities']['user_mentions']:
-    #     mentions.append(dict(id=v['id'], screen_name=v['screen_name']))
-    # if mentions is []:
-    #     if 'in_reply_to_user_id' in s.keys():
-    #         mentions = [dict(id=s['in_reply_to_user_id'],
-    #                          screen_name=s['in_reply_to_screen_name']
-    #                          )]
-    # mentions_to = mentions if mentions is not [] else []
-
-
-    result = dict(created_at=str(s['created_at']),
+    if 'in_reply_to_user_id' in s.keys() or s['text'][0] == '@':
+        is_reply = True
+    result = dict(created_at=created_at,
                 id=s['id'],
                 source=source,
                 text=s['text'],
                 media=media,
                 is_retweet=is_retweet,
                 is_quote=is_quote,
+                is_reply=is_reply,
                 urls=len(s['entities']['urls']),
                 lang=s['lang'],
                 favorite_count=s['favorite_count']
@@ -69,9 +71,6 @@ def get_tweet_data_from_api(s):
                                  screen_name=s['in_reply_to_screen_name']
                                  )
     return result
-
-def get_tweet_data(s):
-    return dict(created_at= s['created_at'], id=s['id'])
 
 def minimized_tweets(new_time_list, tweets):
     minimized = []

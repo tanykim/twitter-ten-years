@@ -9,6 +9,7 @@ def load_list():
 def update_timezone(d, location_info, current_loc_id):
     utc = pytz.timezone('UTC')
     utc_date = datetime.strptime(d + ' +0000', '%Y-%m-%d %H:%M:%S %z').astimezone(utc)
+
     for idx, loc in enumerate(location_info[current_loc_id:]):
         start_date = datetime.strptime(loc['start_date'], '%Y-%m-%d').astimezone(utc)
 
@@ -19,6 +20,8 @@ def update_timezone(d, location_info, current_loc_id):
     tz = pytz.timezone(location_info[current_loc_id]['timezone'])
     tzed = utc_date.astimezone(tz)
     tz_date = datetime.strftime(tzed, '%Y-%m-%d %H:%M:%S %z')
+
+    # tz_date = datetime.strftime(tzed, '%Y-%m-%d %H:%M:%S %z')
     # print (utc_date, tz_date, current_loc_id)
     return dict(date=tz_date, id=current_loc_id)
 
