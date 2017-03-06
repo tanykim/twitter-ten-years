@@ -8,6 +8,11 @@ import { getFriendObj } from '../../processors/calculator'
 
 class FlowWrapper extends Component {
 
+  constructor(props) {
+    super();
+    console.log('--------');
+  }
+
   componentWillUpdate(nextProps) {
     if (nextProps.selectedFriend > 0) {
       this.friend = getFriendObj(this.props.lines, this.props.ranking, nextProps.selectedFriend);

@@ -1,18 +1,13 @@
 import moment from 'moment'
 import Profile from './../data/profile.json'
 
-let generated = false;
+let timeRange = null;
 
-const timeRange = (state = [], action) => {
-  if (action.type === 'SET_TIME_RANGE' && !generated) {
+export default () => {
+  if (!timeRange) {
     const start = moment(Profile['signed_up_at'], 'YYYY-MM-DD HH:mm:ss');
     const end = start.clone().add(10, 'years');
-    // console.log(start, end);
-    generated = true;
-    return [start, end];
-  } else {
-    return state;
+    timeRange = [start, end];
   }
+  return timeRange;
 }
-
-export default timeRange;

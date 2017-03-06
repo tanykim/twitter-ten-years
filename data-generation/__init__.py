@@ -39,7 +39,7 @@ elif current == 1:
         # start_id should be manually increased after each run due to API limit:
         # incease upto total tweet counts / 5000 (number of tweets received by a bunch of calls)
         # one less in start_id 2, 5
-        start_id = 19
+        start_id = 2
         status_lookup.main(api, tweets, start_id)
 
 elif current == 2:

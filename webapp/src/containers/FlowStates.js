@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 import { selectFriend } from '../actions'
 import FlowWrapper from '../components/Flow/wrapper'
 
@@ -10,7 +10,7 @@ const mapStateToProps = (state) => ({
   histogram: state.flow.histogram,
   selectedFriend: state.selectedFriend,
   ranking: state.flow.ranking
-});
+})
 
 const mapDispatchToProps =  ({
   selectFriend: selectFriend

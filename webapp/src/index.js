@@ -1,16 +1,15 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
-import reducer from './reducers'
-import App from './components/App'
+import configureStore from './configureStore'
+import App from './containers/App'
 import Home from './components/Home'
 import Page from './components/Page'
 
 import './styles/style.css'
 
-const store = createStore(reducer);
+const store = configureStore()
 
 render(
   <Provider store={store}>

@@ -1,11 +1,14 @@
 import { combineReducers } from 'redux'
 import timeRange from './timeRange'
-// import { friends, highlightedFriend } from './friends'
-import { flow, selectedFriend } from './flow'
+import { dataByPage, isFetching } from './page'
+
+// import { flow, selectedFriend } from './flow'
 
 export default combineReducers({
+  // selectedPage,
   timeRange,
-  flow,
-  selectedFriend
-  // highlightedFriend
+  dataByPage,
+  isFetching
+  //flow,
+  // selectedFriend
 })

@@ -44,4 +44,4 @@ def main(api, source, start_id):
     all_tweets_list = list(itertools.chain(*all_tweets))
     print ('--updated ', start_id, len(all_tweets_list), 'tweets', all_tweets_list[0]['id'], all_tweets_list[len(all_tweets_list) - 1]['id'])
 
-    file_writer.write_json('from_api/' + start_id, all_tweets_list)
+    file_writer.write_json('from_api/' + str(start_id), all_tweets_list, False)
