@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Footer from './Footer'
+import TimelineStates from '../containers/TimelineStates'
 import FlowStates from '../containers/FlowStates'
 
 class Page extends Component {
@@ -9,8 +10,9 @@ class Page extends Component {
     return (
       <div>
         <h1>{ page }</h1>
-        { page === 'flow' && <FlowStates /> }
-        <Footer />
+        { page === 'timeline' && <TimelineStates/> }
+        { page === 'flow' && <FlowStates/> }
+        <Footer/>
       </div>
     );
   }

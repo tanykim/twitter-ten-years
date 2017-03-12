@@ -18,7 +18,6 @@ export const receiveData = (page, data) => ({
   data
 })
 
-
 function fetchData(page) {
   return dispatch => {
     dispatch(requestData(page))
@@ -59,6 +58,7 @@ export function fetchDataIfNeeded(page) {
   }
 }
 
+/* Flow */
 export const selectFriend = (id) => ({
   type: 'SET_FLOW_FRIEND_ID',
   id
