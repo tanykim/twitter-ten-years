@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { fetchDataIfNeeded, invalidatePage } from '../actions'
 import Menu from '../components/Menu'
-import _ from 'underscore';
+import _ from 'lodash';
 
 class App extends Component {
 
@@ -34,13 +34,17 @@ class App extends Component {
 
   render() {
     const { data, isFetching } = this.props
-    console.log('----- App Render', data, isFetching);
-    //TOOD: pass data to children
+    const page = this.props.params.page
+    // console.log('----- App Render', page, data, isFetching, _.has(data[page], 'data'));
+    const isDataReceived = _.has(data[page], 'data');
     return (
       <div>
         <Menu />
         {!isFetching && <a href='#' onClick={this.handleRefreshClick}> Refresh </a>}
-        { isFetching ? <h1> Loading </h1> : this.props.children }
+        {isFetching && <h1> Loading </h1>}
+        { //page is undefined when it's home
+          (isDataReceived || page === undefined) && this.props.children
+        }
       </div>
     )
   }

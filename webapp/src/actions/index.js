@@ -1,4 +1,5 @@
-import _ from 'underscore'
+import _ from 'lodash'
+import { getFlowData } from '../processors/generator'
 
 //TODO: figure out what this really does
 export const invalidatePage = (page) => ({
@@ -21,17 +22,19 @@ export const receiveData = (page, data) => ({
 function fetchData(page) {
   return dispatch => {
     dispatch(requestData(page))
-    //TODO: async function for data loading
-    // Promise.resolve(getDataByPage(page))
-    //   .then(
-    //     v => {
-    //       console.log('---------data by page', v)
-    //       dispatch(receiveData(page, v))
-    //     }
-    //   );
-    setTimeout(function(){
-       dispatch(receiveData(page, {aaa: 'aaa'}));
-    }, 3000);
+
+    //use defer to keep 'loading' while processing data
+    _.defer(() => {
+      let data;
+      switch (page) {
+        case 'flow':
+          data = getFlowData()
+          break
+        default:
+          data = {aaa: 'aaaa'}
+      }
+      dispatch(receiveData(page, data))
+    })
   }
 }
 

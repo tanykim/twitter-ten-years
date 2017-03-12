@@ -8,10 +8,9 @@ import { getFriendObj } from '../../processors/calculator'
 
 class FlowWrapper extends Component {
 
-  constructor(props) {
-    super();
-    console.log('--------');
-  }
+  // constructor(props) {
+  //   super();
+  // }
 
   componentWillUpdate(nextProps) {
     if (nextProps.selectedFriend > 0) {
@@ -41,7 +40,7 @@ class FlowWrapper extends Component {
           <Histogram {...this.props} type="duration" friend={this.friend} />
         </div>
       </div>
-    );
+    )
   }
 }
 

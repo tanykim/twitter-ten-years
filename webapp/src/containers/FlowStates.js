@@ -2,15 +2,19 @@ import { connect } from 'react-redux'
 import { selectFriend } from '../actions'
 import FlowWrapper from '../components/Flow/wrapper'
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => {
+  console.log(state)
+  const data = state.dataByPage.flow.data
+  return {
   range: state.timeRange,
-  friends: state.flow.friends,
-  lines: state.flow.mentions,
-  max: state.flow.max,
-  histogram: state.flow.histogram,
+  // data: state.dataByPage.flow
+  friends: data.friends,
+  lines: data.mentions,
+  max: data.max,
+  histogram: data.histogram,
   selectedFriend: state.selectedFriend,
-  ranking: state.flow.ranking
-})
+  ranking: data.ranking
+}}
 
 const mapDispatchToProps =  ({
   selectFriend: selectFriend

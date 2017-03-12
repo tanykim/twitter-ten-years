@@ -1,7 +1,4 @@
-const data = (state = {
-  didInvalidate: false,
-  data: {}
-}, action) => {
+const data = (state = {didInvalidate: false}, action) => {
   switch (action.type) {
     case 'INVALIDATE_PAGE':
       return Object.assign({}, state, {

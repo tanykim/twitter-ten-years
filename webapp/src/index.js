@@ -15,10 +15,11 @@ render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App}>
-        <IndexRoute component={Home} />
-        <Route path=":page" component={Page} />
+        <IndexRoute component={Home}/>
+        <Route path=":page" component={Page}/>
       </Route>
     </Router>
   </Provider>,
   document.getElementById('root')
 )
+
