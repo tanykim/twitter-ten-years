@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import { getFlowData } from '../processors/generator'
+import { getTimelineData } from '../processors/generator'
 
 //TODO: figure out what this really does
 export const invalidatePage = (page) => ({
@@ -26,6 +27,9 @@ function fetchData(page) {
     _.defer(() => {
       let data;
       switch (page) {
+        case 'timeline':
+          data = getTimelineData()
+          break
         case 'flow':
           data = getFlowData()
           break
@@ -58,8 +62,23 @@ export function fetchDataIfNeeded(page) {
   }
 }
 
+// export const finishPageRender = (page) => ({
+//   type: 'FINISH_PAGE_RENDER',
+//   page
+// })
+
+// export function pageRenderFinished(page) {
+//   dispatch(finishPageRender(page))
+// }
+
+/* Timeline */
+export const selectRange = (id) => ({
+  type: 'SET_TIMELINE_RANGE',
+  id
+})
+
 /* Flow */
 export const selectFriend = (id) => ({
-  type: 'SET_FLOW_FRIEND_ID',
+  type: 'SET_FLOW_FRIEND',
   id
 })

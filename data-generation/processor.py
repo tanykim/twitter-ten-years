@@ -75,16 +75,33 @@ def get_tweet_data(s, isDirectAPI):
 def minimized_tweets(new_time_list, tweets):
     minimized = []
     for idx, t in enumerate(tweets):
-        minimized.append(dict(
-            id=new_time_list[idx], # 0
-            to=t['mention']['screen_name'] if 'mention' in t.keys() else '', # 1
-            # map(lambda x: x['screen_name'], t['mentions_to']), # 1
-            media=t['media'],# 2
-            urls=t['urls'], # 3
-            rt=t['is_retweet'], # 4
-            q=t['is_quote'],  # 5
-            lang=t['lang'],  # 6
-            fav=t['favorite_count'],  # 7
-            app=t['source'] # 8
-        ))
+        id = new_time_list[idx] # 0
+        props = []
+        if 'mention' in t.keys():
+            props.append('m')
+        if t['media'] is not 'none' and 'photo' in t['media']:
+            props.append('p')
+        if t['media'] is not 'none' and 'video' in t['media']:
+            props.append('v')
+        if t['is_retweet']:
+            props.append('r')
+        if t['is_quote']:
+            props.append('q')
+        if t['urls'] > 0:
+            props.append('u')
+        if t['favorite_count'] > 0:
+            props.append('f')
+        # minimized.append(dict(
+        #     id=new_time_list[idx], # 0
+        #     to=t['mention']['screen_name'] if 'mention' in t.keys() else '', # 1
+        #     # map(lambda x: x['screen_name'], t['mentions_to']), # 1
+        #     media=t['media'],# 2
+        #     urls=t['urls'], # 3
+        #     rt=t['is_retweet'], # 4
+        #     q=t['is_quote'],  # 5
+        #     lang=t['lang'],  # 6
+        #     fav=t['favorite_count'],  # 7
+        #     app=t['source'] # 8
+        # ))
+        minimized.append([id, props, t['lang'], t['source']])
     return minimized

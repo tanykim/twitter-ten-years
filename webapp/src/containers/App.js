@@ -21,6 +21,7 @@ class App extends Component {
   componentWillUpdate(nextProps) {
     if (nextProps.params.page && this.props.params !== nextProps.params ) {
       const nextPage = nextProps.params.page;
+      console.log(this.props.data[nextPage], this.props.isFetching);
       this.props.dispatch(fetchDataIfNeeded(nextPage))
     }
   }
@@ -35,7 +36,7 @@ class App extends Component {
   render() {
     const { data, isFetching } = this.props
     const page = this.props.params.page
-    // console.log('----- App Render', page, data, isFetching, _.has(data[page], 'data'));
+    console.log('----- App Render', page, isFetching, _.has(data[page], 'data'));
     const isDataReceived = _.has(data[page], 'data');
     return (
       <div>

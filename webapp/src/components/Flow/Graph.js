@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import * as d3 from 'd3'
-import Axis from './Axis'
+import Axis from '../common/Axis'
 import Lines from './Lines'
 import Dots from './Dots'
 
@@ -26,7 +26,7 @@ class Graph extends Component {
         height={this.dim.h + this.margin.top + this.margin.bottom}
       >
         <g transform={`translate(${this.margin.left}, ${this.margin.top})`}>
-          <Axis x={this.x} y={this.y} dim={this.dim} {...this.props}/>
+          <Axis x={this.x} y={this.y} dim={this.dim} {...this.props} pos="bottom" id="flow"/>
           <Lines x={this.x} y={this.y} {...this.props} />
           <Dots x={this.x} y={this.y} friend={this.props.friend} />
         </g>

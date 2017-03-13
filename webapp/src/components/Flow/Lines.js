@@ -28,7 +28,7 @@ class Lines extends Component {
           d3.select(this).classed('highlighted', true);
           this.parentElement.appendChild(this);
           d3.select('#flow-stats')
-            .html(`@${l.name}: ${l.count} mentions <br/> First mention: ${l.first.text} at ${l.first.at}`);
+            .html(`@${l.name}: ${l.count} mentions <br/> First mention: ${l.first}`);
         })
         .on('click', function() {
           //update prop

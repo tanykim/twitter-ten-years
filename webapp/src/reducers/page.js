@@ -18,7 +18,7 @@ const data = (state = {didInvalidate: false}, action) => {
   }
 }
 
-function dataByPage(state = {}, action) {
+export function dataByPage(state = {}, action) {
   switch (action.type) {
     case 'INVALIDATE_PAGE':
     case 'REQUEST_DATA':
@@ -31,7 +31,7 @@ function dataByPage(state = {}, action) {
   }
 }
 
-function isFetching(state = false, action) {
+export function isFetching(state = false, action) {
   switch (action.type) {
     case 'INVALIDATE_PAGE':
     case 'REQUEST_DATA':
@@ -42,4 +42,14 @@ function isFetching(state = false, action) {
       return state
   }
 }
-export { dataByPage, isFetching }
+
+export function isPageRenderFinished(state={}, action) {
+  switch (action.type) {
+    case 'FINISH_PAGE_RENDER':
+      return Object.assign({}, state, {
+        [action.page]: true
+      })
+    default:
+      return state
+  }
+}
