@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import { selectRange } from '../actions'
 import TimelineWrapper from '../components/Timeline/wrapper'
 
 const mapStateToProps = (state) => {
@@ -7,16 +6,12 @@ const mapStateToProps = (state) => {
   return {
     range: state.timeRange,
     selectedRange: state.selectedRange,
-    tweets: data.tweets,
+    // tweets: data.tweets,
     byMonth: data.byMonth,
   }
 }
 
-const mapDispatchToProps =  ({
-  selectRange: selectRange
-})
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  // mapDispatchToProps
 )(TimelineWrapper)

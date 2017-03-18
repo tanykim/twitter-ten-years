@@ -7,27 +7,27 @@ import Axis from '../common/Axis'
 class Bars extends Component {
 
   componentWillMount () {
-    const containerW = document.getElementById('graph-qt').clientWidth - 30;
+    const containerW = document.getElementById('graph-full').clientWidth - 30;
     this.margin = {top: 40, right: 10, bottom: 10, left: 40};
     const timeDomain = [this.props.range[0].startOf('month'),
       this.props.range[1].add(1, 'month').startOf('month')];
     const countDomain = [0, _.max(this.props.data.map((d) => d[1]))];
     this.dim = {
       w: containerW - this.margin.left - this.margin.right,
-      h: 1000 - this.margin.top - this.margin.bottom
+      h: 200 - this.margin.top - this.margin.bottom
     };
-    this.x = d3.scaleLinear().domain(countDomain).range([0, this.dim.w]);
-    this.y = d3.scaleTime().domain(timeDomain).range([this.dim.h, 0]);
+    this.x = d3.scaleTime().domain(timeDomain).range([0, this.dim.w]);
+    this.y = d3.scaleLinear().domain(countDomain).range([0, this.dim.h]);
   }
 
   render () {
-    const barW = this.dim.h / this.props.data.length;
+    const barW = this.dim.w / this.props.data.length;
     const bars = this.props.data.map((d) => (
       <rect
-        x="0"
-        y={this.y(moment(d[0], 'YYYY-MM'))}
-        width={this.x(d[1])}
-        height={barW}
+        x={this.x(moment(d[0], 'YYYY-MM'))}
+        y="0"
+        width={barW}
+        height={this.y(d[1])}
         key={d[0]}
       />)
     )

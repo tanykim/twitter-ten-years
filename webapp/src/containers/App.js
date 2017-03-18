@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchDataIfNeeded, invalidatePage } from '../actions'
 import Menu from '../components/Menu'
@@ -36,7 +36,7 @@ class App extends Component {
   render() {
     const { data, isFetching } = this.props
     const page = this.props.params.page
-    console.log('----- App Render', page, isFetching, _.has(data[page], 'data'));
+    // console.log('----- App Render', page, isFetching, _.has(data[page], 'data'));
     const isDataReceived = _.has(data[page], 'data');
     return (
       <div>
@@ -49,12 +49,6 @@ class App extends Component {
       </div>
     )
   }
-}
-
-App.propTypes = {
-  data: PropTypes.object.isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  dispatch: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {

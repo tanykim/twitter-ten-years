@@ -43,13 +43,14 @@ export function isFetching(state = false, action) {
   }
 }
 
-export function isPageRenderFinished(state={}, action) {
-  switch (action.type) {
-    case 'FINISH_PAGE_RENDER':
-      return Object.assign({}, state, {
-        [action.page]: true
-      })
-    default:
-      return state
-  }
-}
+
+// export function isPageRenderFinished(state={}, action) {
+//   switch (action.type) {
+//     case 'FINISH_PAGE_RENDER':
+//       return Object.assign({}, state, {
+//         [action.page]: true
+//       })
+//     default:
+//       return state
+//   }
+// }

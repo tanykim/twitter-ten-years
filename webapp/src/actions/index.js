@@ -62,6 +62,7 @@ export function fetchDataIfNeeded(page) {
   }
 }
 
+
 // export const finishPageRender = (page) => ({
 //   type: 'FINISH_PAGE_RENDER',
 //   page
@@ -76,6 +77,19 @@ export const selectRange = (id) => ({
   type: 'SET_TIMELINE_RANGE',
   id
 })
+
+export const getTweets = () => {
+  // console.log('--------get tweets');
+  return (dispatch, getState) => {
+    console.log('---get tweets', getState().selectedRange);
+    dispatch({type: 'SET_FETCHING_TIMELINE_TWEETS', value: true})
+     _.delay(() => {
+      dispatch({type: 'SET_TIMELINE_TWEETS', data: {data: 'aaa'}})
+      dispatch({type: 'SET_FETCHING_TIMELINE_TWEETS', value: false})
+    }, 1000)
+  }
+  // getTweetsInRange(range)
+}
 
 /* Flow */
 export const selectFriend = (id) => ({
