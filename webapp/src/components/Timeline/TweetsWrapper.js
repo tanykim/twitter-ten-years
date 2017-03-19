@@ -4,7 +4,7 @@ class TweetsWrapper extends Component {
 
   componentWillMount () {
     console.log('-------timeline wrapper will mount');
-    this.props.onMountFunc();
+    this.props.getTweets();
   }
 
   render () {

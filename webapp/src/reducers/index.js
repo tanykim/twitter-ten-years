@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import moment from 'moment'
 import Profile from './../data/profile.json'
-import { isFetchingTweets, tweets } from './timeline'
+import { selectedRange, isFetchingTweets, tweets } from './timeline'
 import { selectedFriend } from './flow'
 
 const isFetching = (state = false, action) => {
@@ -36,6 +36,6 @@ export default combineReducers({
   isFetching,
   timeRange,
   dataByPage,
-  isFetchingTweets, tweets,
+  selectedRange, isFetchingTweets, tweets,
   selectedFriend
 })

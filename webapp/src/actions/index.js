@@ -46,10 +46,8 @@ export const getTweets = () => {
 /* Flow */
 export const selectFriend = (id) => {
   return (dispatch, getState) => {
-    const { mentions, ranking, friends} = getState().dataByPage.flow;
-    if (!friends[id]) {
-      const data = getFriendObj(mentions, ranking, id)
-      dispatch({ type: 'SET_FLOW_FRIEND', data })
-    }
+    const { mentions, ranking } = getState().dataByPage.flow;
+    const data = getFriendObj(mentions, ranking, id)
+    dispatch({ type: 'SET_FLOW_FRIEND', data })
   }
 }

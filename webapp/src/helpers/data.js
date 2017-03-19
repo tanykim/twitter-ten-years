@@ -2,8 +2,7 @@
 import _ from 'lodash'
 
 export const getTimelineData = () => {
-  const byMonth = require('../data/tweets_by_month.json')
-  return { byMonth }
+  return require('../data/tweets_by_month.json')
 }
 
 export const getFlowData = () => {

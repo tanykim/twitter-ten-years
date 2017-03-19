@@ -1,20 +1,28 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import Bars from './Bars'
-import TweetsStates from '../../containers/TweetsStates'
+import TweetsWrapper from './TweetsWrapper'
+// import TweetsStates from '../../containers/TweetsStates'
 
 class TimelineWrapper extends Component {
+  componentWillMount() {
+    this.props.onMountFunc()
+  }
+
   render () {
-    return (
-      <div className="row">
+    const { isFetching, data } = this.props;
+
+    return (<div>
+      {isFetching && <h1> Loading... </h1> }
+      {!isFetching && data && <div className="row">
         <div className="col-xs-12">
-          <Bars data={this.props.byMonth} range={this.props.range} />
+          <Bars {...this.props} />
         </div>
         <div className="col-xs-12">
-            <TweetsStates />
+          <TweetsWrapper {...this.props} />
         </div>
-      </div>
-    )
+      </div>}
+    </div>)
   }
 }
 
