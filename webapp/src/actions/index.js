@@ -1,6 +1,5 @@
 import _ from 'lodash'
-import { getFlowData } from '../processors/generator'
-import { getTimelineData } from '../processors/generator'
+import { getTimelineData, getFlowData } from '../processors/generator'
 
 //TODO: figure out what this really does
 export const invalidatePage = (page) => ({

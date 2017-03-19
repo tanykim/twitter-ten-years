@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from datetime import datetime
+from collections import Counter
 
 def get_mentioned_users(new_time_list, tweets):
     mentioned_users = {}
@@ -105,3 +106,11 @@ def minimized_tweets(new_time_list, tweets):
         # ))
         minimized.append([id, props, t['lang'], t['source']])
     return minimized
+
+def get_tweets_by_month(tweets):
+    months = []
+    for t in tweets:
+        created_at = datetime.strptime(t[0], '%Y-%m-%d %H:%M:%S %z')
+        month = datetime.strftime(created_at, '%Y-%m')
+        months.append(month)
+    return list(Counter(months).items())

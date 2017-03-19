@@ -16,11 +16,8 @@ function getCountByMonth(data) {
 }
 
 const getTimelineData = () => {
-  const tweets = require('../data/tweets.json');
-  const months = tweets.map((t) => t[0].substr(0, 7))
-  return {
-    // tweets,
-    byMonth: getCountByMonth(months) }
+  const byMonth = require('../data/tweets_by_month.json')
+  return { byMonth }
 }
 
 const getFlowData = () => {
