@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import * as d3 from 'd3'
 import _ from 'underscore'
 import moment from 'moment'
-import { connect } from 'react-redux'
-import { selectFriend } from '../../actions'
 
 class Lines extends Component {
 
@@ -15,7 +13,7 @@ class Lines extends Component {
       .curve(d3.curveMonotoneX)
 
     //show lines that has at least 2 data points
-    const validLines = _.filter(this.props.lines, function (d) {
+    const validLines = _.filter(this.props.mentions, function (d) {
       return d.points.length > 1;
     });
     validLines.map((l, i) => {
@@ -31,8 +29,7 @@ class Lines extends Component {
             .html(`@${l.name}: ${l.count} mentions <br/> First mention: ${l.first}`);
         })
         .on('click', function() {
-          //update prop
-          return self.props.dispatch(selectFriend(l.id));
+          self.props.selectFriend(l.id);
         })
         .on('mouseout', function() {
           d3.select(this).classed('highlighted', false);
@@ -42,12 +39,11 @@ class Lines extends Component {
   }
 
   componentWillUpdate(nextProps) {
-    if (nextProps.selectedFriend !== this.props.selectedFriend) {
-      d3.select(`.flow-line-${this.props.selectedFriend}`).classed('selected', false);
-      d3.select(`.flow-line-${nextProps.selectedFriend}`).classed('highlighted', false);
-      d3.select(`.flow-line-${nextProps.selectedFriend}`).classed('selected', true);
+    if (nextProps.friend.id !== this.props.friend.id) {
+      d3.select(`.flow-line-${this.props.friend.id}`).classed('selected', false);
+      d3.select(`.flow-line-${nextProps.friend.id}`).classed('highlighted', false);
+      d3.select(`.flow-line-${nextProps.friend.id}`).classed('selected', true);
       d3.select('#flow-stats').html('');
-      //this.showFriendInfo(l);
       // TODO: move the line to the front
     }
 
@@ -59,7 +55,5 @@ class Lines extends Component {
     );
   }
 }
-
-Lines = connect()(Lines)
 
 export default Lines

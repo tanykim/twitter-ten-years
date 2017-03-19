@@ -1,11 +1,9 @@
 //props triggered by user interaction
 
-const selectedFriend = (state = 0, action) => {
+export const selectedFriend = (state = {}, action) => {
   if (action.type === 'SET_FLOW_FRIEND') {
-    return action.id;
+    return Object.assign({}, state, action.data)
   } else {
     return state;
   }
 }
-
-export { selectedFriend }

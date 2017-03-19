@@ -3,9 +3,9 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import configureStore from './configureStore'
-import App from './containers/App'
+import App from './components/App'
 import Home from './components/Home'
-import Page from './components/Page'
+import PageStates from './containers/PageStates'
 
 import './styles/style.css'
 
@@ -16,7 +16,7 @@ render(
     <Router history={browserHistory}>
       <Route path="/" component={App}>
         <IndexRoute component={Home}/>
-        <Route path=":page" component={Page}/>
+        <Route path=":page" component={PageStates}/>
       </Route>
     </Router>
   </Provider>,

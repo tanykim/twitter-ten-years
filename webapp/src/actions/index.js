@@ -1,97 +1,55 @@
 import _ from 'lodash'
-import { getTimelineData, getFlowData } from '../processors/generator'
+import { getTimelineData, getFlowData, getFriendObj } from '../helpers/data'
 
-//TODO: figure out what this really does
-export const invalidatePage = (page) => ({
-  type: 'INVALIDATE_PAGE',
-  page
-})
-
-export const requestData = (page) => ({
-  type: 'REQUEST_DATA',
-  page
-})
-
-export const receiveData = (page, data) => ({
-  type: 'RECEIVE_DATA',
-  page,
-  data
-})
-
-function fetchData(page) {
-  return dispatch => {
-    dispatch(requestData(page))
-
-    //use defer to keep 'loading' while processing data
-    _.defer(() => {
-      let data;
-      switch (page) {
-        case 'timeline':
-          data = getTimelineData()
-          break
-        case 'flow':
-          data = getFlowData()
-          break
-        default:
-          data = {aaa: 'aaaa'}
-      }
-      dispatch(receiveData(page, data))
-    })
-  }
-}
-
-function shouldFetchData(state, page) {
-  const data = state.dataByPage[page]
-  if (!data) {
-    return true
-  } else if (data.isFetching) {
-    return false
-  } else {
-    return data.didInvalidate
-  }
-}
-
-export function fetchDataIfNeeded(page) {
+export const fetchDataIfNeeded = (page) => {
   return (dispatch, getState) => {
-    if (shouldFetchData(getState(), page)) {
-      return dispatch(fetchData(page))
-    } else {
-      return Promise.resolve()
+    //if data is not defined, get data
+    if (!getState().dataByPage[page]) {
+      dispatch({ type: 'REQUEST_DATA' })
+      _.delay(() => {
+        let data;
+        switch (page) {
+          case 'timeline':
+            data = getTimelineData()
+            break
+          case 'flow':
+            data = getFlowData()
+            break
+          default:
+            data = {aaa: 'aaaa'}
+        }
+        dispatch({ type: 'RECEIVE_DATA', page, data })
+      }, 100)
     }
+    /* By default state.isFetching is false,
+    that is, if data exists, no Request and Receive happens,
+    Instead page is loaded immediately */
   }
 }
-
-
-// export const finishPageRender = (page) => ({
-//   type: 'FINISH_PAGE_RENDER',
-//   page
-// })
-
-// export function pageRenderFinished(page) {
-//   dispatch(finishPageRender(page))
-// }
 
 /* Timeline */
-export const selectRange = (id) => ({
-  type: 'SET_TIMELINE_RANGE',
-  id
-})
+// export const selectRange = (id) => ({
+//   type: 'SET_TIMELINE_RANGE',
+//   id
+// })
 
 export const getTweets = () => {
-  // console.log('--------get tweets');
-  return (dispatch, getState) => {
-    console.log('---get tweets', getState().selectedRange);
-    dispatch({type: 'SET_FETCHING_TIMELINE_TWEETS', value: true})
+  return (dispatch) => {
+    dispatch({ type: 'SET_FETCHING_TIMELINE_TWEETS', value: true })
      _.delay(() => {
-      dispatch({type: 'SET_TIMELINE_TWEETS', data: {data: 'aaa'}})
-      dispatch({type: 'SET_FETCHING_TIMELINE_TWEETS', value: false})
+      dispatch({ type: 'SET_TIMELINE_TWEETS', data: {data: 'aaa'} })
+      dispatch({ type: 'SET_FETCHING_TIMELINE_TWEETS', value: false })
     }, 1000)
   }
-  // getTweetsInRange(range)
 }
 
 /* Flow */
-export const selectFriend = (id) => ({
-  type: 'SET_FLOW_FRIEND',
-  id
-})
+export const selectFriend = (id) => {
+  return (dispatch, getState) => {
+    const { mentions, ranking, friends} = getState().dataByPage.flow;
+    if (!friends[id]) {
+      const data = getFriendObj(mentions, ranking, id)
+      dispatch({ type: 'SET_FLOW_FRIEND', data })
+    }
+  }
+}

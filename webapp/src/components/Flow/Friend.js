@@ -5,11 +5,9 @@ class Friend extends Component {
     const friend = this.props.friend;
     return (
       <div className="friend-stats">
-        {friend &&
-          `@${friend.name} - sent ${friend.count} mentions for ${friend.duration} days
-          ranking in count: ${friend.ranking.count} / ${this.props.lines.length}
-          ranking in duration: ${friend.ranking.duration} / ${this.props.lines.length}`
-        }
+        {`@${friend.name} - sent ${friend.count} mentions for ${friend.duration} days
+        ranking in count: ${friend.ranking.count} / ${this.props.mentions.length}
+        ranking in duration: ${friend.ranking.duration} / ${this.props.mentions.length}`}
       </div>
     );
   }

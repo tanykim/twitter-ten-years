@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import _ from 'lodash'
 import * as d3 from 'd3'
 
 class Histogram extends Component {
@@ -79,7 +80,7 @@ class Histogram extends Component {
 
   componentWillUpdate(nextProps) {
     //show friend status line over the histogram
-    if (nextProps.friend) {
+    if (!_.isEmpty(nextProps.friend)) {
       const f = nextProps.friend;
       const t = this.props.type;
       d3.select(`.flow-histogram-${t}-line`)
