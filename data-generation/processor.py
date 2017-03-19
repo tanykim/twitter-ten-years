@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from datetime import datetime
 from collections import Counter
+from operator import itemgetter
 
 def get_mentioned_users(new_time_list, tweets):
     mentioned_users = {}
@@ -114,3 +115,49 @@ def get_tweets_by_month(tweets):
         month = datetime.strftime(created_at, '%Y-%m')
         months.append(month)
     return list(Counter(months).items())
+
+def get_points_by_month(tweets):
+    months = []
+    for t in tweets:
+        created_at = datetime.strptime(t, '%Y-%m-%d %H:%M:%S %z')
+        month = datetime.strftime(created_at, '%Y-%m')
+        months.append(month)
+    return list(Counter(months).items())
+
+def get_time_diff(tweets):
+    latest = datetime.strptime(tweets[0], '%Y-%m-%d %H:%M:%S %z')
+    oldest = datetime.strptime(tweets[len(tweets) - 1], '%Y-%m-%d %H:%M:%S %z')
+    return (latest-oldest).days
+
+def get_flow_data(friends):
+    mentions = []
+    max_vals = []
+    for id, d in friends.items():
+        points = get_points_by_month(d[0])
+        max_vals.append(max(map(lambda x: x[1], points)))
+        mentions.append(dict(
+            name=d[1],
+            points=points,
+            first=d[0][len(d[0]) - 1],
+            count=len(d[0]),
+            duration=get_time_diff(d[0]),
+            id=int(id)
+        ))
+
+    count = list(map(lambda x: x['count'], mentions))
+    duration = list(map(lambda x: x['duration'], mentions))
+
+    friends_list = map(lambda x: dict(value=x['id'], label='@'+x['name'], count=x['count']), mentions)
+    friends_sorted = sorted(friends_list, key=itemgetter('count'),reverse=True)
+
+    # sort by count/duration first, then make list from only necessary elements
+    r_count = list(map(lambda x: [x['id'], x['name'], x['count']], sorted(mentions, key=itemgetter('count'), reverse=True)))
+    r_duration = list(map(lambda x: [x['id'], x['name'], x['duration']], sorted(mentions, key=itemgetter('duration'), reverse=True)))
+
+    return dict(
+        mentions=mentions,
+        max=max(max_vals),
+        histogram=dict(count=count, duration=duration),
+        friends=friends_sorted,
+        ranking=dict(count=r_count, duration=r_duration)
+    )
