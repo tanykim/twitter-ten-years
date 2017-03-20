@@ -19,9 +19,11 @@ def update_timezone(d, location_info, current_loc_id):
             break
     tz = pytz.timezone(location_info[current_loc_id]['timezone'])
     tzed = utc_date.astimezone(tz)
-    tz_date = datetime.strftime(tzed, '%Y-%m-%d %H:%M:%S %z')
 
+    # convert time with upto hour and add day of week
+    tz_date = datetime.strftime(tzed, '%Y-%m-%d %H %w')
     # tz_date = datetime.strftime(tzed, '%Y-%m-%d %H:%M:%S %z')
+
     # print (utc_date, tz_date, current_loc_id)
     return dict(date=tz_date, id=current_loc_id)
 

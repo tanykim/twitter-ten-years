@@ -1,8 +1,6 @@
 //props triggered by user interaction
 
-import moment from 'moment'
-
-export const selectedRange = (state = [moment('2016-01', 'YYYY-MM'), moment('2016-02', 'YYYY-MM')], action) => {
+export const selectedRange = (state = [], action) => {
   if (action.type === 'SET_TIMELINE_RANGE') {
     return action.range
   } else {

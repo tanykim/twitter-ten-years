@@ -111,7 +111,7 @@ def minimized_tweets(new_time_list, tweets):
 def get_tweets_by_month(tweets):
     months = []
     for t in tweets:
-        created_at = datetime.strptime(t[0], '%Y-%m-%d %H:%M:%S %z')
+        created_at = datetime.strptime(t[0], '%Y-%m-%d %H %w')
         month = datetime.strftime(created_at, '%Y-%m')
         months.append(month)
     return list(Counter(months).items())
@@ -119,14 +119,14 @@ def get_tweets_by_month(tweets):
 def get_points_by_month(tweets):
     months = []
     for t in tweets:
-        created_at = datetime.strptime(t, '%Y-%m-%d %H:%M:%S %z')
+        created_at = datetime.strptime(t, '%Y-%m-%d %H %w')
         month = datetime.strftime(created_at, '%Y-%m')
         months.append(month)
     return list(Counter(months).items())
 
 def get_time_diff(tweets):
-    latest = datetime.strptime(tweets[0], '%Y-%m-%d %H:%M:%S %z')
-    oldest = datetime.strptime(tweets[len(tweets) - 1], '%Y-%m-%d %H:%M:%S %z')
+    latest = datetime.strptime(tweets[0], '%Y-%m-%d %H %w')
+    oldest = datetime.strptime(tweets[len(tweets) - 1], '%Y-%m-%d %H %w')
     return (latest-oldest).days
 
 def get_flow_data(friends):

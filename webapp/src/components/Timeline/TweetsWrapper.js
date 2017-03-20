@@ -13,7 +13,10 @@ class TweetsWrapper extends Component {
     return (
       <div>
         {isFetchingTweets && <div>Loading</div>}
-        {tweets && <div>{this.props.tweets.data}</div>}
+        {tweets && <div>{
+          //info of tweets in the selected range come here
+          this.props.tweets.total
+        }</div>}
       </div>
     )
   }

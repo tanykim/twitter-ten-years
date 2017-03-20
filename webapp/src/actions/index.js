@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { getTimelineData, getFlowData, getFriendObj } from '../helpers/data'
+import { getTimelineData, getTweetsData, getFlowData, getFriendObj } from '../helpers/data'
 
 export const fetchDataIfNeeded = (page) => {
   return (dispatch, getState) => {
@@ -28,18 +28,20 @@ export const fetchDataIfNeeded = (page) => {
 }
 
 /* Timeline */
-// export const selectRange = (id) => ({
+// export const selectRange = () => ({
 //   type: 'SET_TIMELINE_RANGE',
-//   id
+//   range: []
 // })
 
 export const getTweets = () => {
   return (dispatch) => {
     dispatch({ type: 'SET_FETCHING_TIMELINE_TWEETS', value: true })
      _.delay(() => {
-      dispatch({ type: 'SET_TIMELINE_TWEETS', data: {data: 'aaa'} })
+      const range = ['2016-01-01', '2016-01-31']
+      dispatch({ type: 'SET_TIMELINE_TWEETS', data: getTweetsData(range)})
+      dispatch({ type: 'SET_TIMELINE_RANGE', range })
       dispatch({ type: 'SET_FETCHING_TIMELINE_TWEETS', value: false })
-    }, 1000)
+    }, 100)
   }
 }
 

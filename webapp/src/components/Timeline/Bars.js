@@ -40,6 +40,16 @@ class Bars extends Component {
         <g transform={`translate(${this.margin.left}, ${this.margin.top})`}>
           <Axis x={this.x} y={this.y} dim={this.dim} {...this.props} id="timeline"/>
           {bars}
+          {!_.isEmpty(this.props.selectedRange) &&
+            //show brush
+            <rect
+              x={this.x(moment(this.props.selectedRange[0], 'YYYY-MM-DD'))}
+              y="0"
+              width={this.x(moment(this.props.selectedRange[1], 'YYYY-MM-DD'))
+               - this.x(moment(this.props.selectedRange[0], 'YYYY-MM-DD'))}
+              height={this.dim.h}
+              className="timeline-brush"
+            ></rect>}
         </g>
       </svg>
     );
