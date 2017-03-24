@@ -1,10 +1,5 @@
 /* shared functions to calculate props/states */
-
 import moment from 'moment'
-
-export const formatTime = (d, f) => {
-  return d.format(f)
-}
 
 export const getMoment = (d) => {
   return moment(d.substr(0, 19), 'YYYY-MM-DD HH:mm:ss')
@@ -17,12 +12,25 @@ export const getNumberedTime = (d) => {
   return h + m / 60 + s / (60 * 60)
 }
 
-export const formatToYearMonth = (d) => {
-  return getMoment(d).format('YYYY-MM')
-}
-
 export const getTimeDiff = (timeStrArray, unit) => {
   const latest = getMoment(timeStrArray[0])
   const oldest = getMoment(timeStrArray[timeStrArray.length - 1])
   return latest.diff(oldest, unit)
+}
+
+const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+export const getWeekday = (id) => {
+  return weekdays[id];
+}
+
+export const getAmPm = (h) => {
+  return `${(h % 12) || 12} ${h % 6 === 0 ? (h < 12 ? 'AM' : 'PM') : ''}`
+}
+
+export const getRangeText = (range) => {
+  const sm = moment(range[0], 'YYYY-MM-DD');
+  const em = moment(range[1], 'YYYY-MM-DD');
+  const diff = em.diff(sm, 'days');
+
+  return `From ${sm.format('ddd MMM DD YYYY')} to ${em.format('ddd MMM DD YYYY')} (${diff} days)`;
 }

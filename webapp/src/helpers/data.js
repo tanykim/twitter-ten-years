@@ -38,13 +38,15 @@ export const getTweetsData = (range) => {
   const total = tInRange.length
 
   //make nested array of 7 * 24 with 0 as day & hour
-  let byDayHour = _.fill(Array(7), _.fill(Array(24), 0))
+  let max = 0
+  const byDayHour = _.range(7).map(() => _.range(24).map(() => 0))
   _.forEach(tInRange, (t) => {
     //get the part of day and hour from 'YYYY-MM-DD HH ww'format, then make it to integer
-    const day = t[0].slice(-2)
-    const hour = t[0].slice(10, -2)
+    const day = +t[0].slice(-2)
+    const hour = +t[0].slice(10, -2)
     //then incread the number to matching point
-    byDayHour[+day][+hour] += 1
+    byDayHour[day][hour] += 1
+    max = Math.max(max, byDayHour[day][hour])
   })
 
   //interaction - types: mention, retweet, quote
@@ -59,7 +61,7 @@ export const getTweetsData = (range) => {
   const language = getCountsByTweetProp(2, tInRange)
   const device = getCountsByTweetProp(3, tInRange)
 
-  return { total, byDayHour, interaction, media, language, device }
+  return { total, max, byDayHour, interaction, media, language, device }
 }
 
 export const getFlowData = () => {

@@ -37,11 +37,11 @@ export const getTweets = () => {
   return (dispatch) => {
     dispatch({ type: 'SET_FETCHING_TIMELINE_TWEETS', value: true })
      _.delay(() => {
-      const range = ['2016-01-01', '2016-01-31']
+      const range = ['2016-02-01', '2016-03-31']
       dispatch({ type: 'SET_TIMELINE_TWEETS', data: getTweetsData(range)})
       dispatch({ type: 'SET_TIMELINE_RANGE', range })
       dispatch({ type: 'SET_FETCHING_TIMELINE_TWEETS', value: false })
-    }, 100)
+    }, 1000)
   }
 }
 
