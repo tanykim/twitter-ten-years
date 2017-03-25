@@ -10,22 +10,31 @@ export const getTimelineData = () => {
 const getCountsByTweetType = (types, tweets) => {
   return _.map(types, function(type) {
     const tweetsInType = _.filter(tweets, function(d) {
-      return d[1].indexOf(type) > -1
+      return d[1].indexOf(type.charAt(0).toLowerCase()) > -1
     })
     return tweetsInType.length
   })
 }
 
-//language or device
-const getCountsByTweetProp = (idx, tweets) => {
-  return _.chain(tweets)
-    .map((d) => d[idx])
-    .countBy()
-    .toPairs()
-    .sortBy((d) => -d[1]) //order by count desc
-    .fromPairs()
-    .omit('und') //remove undefined
-    .value()
+const getRestCount = (counts, total) => {
+  return total - _.reduce(counts, function (sum, n) { return sum + n; }, 0);
+}
+
+const getTweetTypeData = (types, tweets, total) => {
+  //get count by types
+  const counts = getCountsByTweetType(types, tweets);
+  //make a pair with type label
+  const array = types.map((type, i) => {
+    return [type, counts[i]];
+  });
+  //remove if the value is 0
+  _.remove(array, (d) => d[1] === 0);
+  //reverse order
+  const ordered = _.sortBy(array, (d) => -d[1]);
+  //add the rest count at the end
+  ordered.push(['rest', getRestCount(counts, total)]);
+
+  return ordered;
 }
 
 export const getTweetsData = (range) => {
@@ -49,19 +58,14 @@ export const getTweetsData = (range) => {
     max = Math.max(max, byDayHour[day][hour])
   })
 
-  //interaction - types: mention, retweet, quote
-  const interactionCounts = getCountsByTweetType(['m', 'r', 'q'], tInRange)
-  const interaction = _.zipObject(['mention', 'retweet', 'quote'], interactionCounts)
+  //count tweets by type
+  const interaction = getTweetTypeData(['Mention', 'Retweet', 'Quote'], tInRange, total);
+  const media = getTweetTypeData(['Photo', 'Video'], tInRange, total);
+  const language = getTweetTypeData(['Korean', 'English'], tInRange, total);
+  const source = getTweetTypeData(['Big Screen', 'Small Screen'], tInRange, total);
+  const byType = _.toPairs({ interaction, media, language, source });
 
-  //media - types: photo, video
-  const mediaCounts = getCountsByTweetType(['p', 'v'], tInRange)
-  const media = _.zipObject(['photo', 'video'], mediaCounts)
-
-  //language is the 3rd element in tweet [time, types, language, device]
-  const language = getCountsByTweetProp(2, tInRange)
-  const device = getCountsByTweetProp(3, tInRange)
-
-  return { total, max, byDayHour, interaction, media, language, device }
+  return { total, max, byDayHour, byType };
 }
 
 export const getFlowData = () => {

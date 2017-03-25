@@ -16,7 +16,7 @@ import finalize
 # 3 - get new tweets, do this to finalize as well.
 # 4 - already get new tweets, just finalize
 
-current = 3
+current = 4
 
 # Twitter credentials
 with open('settings.json', encoding='utf-8') as setting_file:

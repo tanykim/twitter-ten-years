@@ -76,6 +76,8 @@ def get_tweet_data(s, isDirectAPI):
 
 def minimized_tweets(new_time_list, tweets):
     minimized = []
+    big_screen = ['Twitter Web Client', 'Twitter For Mac']
+    small_screen = ['Mobile Web', 'Mobile Web (M2)', 'Twitter for Android', 'Twitter for Windows Phone', 'Twitter for iPhone', 'Windows Phone', 'iOS', 'rowi for Windows Phone']
     for idx, t in enumerate(tweets):
         id = new_time_list[idx] # 0
         props = []
@@ -89,10 +91,18 @@ def minimized_tweets(new_time_list, tweets):
             props.append('r')
         if t['is_quote']:
             props.append('q')
-        if t['urls'] > 0:
-            props.append('u')
         if t['favorite_count'] > 0:
             props.append('f')
+        if t['lang'] == 'ko':
+            props.append('k')
+        if t['lang'] == 'en':
+            props.append('e')
+        if t['source'] in big_screen:
+            props.append('b')
+        if t['source'] in small_screen:
+            props.append('s')
+        # if t['urls'] > 0:
+        #     props.append('u')
         # minimized.append(dict(
         #     id=new_time_list[idx], # 0
         #     to=t['mention']['screen_name'] if 'mention' in t.keys() else '', # 1
@@ -105,7 +115,7 @@ def minimized_tweets(new_time_list, tweets):
         #     fav=t['favorite_count'],  # 7
         #     app=t['source'] # 8
         # ))
-        minimized.append([id, props, t['lang'], t['source']])
+        minimized.append([id, props])
     return minimized
 
 def get_tweets_by_month(tweets):

@@ -54,6 +54,27 @@
     text-anchor: middle;
   }
 }
+.pie-wrapper {
+  .label {
+    font-size: 12px;
+    text-anchor: middle;
+    alignment-baseline: central;
+    text-transform: uppercase;
+  }
+  .legend-wrapper {
+    /*text-align: center;*/
+  }
+  .pie-legend {
+    display: flex;
+    align-items: center;
+    .type-label {
+      display: inline-block;
+      width: 50px;
+      height: 20px;
+      margin-right: 12px;
+    }
+  }
+}
 .flow-dots {
   stroke: @selected;
   stroke-width: 2;

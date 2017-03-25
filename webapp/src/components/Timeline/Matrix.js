@@ -36,12 +36,14 @@ class Matrix extends Component {
       </g>)
     )
     return (
-      <svg
-        width={this.dim.w + this.margin.left + this.margin.right}
-        height={this.dim.h + this.margin.top + this.margin.bottom}
-      >
-        {squares}
-      </svg>
+      <div className="matrix-wrapper">
+        <svg
+          width={this.dim.w + this.margin.left + this.margin.right}
+          height={this.dim.h + this.margin.top + this.margin.bottom}
+        >
+          {squares}
+        </svg>
+      </div>
     )
   }
 }
