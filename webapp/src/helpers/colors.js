@@ -18,4 +18,6 @@ const Colors = {
   'rest': last
 };
 
-export { Colors }
+const Grey = ['#333', '#666', '#999', '#aaa'];
+
+export { Colors, Grey }

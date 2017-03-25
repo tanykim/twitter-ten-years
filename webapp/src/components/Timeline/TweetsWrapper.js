@@ -13,23 +13,23 @@ class TweetsWrapper extends Component {
   }
 
   render () {
-    const { isFetchingTweets, tweets, selectedRange } = this.props
+    const { isFetchingTweets, tweets, selectedRange, view, category } = this.props
     return (
       <div>
         { isFetchingTweets && <div>Loading</div>}
         { //info of tweets in the selected range come here
           !isFetchingTweets && !_.isEmpty(tweets) && <div>
           <div> {tweets.total} Tweets {getRangeText(selectedRange)}</div>
-          <div className="row">
+          { view === 'category' && <div className="row">
             {
               tweets.byType.map((value, i) =>
-                <div className="col-lg-3" key={i}>
-                  <Pie label={value[0]} data={value[1]} total={tweets.total} />
+                <div className={`col-lg-3 ${category === value[0] ? 'category-selected' : ''}`} key={i}>
+                  <Pie label={value[0]} data={value[1]} total={tweets.total} category={category} />
                 </div>
               )
             }
-          </div>
-          <Matrix data={tweets.byDayHour} max={tweets.max}/>
+          </div> }
+          { view === 'all' && <Matrix data={tweets.byDayHour} max={tweets.max}/> }
         </div>}
       </div>
     )

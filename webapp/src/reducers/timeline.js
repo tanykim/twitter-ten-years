@@ -24,3 +24,18 @@ export const tweets = (state = {}, action) => {
   }
 }
 
+export const view = (state = 'all', action) => {
+  if (action.type === 'SET_TIMELINE_VIEW') {
+    return action.data
+  } else {
+    return state
+  }
+}
+
+export const category = (state = 'interaction', action) => {
+  if (action.type === 'SET_TIMELINE_CATEGORY') {
+    return action.data
+  } else {
+    return state
+  }
+}

@@ -45,6 +45,18 @@ export const getTweets = () => {
   }
 }
 
+export const changeTimelineView = (data) => {
+  return (dispatch) => {
+    dispatch({ type: 'SET_TIMELINE_VIEW', data })
+  }
+}
+
+export const changeTimelineCategory = (data) => {
+  return (dispatch) => {
+    dispatch({ type: 'SET_TIMELINE_CATEGORY', data })
+  }
+}
+
 /* Flow */
 export const selectFriend = (id) => {
   return (dispatch, getState) => {

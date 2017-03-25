@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { fetchDataIfNeeded, getTweets } from '../actions'
+import { fetchDataIfNeeded, getTweets, changeTimelineView, changeTimelineCategory } from '../actions'
 import TimelineWrapper from '../components/Timeline/wrapper'
 
 const mapStateToProps = (state) => {
@@ -9,14 +9,18 @@ const mapStateToProps = (state) => {
     data: state.dataByPage.timeline,
     selectedRange: state.selectedRange,
     tweets: state.tweets,
-    isFetchingTweets: state.isFetchingTweets
+    isFetchingTweets: state.isFetchingTweets,
+    view: state.view,
+    category: state.category
   }
 }
 
 const mapDispatchToProps = (dispatch) => (
   {
     onMountFunc: () => dispatch(fetchDataIfNeeded('timeline')),
-    getTweets: () => dispatch(getTweets())
+    getTweets: () => dispatch(getTweets()),
+    changeView: (view) => dispatch(changeTimelineView(view)),
+    changeCategory: (category) => dispatch(changeTimelineCategory(category))
   }
 )
 
