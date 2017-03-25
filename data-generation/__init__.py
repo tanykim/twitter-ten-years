@@ -69,6 +69,7 @@ elif current == 3:
             finalize.main(previous_data)
 
 elif current == 4:
+    print ('---finalizing data')
     with open('output/tweets_updated.json', encoding='utf-8') as data_file:
         previous_data = json.loads(data_file.read())
         finalize.main(previous_data)

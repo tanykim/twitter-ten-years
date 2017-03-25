@@ -52,7 +52,13 @@ class TimelineWrapper extends Component {
           </div> }
         </div>
         <div className="col-xs-12">
-          <Bars {...this.props} />
+          <Bars
+            range={this.props.range}
+            selectedRange={this.props.selectedRange}
+            {...this.props.data}
+            view={this.props.view}
+            category={this.props.category}
+          />
         </div>
         <div className="col-xs-12">
           <TweetsWrapper {...this.props} />

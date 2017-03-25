@@ -11,8 +11,8 @@ const Colors = {
   'Small Screen': first,
   'Big Screen': second,
   'Mention': first,
-  'Quote': second,
   'Retweet': third,
+  'Quote': second,
   'Photo': first,
   'Video': second,
   'rest': last

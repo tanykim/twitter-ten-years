@@ -34,3 +34,12 @@ export const getRangeText = (range) => {
 
   return `From ${sm.format('ddd MMM DD YYYY')} to ${em.format('ddd MMM DD YYYY')} (${diff} days)`;
 }
+
+//MUST be the same order as python code
+const TypeList = {
+  interaction: ['Mention', 'Quote', 'Retweet'],
+  media: ['Photo', 'Video'],
+  language: ['Korean', 'English'],
+  source: ['Big Screen', 'Small Screen']
+}
+export { TypeList }

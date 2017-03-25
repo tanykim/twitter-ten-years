@@ -1,9 +1,10 @@
 /* data generation for visualization triggered by action */
 import _ from 'lodash'
 import Tweets from '../data/tweets.json'
+import { TypeList } from './formatter'
 
 export const getTimelineData = () => {
-  return require('../data/tweets_by_month.json')
+  return require('../data/tweets_by_month.json');
 }
 
 //tweet types
@@ -59,10 +60,11 @@ export const getTweetsData = (range) => {
   })
 
   //count tweets by type
-  const interaction = getTweetTypeData(['Mention', 'Retweet', 'Quote'], tInRange, total);
-  const media = getTweetTypeData(['Photo', 'Video'], tInRange, total);
-  const language = getTweetTypeData(['Korean', 'English'], tInRange, total);
-  const source = getTweetTypeData(['Big Screen', 'Small Screen'], tInRange, total);
+  //make sure the order of types are same in python and visualiation components
+  const interaction = getTweetTypeData(TypeList.interaction, tInRange, total);
+  const media = getTweetTypeData(TypeList.media, tInRange, total);
+  const language = getTweetTypeData(TypeList.language, tInRange, total);
+  const source = getTweetTypeData(TypeList.source, tInRange, total);
   const byType = _.toPairs({ interaction, media, language, source });
 
   return { total, max, byDayHour, byType };
