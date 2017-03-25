@@ -13,7 +13,7 @@ class TweetsWrapper extends Component {
   }
 
   render () {
-    const { isFetchingTweets, tweets, selectedRange, view, category } = this.props
+    const { isFetchingTweets, tweets, selectedRange, view, category, matrix } = this.props
     return (
       <div>
         { isFetchingTweets && <div>Loading</div>}
@@ -29,7 +29,12 @@ class TweetsWrapper extends Component {
               )
             }
           </div> }
-          { view === 'all' && <Matrix data={tweets.byDayHour} max={tweets.max}/> }
+          <Matrix
+            {...tweets}
+            view={view} category={category}
+            matrix={matrix}
+            changeMatrixView={this.props.changeMatrixView}
+            />
         </div>}
       </div>
     )

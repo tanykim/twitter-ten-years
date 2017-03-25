@@ -3,6 +3,8 @@ import _ from 'lodash'
 import Tweets from '../data/tweets.json'
 import { TypeList } from './formatter'
 
+/* timeline */
+
 export const getTimelineData = () => {
   return require('../data/tweets_by_month.json');
 }
@@ -38,6 +40,19 @@ const getTweetTypeData = (types, tweets, total) => {
   return ordered;
 }
 
+const getTypeForMatrix = (tweets, key) => {
+  return _.chain(tweets)
+    .groupBy((t) => key === 'day' ? +t[0].slice(-2) : +t[0].slice(10, -2)) //get day or hour
+    .toPairs() //make an array
+    .map((d) => [ +d[0],
+      _.chain(d[1])
+        .map((v) => v[1])
+        .flatten()
+        .countBy() //conunt by type
+        .value()])
+    .value();
+}
+
 export const getTweetsData = (range) => {
 
   //get tweets in the correct range
@@ -48,27 +63,42 @@ export const getTweetsData = (range) => {
   const total = tInRange.length
 
   //make nested array of 7 * 24 with 0 as day & hour
-  let max = 0
-  const byDayHour = _.range(7).map(() => _.range(24).map(() => 0))
+  let max = 0;
+  const byDayHour = _.range(7).map(() => _.range(24).map(() => 0));
+  let byDay = _.range(7).map(() => 0);
+  let byHour = _.range(24).map(() => 0);
+
   _.forEach(tInRange, (t) => {
     //get the part of day and hour from 'YYYY-MM-DD HH ww'format, then make it to integer
     const day = +t[0].slice(-2)
     const hour = +t[0].slice(10, -2)
     //then incread the number to matching point
     byDayHour[day][hour] += 1
+    byDay[day] += 1
+    byHour[hour] += 1
     max = Math.max(max, byDayHour[day][hour])
   })
 
+  //return e.g., [0: {m: 10, r:2}]
+  //bar graph data by day or hour
+  const matrixType = {
+    day: getTypeForMatrix(tInRange, 'day'),
+    hour: getTypeForMatrix(tInRange, 'hour')
+  };
+  // console.log(byTypeDay, byTypeHour);
+
   //count tweets by type
-  //make sure the order of types are same in python and visualiation components
+  //make sure the order of types are same in python
   const interaction = getTweetTypeData(TypeList.interaction, tInRange, total);
   const media = getTweetTypeData(TypeList.media, tInRange, total);
   const language = getTweetTypeData(TypeList.language, tInRange, total);
   const source = getTweetTypeData(TypeList.source, tInRange, total);
   const byType = _.toPairs({ interaction, media, language, source });
 
-  return { total, max, byDayHour, byType };
+  return { total, max, byDayHour, byDay, byHour, byType, matrixType };
 }
+
+/* Flow */
 
 export const getFlowData = () => {
   return require('../data/flow_data.json')

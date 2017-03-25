@@ -37,7 +37,7 @@ export const getTweets = () => {
   return (dispatch) => {
     dispatch({ type: 'SET_FETCHING_TIMELINE_TWEETS', value: true })
      _.delay(() => {
-      const range = ['2016-02-01', '2016-03-31']
+      const range = ['2016-01-01', '2016-02-28']
       dispatch({ type: 'SET_TIMELINE_TWEETS', data: getTweetsData(range)})
       dispatch({ type: 'SET_TIMELINE_RANGE', range })
       dispatch({ type: 'SET_FETCHING_TIMELINE_TWEETS', value: false })
@@ -54,6 +54,12 @@ export const changeTimelineView = (data) => {
 export const changeTimelineCategory = (data) => {
   return (dispatch) => {
     dispatch({ type: 'SET_TIMELINE_CATEGORY', data })
+  }
+}
+
+export const changeTimelineMatrixView = (data) => {
+  return (dispatch) => {
+    dispatch({ type: 'SET_TIMELINE_MATRIX_VIEW', data })
   }
 }
 

@@ -39,3 +39,11 @@ export const category = (state = 'interaction', action) => {
     return state
   }
 }
+
+export const matrix = (state = 'day', action) => {
+  if (action.type === 'SET_TIMELINE_MATRIX_VIEW') {
+    return action.data
+  } else {
+    return state
+  }
+}

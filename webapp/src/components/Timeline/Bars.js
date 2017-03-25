@@ -22,6 +22,11 @@ class Bars extends Component {
     this.y = d3.scaleLinear().domain(countDomain).range([0, this.dim.h]);
   }
 
+  getBarWidth(x, p) {
+    return x(moment(p, 'YYYY-MM').add(32, 'days').startOf('month'))
+      - x(moment(p, 'YYYY-MM')) -1;
+  }
+
   componentWillReceiveProps(nextProps) {
 
     //when the view changes from all to category, and change between category
@@ -30,7 +35,6 @@ class Bars extends Component {
 
       const category = nextProps.category;
       const types = TypeList[category];
-      console.log(types);
       const data = this.props[category].map((d) => {
           const obj = { month: d[0] };
           _.forEach(types, (t, i) => (obj[t] = d[1][i]));
@@ -52,19 +56,17 @@ class Bars extends Component {
           .attr('x', (d) => self.x(moment(d.data.month, 'YYYY-MM')))
           .attr('y', (d) => self.y(d[0]))
           .attr('height', (d) => self.y(d[1]) - self.y(d[0]))
-          .attr('width', self.dim.w / 121 - 1);
+          .attr('width', (d) => this.getBarWidth(self.x, d.data.month));
         }
     }
 
 
   render () {
-    //121 months in 10 years
-    const barW = this.dim.w / 121 - 1;
     const bars = this.props.all.map((d) =>
       <rect
         x={this.x(moment(d[0], 'YYYY-MM'))}
         y='0'
-        width={barW}
+        width={this.getBarWidth(this.x, d[0])}
         height={this.y(d[1])}
         key={d[0]}
       />
@@ -76,12 +78,12 @@ class Bars extends Component {
         height={this.dim.h + this.margin.top + this.margin.bottom}
       >
         <g transform={`translate(${this.margin.left}, ${this.margin.top})`}>
-          <Axis x={this.x} y={this.y} dim={this.dim} {...this.props} id="timeline"/>
           { //all tweets
             bars }
           { //selected tweets
             <g id="timeline-category" />
           }
+          <Axis x={this.x} y={this.y} dim={this.dim} {...this.props} id="timeline"/>
           {!_.isEmpty(this.props.selectedRange) &&
             //show brush
             <rect

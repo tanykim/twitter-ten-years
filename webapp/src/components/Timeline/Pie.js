@@ -15,13 +15,17 @@ class Pie extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.category !== nextProps.category) {
       //change old pie to grey scale
-      _.forEach(this.props.data, (d, i) =>
-        d3.select(`#g-pie-${this.props.category}`).select(`.arc-${i}`).style('fill', Grey[i])
-      );
+      if (this.props.category === this.props.label) {
+        _.forEach(this.props.data, (d, i) =>
+          d3.select(`#g-pie-${this.props.category}`).select(`.arc-${i}`).style('fill', Grey[i])
+        );
+      }
       //change new pie to color scale
-      _.forEach(nextProps.data, (d, i) =>
-        d3.select(`#g-pie-${nextProps.category}`).select(`.arc-${i}`).style('fill', Colors[d[0]])
-      );
+      if (nextProps.category === nextProps.label) {
+        _.forEach(nextProps.data, (d, i) =>
+          d3.select(`#g-pie-${nextProps.category}`).select(`.arc-${i}`).style('fill', Colors[d[0]])
+        );
+      }
     }
   }
 
