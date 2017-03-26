@@ -20,6 +20,8 @@ class Bars extends Component {
     };
     this.x = d3.scaleTime().domain(timeDomain).range([0, this.dim.w]);
     this.y = d3.scaleLinear().domain(countDomain).range([0, this.dim.h]);
+    //make the total tweets by month to objects, to calculate Rest count later
+    this.all = _.fromPairs(this.props.all);
   }
 
   getBarWidth(x, p) {
@@ -37,17 +39,22 @@ class Bars extends Component {
       const types = TypeList[category];
       const data = this.props[category].map((d) => {
           const obj = { month: d[0] };
-          _.forEach(types, (t, i) => (obj[t] = d[1][i]));
-          return obj;
+          let sum = 0;
+          _.forEach(types, (t, i) => {
+            sum = sum + d[1][i];
+            obj[t] = d[1][i];
+          });
+          return _.assignIn({rest: this.all[d[0]] - sum}, obj);
         }
       );
+      // console.log(data);
 
       const self = this;
 
       d3.select('#timeline-category').html('')
         .selectAll('g')
         //order types descending
-        .data(d3.stack().order(d3.stackOrderDescending).keys(types)(data))
+        .data(d3.stack().keys(_.concat(types, 'rest'))(data))
         .enter().append('g')
           .attr('fill', (d) => Colors[d.key])
         .selectAll('rect')
@@ -57,7 +64,10 @@ class Bars extends Component {
           .attr('y', (d) => self.y(d[0]))
           .attr('height', (d) => self.y(d[1]) - self.y(d[0]))
           .attr('width', (d) => this.getBarWidth(self.x, d.data.month));
-        }
+
+      } else if (nextProps.view === 'all') {
+        d3.select('#timeline-category').html('');
+      }
     }
 
 
@@ -79,7 +89,8 @@ class Bars extends Component {
       >
         <g transform={`translate(${this.margin.left}, ${this.margin.top})`}>
           { //all tweets
-            bars }
+            this.props.view === 'all' && bars
+          }
           { //selected tweets
             <g id="timeline-category" />
           }

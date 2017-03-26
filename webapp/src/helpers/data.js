@@ -65,8 +65,10 @@ export const getTweetsData = (range) => {
   //make nested array of 7 * 24 with 0 as day & hour
   let max = 0;
   const byDayHour = _.range(7).map(() => _.range(24).map(() => 0));
-  let byDay = _.range(7).map(() => 0);
-  let byHour = _.range(24).map(() => 0);
+  const sum = {
+    day: _.range(7).map(() => 0),
+    hour: _.range(24).map(() => 0)
+  };
 
   _.forEach(tInRange, (t) => {
     //get the part of day and hour from 'YYYY-MM-DD HH ww'format, then make it to integer
@@ -74,8 +76,8 @@ export const getTweetsData = (range) => {
     const hour = +t[0].slice(10, -2)
     //then incread the number to matching point
     byDayHour[day][hour] += 1
-    byDay[day] += 1
-    byHour[hour] += 1
+    sum.day[day] += 1
+    sum.hour[hour] += 1
     max = Math.max(max, byDayHour[day][hour])
   })
 
@@ -85,7 +87,6 @@ export const getTweetsData = (range) => {
     day: getTypeForMatrix(tInRange, 'day'),
     hour: getTypeForMatrix(tInRange, 'hour')
   };
-  // console.log(byTypeDay, byTypeHour);
 
   //count tweets by type
   //make sure the order of types are same in python
@@ -93,9 +94,9 @@ export const getTweetsData = (range) => {
   const media = getTweetTypeData(TypeList.media, tInRange, total);
   const language = getTweetTypeData(TypeList.language, tInRange, total);
   const source = getTweetTypeData(TypeList.source, tInRange, total);
-  const byType = _.toPairs({ interaction, media, language, source });
+  const byType = _.toPairsIn({ interaction, media, language, source });
 
-  return { total, max, byDayHour, byDay, byHour, byType, matrixType };
+  return { total, max, byDayHour, sum, byType, matrixType };
 }
 
 /* Flow */

@@ -26,14 +26,13 @@ class Matrix extends Component {
   }
 
   showDayBars(types, data) {
-
     const self = this;
-    const x = d3.scaleLinear().range([0, self.dim.w]).domain([0, _.max(this.props.byDay)]);
+    const x = d3.scaleLinear().range([0, self.dim.w]).domain([0, _.max(this.props.sum.day)]);
 
     d3.select('#matrix-category').html('')
       .selectAll('g')
       //order types descending
-      .data(d3.stack().order(d3.stackOrderDescending).keys(types)(data))
+      .data(d3.stack().keys(types)(data))
       .enter().append('g')
         .attr('fill', (d) => Colors[d.key])
       .selectAll('rect')
@@ -46,14 +45,13 @@ class Matrix extends Component {
   }
 
   showHourBars(types, data) {
-
     const self = this;
-    const y = d3.scaleLinear().range([self.dim.h, 0]).domain([0, _.max(this.props.byHour)]);
+    const y = d3.scaleLinear().range([self.dim.h, 0]).domain([0, _.max(this.props.sum.hour)]);
 
     d3.select('#matrix-category').html('')
       .selectAll('g')
       //order types descending
-      .data(d3.stack().order(d3.stackOrderDescending).keys(types)(data))
+      .data(d3.stack().keys(types)(data))
       .enter().append('g')
         .attr('fill', (d) => Colors[d.key])
       .selectAll('rect')
@@ -79,16 +77,28 @@ class Matrix extends Component {
           const obj = { id: d[0] };
           //original data keys are only in the first letter
           //if the key does not exist, return 0
-          _.forEach(types, (t) => (obj[t] = d[1][t.charAt(0).toLowerCase()] || 0));
-          return obj;
+          let sum = 0;
+          _.forEach(types, (t) => {
+            const val = d[1][t.charAt(0).toLowerCase()] || 0;
+            obj[t] = val;
+            sum += val
+          });
+          //substract all key values from the total and add
+          //for the stacked bar with length of total value
+          return _.assignIn({rest: this.props.sum[view][d[0]] - sum }, obj);
         }
       );
 
+      //add more type for stacked graph
+      const allTypes = _.concat(types, 'rest');
+
       if (view === 'day') {
-        this.showDayBars(types, data);
+        this.showDayBars(allTypes, data);
       } else {
-        this.showHourBars(types, data);
+        this.showHourBars(allTypes, data);
       }
+    } else if (nextProps.view === 'all') {
+      d3.select('#matrix-category').html('');
     }
   }
 
@@ -118,7 +128,7 @@ class Matrix extends Component {
 
     return (
       <div className="matrix-wrapper">
-        { ['day', 'hour'].map((view) => <span key={view}>
+        { this.props.view === 'category' && ['day', 'hour'].map((view) => <span key={view}>
               <input
                 type="radio"
                 name="matrix"
