@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
-import Bars from './Bars'
 import TweetsWrapper from './TweetsWrapper'
-// import TweetsStates from '../../containers/TweetsStates'
 
 class TimelineWrapper extends Component {
 
@@ -50,15 +48,6 @@ class TimelineWrapper extends Component {
                 /> {category}
             </span>)}
           </div> }
-        </div>
-        <div className="col-xs-12">
-          <Bars
-            range={this.props.range}
-            selectedRange={this.props.selectedRange}
-            {...this.props.data}
-            view={this.props.view}
-            category={this.props.category}
-          />
         </div>
         <div className="col-xs-12">
           <TweetsWrapper {...this.props} />

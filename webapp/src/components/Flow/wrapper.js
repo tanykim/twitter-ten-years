@@ -7,6 +7,7 @@ import Friend from './Friend'
 import Histogram from './Histogram'
 
 class FlowWrapper extends Component {
+
   componentWillMount() {
     this.props.onMountFunc()
   }
@@ -29,11 +30,11 @@ class FlowWrapper extends Component {
         </div>
         <div className="col-xs-12 col-lg-6">
           <div> Number of sent mentions </div>
-          <Histogram {...data} type="count" />
+          <Histogram {...data} type="count" friend={selectedFriend}/>
         </div>
         <div className="col-xs-12 col-lg-6">
           <div> Duration of communication (Days) </div>
-          <Histogram {...data} type="duration" />
+          <Histogram {...data} type="duration" friend={selectedFriend}/>
         </div>
       </div> }
     </div>)

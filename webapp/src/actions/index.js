@@ -28,18 +28,18 @@ export const fetchDataIfNeeded = (page) => {
 }
 
 /* Timeline */
-// export const selectRange = () => ({
-//   type: 'SET_TIMELINE_RANGE',
-//   range: []
-// })
 
-export const getTweets = () => {
+export const selectRange = (range) => ({
+  type: 'SET_TIMELINE_RANGE',
+  range
+})
+
+export const getTweets = (range) => {
   return (dispatch) => {
+    dispatch({ type: 'SET_TIMELINE_RANGE', range })
     dispatch({ type: 'SET_FETCHING_TIMELINE_TWEETS', value: true })
      _.delay(() => {
-      const range = ['2016-01-01', '2016-02-28']
       dispatch({ type: 'SET_TIMELINE_TWEETS', data: getTweetsData(range)})
-      dispatch({ type: 'SET_TIMELINE_RANGE', range })
       dispatch({ type: 'SET_FETCHING_TIMELINE_TWEETS', value: false })
     }, 1000)
   }

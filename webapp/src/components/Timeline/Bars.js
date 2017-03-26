@@ -29,49 +29,74 @@ class Bars extends Component {
       - x(moment(p, 'YYYY-MM')) -1;
   }
 
+  showStackedBars(nextProps) {
+    const category = nextProps.category;
+    const types = TypeList[category];
+    const data = this.props[category].map((d) => {
+        const obj = { month: d[0] };
+        let sum = 0;
+        _.forEach(types, (t, i) => {
+          sum += d[1][i];
+          obj[t] = d[1][i];
+        });
+        return _.assignIn({rest: this.all[d[0]] - sum}, obj);
+      }
+    );
+
+    const self = this;
+
+    d3.select('#timeline-category').html('')
+      .selectAll('g')
+      //order types descending
+      .data(d3.stack().keys(_.concat(types, 'rest'))(data))
+      .enter().append('g')
+        .attr('fill', (d) => Colors[d.key])
+      .selectAll('rect')
+      .data((d) => d)
+      .enter().append('rect')
+        .attr('x', (d) => self.x(moment(d.data.month, 'YYYY-MM')))
+        .attr('y', (d) => self.y(d[0]))
+        .attr('height', (d) => self.y(d[1]) - self.y(d[0]))
+        .attr('width', (d) => this.getBarWidth(self.x, d.data.month));
+  }
+
   componentWillReceiveProps(nextProps) {
 
     //when the view changes from all to category, and change between category
     if ((this.props.view === 'all' && nextProps.view === 'category') ||
         (this.props.category !== nextProps.category)) {
-
-      const category = nextProps.category;
-      const types = TypeList[category];
-      const data = this.props[category].map((d) => {
-          const obj = { month: d[0] };
-          let sum = 0;
-          _.forEach(types, (t, i) => {
-            sum = sum + d[1][i];
-            obj[t] = d[1][i];
-          });
-          return _.assignIn({rest: this.all[d[0]] - sum}, obj);
-        }
-      );
-      // console.log(data);
-
-      const self = this;
-
-      d3.select('#timeline-category').html('')
-        .selectAll('g')
-        //order types descending
-        .data(d3.stack().keys(_.concat(types, 'rest'))(data))
-        .enter().append('g')
-          .attr('fill', (d) => Colors[d.key])
-        .selectAll('rect')
-        .data((d) => d)
-        .enter().append('rect')
-          .attr('x', (d) => self.x(moment(d.data.month, 'YYYY-MM')))
-          .attr('y', (d) => self.y(d[0]))
-          .attr('height', (d) => self.y(d[1]) - self.y(d[0]))
-          .attr('width', (d) => this.getBarWidth(self.x, d.data.month));
-
+      this.showStackedBars(nextProps);
       } else if (nextProps.view === 'all') {
-        d3.select('#timeline-category').html('');
-      }
+      d3.select('#timeline-category').html('');
     }
+  }
 
+  componentDidMount() {
+    const brush = d3.brushX()
+      .extent([[0, 0], [this.dim.w, this.dim.h]])
+      .on('end', () => {
+        if (!d3.event.sourceEvent) return; // Only transition after input.
+        if (!d3.event.selection) return; // Ignore empty selections.
+        const s = d3.event.selection;
+        const newPoints = s.map(this.x.invert, this.x).map((p) =>
+          moment(p).format('YYYY-MM-DD')
+        );
+        this.props.selectRange(newPoints);
+      })
+      .filter(() => {
+        //stop brush while loading tweets
+        return !this.props.isFetchingTweets;
+      })
+
+    const brushRange = this.props.selectedRange.map((r) => this.x(moment(r, 'YYYY-MM')));
+    d3.select('#timeline-brush')
+      .attr('class', 'brush')
+      .call(brush)
+      .call(brush.move, brushRange);
+  }
 
   render () {
+
     const bars = this.props.all.map((d) =>
       <rect
         x={this.x(moment(d[0], 'YYYY-MM'))}
@@ -92,20 +117,13 @@ class Bars extends Component {
             this.props.view === 'all' && bars
           }
           { //selected tweets
-            <g id="timeline-category" />
+            <g id='timeline-category' />
           }
-          <Axis x={this.x} y={this.y} dim={this.dim} {...this.props} id="timeline"/>
-          {!_.isEmpty(this.props.selectedRange) &&
-            //show brush
-            <rect
-              x={this.x(moment(this.props.selectedRange[0], 'YYYY-MM-DD'))}
-              y='0'
-              width={this.x(moment(this.props.selectedRange[1], 'YYYY-MM-DD'))
-               - this.x(moment(this.props.selectedRange[0], 'YYYY-MM-DD'))}
-              height={this.dim.h}
-              className='timeline-brush'
-            ></rect>}
+          <Axis x={this.x} y={this.y} dim={this.dim} {...this.props} id='timeline'/>
+
         </g>
+        <g id='timeline-brush'
+          transform={`translate(${this.margin.left}, ${this.margin.top})`} />
       </svg>
     );
   }
