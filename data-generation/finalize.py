@@ -17,7 +17,8 @@ def main(tweets):
     tweets_minimized = processor.minimized_tweets(new_time_list, tweets)
     tweets_by_month = processor.get_tweets_by_month(tweets_minimized)
     friends = processor.get_mentioned_users(new_time_list, tweets)
-    flow_data = processor.get_flow_data(friends)
+    friends_network = processor.get_friends_network(tweets, friends)
+    flow_data = processor.get_flow_data(friends, friends_network)
     # print (flow_data)
 
     final_data = dict(tweets=tweets_minimized, friends=friends, tweets_by_month=tweets_by_month, flow_data=flow_data)

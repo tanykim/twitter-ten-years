@@ -5,6 +5,7 @@ import Graph from './Graph'
 import Stats from './Stats'
 import Friend from './Friend'
 import Histogram from './Histogram'
+import Network from './Network'
 
 class FlowWrapper extends Component {
 
@@ -20,6 +21,9 @@ class FlowWrapper extends Component {
       <div className="row">
         <div className="col-xs-12 col-md-6">
           <SelectFriend {...data} selectFriend={this.props.selectFriend} />
+        </div>
+        <div className="col-xs-12">
+          <Network {...data} />
         </div>
         <div className="col-xs-12">
           <Graph {...data} range={this.props.range} friend={selectedFriend} selectFriend={this.props.selectFriend}/>

@@ -102,7 +102,14 @@ export const getTweetsData = (range) => {
 /* Flow */
 
 export const getFlowData = () => {
-  return require('../data/flow_data.json')
+  const categoryData = require('../data/friends_category.json')
+  const categoryById = _.fromPairs(_.map(categoryData, (d, k) => {
+    // console.log(k, d);
+    return [k, d.category]
+  }));
+  const flowData = require('../data/flow_data.json')
+
+  return _.assignIn({category: categoryById}, flowData);
 }
 
 function findRank(list, id) {

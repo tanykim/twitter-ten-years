@@ -15,7 +15,11 @@ const Colors = {
   'Quote': second,
   'Photo': first,
   'Video': second,
-  'rest': last
+  'rest': last,
+  '0': first,
+  '1': second,
+  '2': third,
+  '3': last
 };
 
 const Grey = ['#333', '#666', '#999', '#aaa'];

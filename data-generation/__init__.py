@@ -11,12 +11,12 @@ import finalize
 
 # steps: this must be done step by step
 # 0 - list tweet ids from downloaded files - save as tweets_from_file.json
-# 1 - get tweet info via APIs.
+# 1 - get tweet info via APIs. Save raw data.
 # 2 - merge and process all tweets make tweets_updated file from step 1.
-# 3 - get new tweets, do this to finalize as well.
+# 3 - get new tweets via API, process and append them to the result of 2.
 # 4 - already get new tweets, just finalize
 
-current = 4
+current = 2
 
 # Twitter credentials
 with open('settings.json', encoding='utf-8') as setting_file:
@@ -51,13 +51,14 @@ elif current == 3:
     my_info = my_info.__dict__
     last_status_id = my_info['status'].__dict__['id']
 
-    after_10_years = my_info['created_at'] + datetime.timedelta(days=365.25 * 10)
+    after_10_years = my_info['created_at'] + datetime.timedelta(days=365 * 10 + 3)
+    print (after_10_years)
 
     with open('output/tweets_updated.json', encoding='utf-8') as data_file:
         previous_data = json.loads(data_file.read())
         print ('lasted saved tweet', previous_data[0])
         # if new tweets exist, get upto 10 years from sign-up
-        if previous_data[0]['id'] < last_status_id and datetime.datetime.now() < after_10_years:
+        if int(previous_data[0]['id']) < int(last_status_id) and datetime.datetime.now() < after_10_years:
             new_tweets = api_caller.main(api, previous_data[0]['id'])
             if len(new_tweets) > 0:
                 for i, v in enumerate(new_tweets):
@@ -73,3 +74,4 @@ elif current == 4:
     with open('output/tweets_updated.json', encoding='utf-8') as data_file:
         previous_data = json.loads(data_file.read())
         finalize.main(previous_data)
+

@@ -12,8 +12,10 @@ class Lines extends Component {
       .y(function(d) { return self.props.y(d[1]); })
       .curve(d3.curveMonotoneX)
 
+    const { mentions, category } = this.props;
+
     //show lines that has at least 2 data points
-    const validLines = _.filter(this.props.mentions, function (d) {
+    const validLines = _.filter(mentions, function (d) {
       return d.points.length > 1;
     });
     validLines.map((l, i) => {
@@ -21,7 +23,7 @@ class Lines extends Component {
         .append('path')
         .datum(l.points)
         .attr('d', line)
-        .attr('class', `normal flow-line-${l.id}`)
+        .attr('class', `normal${category[l.id] < 3 ? category[l.id] : ''} flow-line-${l.id}`)
         .on('mouseover', function() {
           d3.select(this).classed('highlighted', true);
           this.parentElement.appendChild(this);

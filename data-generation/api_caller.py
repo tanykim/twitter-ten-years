@@ -8,12 +8,12 @@ def call_API(api, since_id, max_id, tweets):
     print ('max id', max_id, since_id)
     for obj in statuses:
         s = obj.__dict__
-        max_id = s['id']
-        if max_id > since_id:
+        max_id = s['id_str']
+        if int(max_id) > int(since_id):
             tweet = processor.get_tweet_data(s, True)
             tweets.append(tweet)
 
-    if max_id is not None and max_id < since_id:
+    if max_id is not None and int(max_id) < int(since_id):
         print ('---------done')
         return tweets
     else:

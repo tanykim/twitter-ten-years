@@ -1,7 +1,8 @@
 from bs4 import BeautifulSoup
 from datetime import datetime
-from collections import Counter
 from operator import itemgetter
+import itertools
+from collections import Counter
 
 def get_mentioned_users(new_time_list, tweets):
     mentioned_users = {}
@@ -10,13 +11,14 @@ def get_mentioned_users(new_time_list, tweets):
             status_id = t['id']
             created_at = new_time_list[idx]
             user_id = t['mention']['id']
-            mention = dict(at=created_at, id=status_id, text=t['text'])
+            # text = t['text']
+            mention = dict(at=created_at, id=status_id)
 
             # add the general mentioned user list
             if user_id in mentioned_users.keys():
                 loc = len(mentioned_users[user_id]['mentions'])
                 for idx, obj in enumerate(mentioned_users[user_id]['mentions']):
-                    if status_id > obj['id']:
+                    if int(status_id) > int(obj['id']):
                         loc = idx
                         break
                 mentioned_users[user_id]['mentions'].insert(loc, mention)
@@ -28,8 +30,34 @@ def get_mentioned_users(new_time_list, tweets):
     minimized = {}
     for key, val in mentioned_users.items():
         m = val['mentions']
-        minimized[key] = [list(map(lambda x:x['at'], m)), val['screen_name'], m[len(m) - 1]['text']]
+        #do not add text m[len(m) - 1]['text']
+        if val['screen_name'] != 'tanyofish':
+            minimized[key] = [list(map(lambda x:x['at'], m)), val['screen_name']]
     return minimized
+
+def get_friends_network(tweets, friends):
+    pairs = []
+    allNodes = []
+    for idx, t in enumerate(tweets):
+        if 'friends' in t.keys():
+            for subset in itertools.combinations(t['friends'], 2):
+                pair = sorted(list(subset))
+                if pair[0] in friends.keys() and pair[1] in friends.keys() and pair[0] != pair[1]:
+                    pairs.append('-'.join(pair))
+                    allNodes.append(pair[0])
+                    allNodes.append(pair[1])
+
+    nodes = []
+    for n in list(set(allNodes)):
+        nodes.append(dict(id=n, name=friends[n][1]))
+
+    links = []
+    for k, v in Counter(pairs).items():
+        ids = k.split('-')
+        result = dict(source=ids[0], target=ids[1], value=v)
+        links.append(result)
+
+    return dict(nodes=nodes, links=links)
 
 def get_tweet_data(s, isDirectAPI):
 
@@ -57,7 +85,7 @@ def get_tweet_data(s, isDirectAPI):
     if 'in_reply_to_user_id' in s.keys() or s['text'][0] == '@':
         is_reply = True
     result = dict(created_at=created_at,
-                id=s['id'],
+                id=s['id_str'],
                 source=source,
                 text=s['text'],
                 media=media,
@@ -69,9 +97,12 @@ def get_tweet_data(s, isDirectAPI):
                 favorite_count=s['favorite_count']
                 )
     if s['in_reply_to_user_id'] is not None:
-        result['mention'] = dict(id=s['in_reply_to_user_id'],
+        result['mention'] = dict(id=s['in_reply_to_user_id_str'],
                                  screen_name=s['in_reply_to_screen_name']
                                  )
+    if 'user_mentions' in s['entities'].keys():
+        if len(s['entities']['user_mentions']) > 1:
+            result['friends'] = list(map( lambda x: x['id_str'], s['entities']['user_mentions']))
     return result
 
 def minimized_tweets(new_time_list, tweets):
@@ -101,20 +132,6 @@ def minimized_tweets(new_time_list, tweets):
             props.append('b')
         if t['source'] in small_screen:
             props.append('s')
-        # if t['urls'] > 0:
-        #     props.append('u')
-        # minimized.append(dict(
-        #     id=new_time_list[idx], # 0
-        #     to=t['mention']['screen_name'] if 'mention' in t.keys() else '', # 1
-        #     # map(lambda x: x['screen_name'], t['mentions_to']), # 1
-        #     media=t['media'],# 2
-        #     urls=t['urls'], # 3
-        #     rt=t['is_retweet'], # 4
-        #     q=t['is_quote'],  # 5
-        #     lang=t['lang'],  # 6
-        #     fav=t['favorite_count'],  # 7
-        #     app=t['source'] # 8
-        # ))
         minimized.append([id, props])
     return minimized
 
@@ -171,7 +188,7 @@ def get_time_diff(tweets):
     oldest = datetime.strptime(tweets[len(tweets) - 1], '%Y-%m-%d %H %w')
     return (latest-oldest).days
 
-def get_flow_data(friends):
+def get_flow_data(friends, network):
     mentions = []
     max_vals = []
     for id, d in friends.items():
@@ -183,7 +200,7 @@ def get_flow_data(friends):
             first=d[0][len(d[0]) - 1],
             count=len(d[0]),
             duration=get_time_diff(d[0]),
-            id=int(id)
+            id=id
         ))
 
     count = list(map(lambda x: x['count'], mentions))
@@ -201,5 +218,6 @@ def get_flow_data(friends):
         max=max(max_vals),
         histogram=dict(count=count, duration=duration),
         friends=friends_sorted,
-        ranking=dict(count=r_count, duration=r_duration)
+        ranking=dict(count=r_count, duration=r_duration),
+        network=network
     )

@@ -26,11 +26,20 @@
   fill: fade(@selected, 10%);
 }
 .lines {
-  .normal, .selected, .highlighted {
+  .normal, .normal0, .normal1, .normal2, .selected, .highlighted {
     fill: none;
   }
   .normal {
     stroke: rgba(0, 0, 0, 0.2);
+  }
+  .normal0 {
+    stroke: rgba(255, 0, 0, 0.2);
+  }
+  .normal1 {
+    stroke: rgba(0, 255, 0, 0.2);
+  }
+  .normal2 {
+    stroke: rgba(0, 0, 255, 0.2);
   }
   .selected {
     stroke: @selected;
