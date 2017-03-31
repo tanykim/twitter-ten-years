@@ -1,9 +1,9 @@
 import React from 'react'
 
 const Footer = () => (
-  <p>
+  <div className="container-fluid">
     Footer
-  </p>
+  </div>
 )
 
 export default Footer

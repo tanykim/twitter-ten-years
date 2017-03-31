@@ -24,7 +24,7 @@ class TimelineWrapper extends Component {
 
   render () {
     const { isFetching, data } = this.props;
-    return (<div>
+    return (<div className="container">
       { isFetching && <h1> Loading... </h1> }
       { !isFetching && data && <div className="row">
         <div>

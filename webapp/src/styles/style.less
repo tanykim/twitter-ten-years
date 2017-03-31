@@ -1,21 +1,200 @@
 @import '../../node_modules/bootstrap-css-only/css/bootstrap.css';
 @import '../../node_modules/react-select/dist/react-select.css';
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
 
 @highlight: blue;
 @selected: red;
 
+@white: #FFFFFF;
+@w-grey-0: #F9F4F2;
+@w-grey-2: #EAE7E4;
+@w-grey-4: #C1B8B6;
+@w-grey-6: #A09692;
+@w-grey-7: #726B6B;
+@w-grey-9: #3A3634;
+
+@pink: #EF6C6C;
+
+@text-link: @pink;
+
+@large: 1.2em;
+@small: 0.875em;
+
+body {
+  background-color: @w-grey-0;
+  font-family: Avenir, 'Lato', 'Helvetica Neue', Helvetica, Arial;
+  color: @w-grey-9;
+}
+
+.logo-wrapper {
+  height: 360px;
+  background: url(/assets/images/logo-bg.svg) repeat-x center;
+  .logo {
+    background: url(/assets/images/logo.svg) no-repeat center center;
+    height: 100%;
+    background-size: 84.34% 83.34%;
+  }
+  .wing-wrapper {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    .menu-name {
+      cursor: pointer;
+      font-weight: 700;
+      font-size: @large;
+      letter-spacing: 0.1em;
+      a {
+        text-decoration: none;
+        color: @text-link;
+      }
+    }
+    .menu-name.left {
+      margin-right: -15px;
+      padding-left: 5px;
+    }
+    .menu-name.right {
+      margin-left: -15px;
+      padding-right: 5px;
+    }
+    .icon {
+      width: 20%;
+      height: 100%;
+      position: relative;
+      span {
+        position: absolute;
+        top: 50%;
+        margin-top: -10px;
+        margin-left: -5px;
+        color: @w-grey-4;
+      }
+      span.pie {
+        margin-left: -2px;
+      }
+    }
+/*    .icon.hover {
+      opacity: 0;
+      -webkit-transition: opacity 1s ease-in-out;
+      -moz-transition: opacity 1s ease-in-out;
+      -o-transition: opacity 1s ease-in-out;
+      transition: opacity 1s ease-in-out;
+    }
+    .icon.normal {
+      opacity: 1;
+    }*/
+  }
+  .wing-wrapper.left {
+    flex-direction: row-reverse;
+    background: url(/assets/images/ribbon-left.svg) no-repeat left center;
+  }
+  .wing-wrapper.right {
+    background: url(/assets/images/ribbon-right.svg) no-repeat right center;
+  }
+}
+
+.home-content-wrapper {
+  .main, .powered, .copyright {
+    text-align: center;
+    a {
+      color: @text-link;
+    }
+  }
+  .main {
+    border-top: 2px solid @w-grey-7;
+    border-bottom: 2px solid @w-grey-7;
+    font-size: @large;
+    line-height: 160%;
+    .border {
+      margin: 5px -15px;
+      padding-top: 25px;
+      padding-bottom: 25px;
+      border-top: 1px dashed @w-grey-4;
+      border-bottom: 1px dashed @w-grey-4;
+      background-color: @white;
+    }
+  }
+  .powered {
+    padding-top: 60px;
+    padding-bottom: 30px;
+    font-size: @small;
+    color: @w-grey-7;
+  }
+  .copyright {
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: @w-grey-7;
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    margin-bottom: 15px;
+    position: relative;
+    color: @w-grey-4;
+    a {
+      color: @white;
+    }
+    .dashed {
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      margin-left: -1em;
+      border-top: 1px dashed @w-grey-4;
+    }
+    .text {
+      display: inline-block;
+      padding-left: 1em;
+      padding-right: 1em;
+      background-color: @w-grey-7;
+      position: relative;
+    }
+  }
+  .copyright:before, .copyright:after {
+   content: "";
+   position: absolute;
+   display: block;
+   bottom: 0;
+   border: 1.5em solid @w-grey-7;
+   z-index: -1;
+  }
+  .copyright:before {
+   left: -2em;
+   border-right-width: 1.8em;
+   border-left-color: transparent;
+  }
+  .copyright:after {
+   right: -2em;
+   border-left-width: 1.8em;
+   border-right-color: transparent;
+  }
+}
+
 .menu-header {
-  font-size: 1.5em;
-  span {
-    margin-right: 1em;
+  background-color: @w-grey-4;
+  text-align: center;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  text-align: center;
+  .border {
+    padding-top: 15px;
+    padding-bottom: 10px;
+    margin: 0px -15px 5px -15px;
+    border-bottom: 1px dashed @w-grey-2;
+  }
+  a {
+    color: @white;
+    text-decoration: none;
   }
   .active {
     font-weight: bold;
-    margin-right: 1em;
   }
-  .normal {
-    margin-right: 1em;
+  .tweets, .home, .friends {
+    padding-right: 15px;
+    padding-left: 15px;
   }
+}
+
+.content {
+  position: relative;
+  top: 80px;
 }
 
 .header {
