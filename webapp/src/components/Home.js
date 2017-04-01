@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router'
+import Footer from './Footer'
 
 class Home extends Component {
 
@@ -72,11 +73,8 @@ class Home extends Component {
             Powered by Twitter API & downloaded Twitter archives. <br/>
             Not affiliated or endorsed by Twitter.
           </div>
-          <div className="col-lg-8 col-lg-offset-2 copyright">
-            <div className="dashed"></div>
-            <div className="text">Made by <a href="http://tany.kim" target="_blank">Tanyoung Kim</a>, View code at <a href="https://github.com/tanykim/twitter-ten-years" target="_blank">GitHub</a></div>
-          </div>
         </div>
+        <Footer />
       </div>
     );
   }

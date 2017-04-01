@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import * as d3 from 'd3'
+import Axis from '../common/Axis'
 import { getWeekday, getAmPm, TypeList } from '../../helpers/formatter'
-import { Colors } from '../../helpers/colors'
 
 class Matrix extends Component {
 
@@ -11,145 +11,192 @@ class Matrix extends Component {
     this.onMatrixViewChanged = this.onMatrixViewChanged.bind(this);
   }
 
-  onMatrixViewChanged(e) {
-    this.props.changeMatrixView(e.currentTarget.value);
+  onMatrixViewChanged(view) {
+    this.props.changeMatrixView(view);
   }
 
   componentWillMount () {
     const containerW = document.getElementById('graph-qt').clientWidth * 3 - 30;
-    this.margin = {top: 40, right: 20, bottom: 10, left: 60};
+    this.margin = { top: 15, right: 20, bottom: 32, left: 60 };
     const w = containerW - this.margin.left - this.margin.right;
     //width and height of square
     this.sq = w / 24;
     const h = this.sq * 7;
     this.dim = { w, h };
+    this.x = d3.scaleLinear().range([0, this.dim.w]).domain([0, _.max(this.props.sum.day)]);
+    this.y = d3.scaleLinear().range([this.dim.h, 0]).domain([0, _.max(this.props.sum.hour)]);
   }
 
   showDayBars(types, data) {
     const self = this;
-    const x = d3.scaleLinear().range([0, self.dim.w]).domain([0, _.max(this.props.sum.day)]);
 
     d3.select('#matrix-category').html('')
       .selectAll('g')
       //order types descending
       .data(d3.stack().keys(types)(data))
       .enter().append('g')
-        .attr('fill', (d) => Colors[d.key])
+        .attr('class', (d) => `elm-${d.key.split(' ')[0]}`)
       .selectAll('rect')
       .data((d) => d)
       .enter().append('rect')
-        .attr('x', (d) => x(d[0]))
-        .attr('y', (d) => self.sq * d.data.id)
-        .attr('height', self.sq)
-        .attr('width', (d) => x(d[1]) - x(d[0]));
+        .attr('x', (d) => self.x(d[0]))
+        .attr('y', (d) => self.sq * d.data.id + 2)
+        .attr('height', self.sq - 4)
+        .attr('width', (d) => self.x(d[1]) - self.x(d[0]));
   }
 
   showHourBars(types, data) {
     const self = this;
-    const y = d3.scaleLinear().range([self.dim.h, 0]).domain([0, _.max(this.props.sum.hour)]);
 
     d3.select('#matrix-category').html('')
       .selectAll('g')
       //order types descending
       .data(d3.stack().keys(types)(data))
       .enter().append('g')
-        .attr('fill', (d) => Colors[d.key])
+        .attr('class', (d) => `elm-${d.key.split(' ')[0]}`)
       .selectAll('rect')
       .data((d) => d)
       .enter().append('rect')
-        .attr('x', (d) => self.sq * d.data.id)
-        .attr('y', (d) => y(d[1]))
-        .attr('height', (d) => y(d[0]) - y(d[1]))
-        .attr('width', self.sq);
+        .attr('x', (d) => self.sq * d.data.id + 2)
+        .attr('y', (d) => self.y(d[1]))
+        .attr('height', (d) => self.y(d[0]) - self.y(d[1]))
+        .attr('width', self.sq - 4);
+  }
+
+  drawMatrix(props) {
+    d3.select('#matrix-category').html('');
+    props.byDayHour.map((day, i) =>
+      day.map((hour, j) =>
+        d3.select('#matrix-none')
+          .append('rect')
+          .attr('x', j * this.sq + 1)
+          .attr('y', i * this.sq + 1)
+          .attr('width', this.sq - 1)
+          .attr('height', this.sq - 1)
+          .attr('rx', 2)
+          .attr('ry', 2)
+          .attr('class', 'square')
+          .style('fill-opacity', hour / props.max)
+      )
+    )
+  }
+
+  getStackedBarData(props) {
+    const category = props.category;
+    const types = TypeList[category];
+    const view = props.matrix;
+
+    //make stack data
+    const data = props.matrixType[view].map((d) => {
+        const obj = { id: d[0] };
+        //original data keys are only in the first letter
+        //if the key does not exist, return 0
+        let sum = 0;
+        _.forEach(types, (t) => {
+          const val = d[1][t.charAt(0).toLowerCase()] || 0;
+          obj[t] = val;
+          sum += val
+        });
+        //substract all key values from the total and add
+        //for the stacked bar with length of total value
+        return _.assignIn({rest: props.sum[view][d[0]] - sum }, obj);
+      }
+    );
+
+    //add more type for stacked graph
+    const allTypes = _.concat(types, 'rest');
+    return { allTypes, data };
   }
 
   componentWillReceiveProps(nextProps) {
-    if ((this.props.view === 'all' && nextProps.view === 'category') ||
-        (this.props.matrix !== nextProps.matrix) ||
-        (this.props.category !== nextProps.category)) {
-
-      const category = nextProps.category;
-      const types = TypeList[category];
-      const view = nextProps.matrix;
-
-      //make stack data
-      const data = this.props.matrixType[view].map((d) => {
-          const obj = { id: d[0] };
-          //original data keys are only in the first letter
-          //if the key does not exist, return 0
-          let sum = 0;
-          _.forEach(types, (t) => {
-            const val = d[1][t.charAt(0).toLowerCase()] || 0;
-            obj[t] = val;
-            sum += val
-          });
-          //substract all key values from the total and add
-          //for the stacked bar with length of total value
-          return _.assignIn({rest: this.props.sum[view][d[0]] - sum }, obj);
-        }
-      );
-
-      //add more type for stacked graph
-      const allTypes = _.concat(types, 'rest');
-
-      if (view === 'day') {
+    if ((this.props.matrix !== nextProps.matrix) ||
+        (nextProps.category !== 'none' && this.props.category !== nextProps.category)) {
+      const { allTypes, data } = this.getStackedBarData(nextProps);
+      d3.select('#matrix-none').html('');
+      if (nextProps.matrix === 'day') {
         this.showDayBars(allTypes, data);
       } else {
         this.showHourBars(allTypes, data);
       }
-    } else if (nextProps.view === 'all') {
-      d3.select('#matrix-category').html('');
+    } else if (this.props.category !== 'none' && nextProps.category === 'none') {
+      this.drawMatrix(nextProps);
+    }
+  }
+
+  componentDidMount() {
+    if (this.props.category === 'none') {
+      this.drawMatrix(this.props);
+    } else {
+      const { allTypes, data } = this.getStackedBarData(this.props);
+      if (this.props.matrix === 'day') {
+        this.showDayBars(allTypes, data);
+      } else {
+        this.showHourBars(allTypes, data);
+      }
     }
   }
 
   render () {
 
+    const { category, matrix, max } = this.props;
+    const { dim, margin } = this;
+
     const days = _.range(7).map((i) => (
-      <text x="0" y={i * this.sq + this.sq / 2} className="weekday" key={i}>{getWeekday(i)}</text>
+      <text x="-6" y={i * this.sq + this.sq / 2} className="weekday" key={i}>{getWeekday(i)}</text>
     ));
 
     const hours = _.range(25).map((i) => (
-      <text x={i * this.sq} y={this.dim.h} className="hour" key={i}>{getAmPm(i)}</text>
+      <text x={i * this.sq} y={dim.h} dy={6} className="hour" key={i}>{getAmPm(i)}</text>
     ));
 
-    const squares = this.props.byDayHour.map((day, i) => (
-      <g key={i}>
-          {day.map((hour, j) =>
-            <rect
-              x={j * this.sq}
-              y={i * this.sq}
-              width={this.sq}
-              height={this.sq}
-              style={{fill: 'black', opacity: hour / this.props.max}}
-              key={j}
-          />)}
-      </g>)
-    )
+    return (<div className="row matrix-wrapper"><div className="col-xs-12">
+      <div className="vis-bg">
 
-    return (
-      <div className="matrix-wrapper">
-        { this.props.view === 'category' && ['day', 'hour'].map((view) => <span key={view}>
-              <input
-                type="radio"
-                name="matrix"
-                value={view}
-                checked={this.props.matrix === view}
-                onChange={this.onMatrixViewChanged}
-              /> { view === 'day' ? 'By Day' : 'By Hour'}
-          </span>) }
+        { category !== 'none' && <ul className="list-inline">
+          {['day', 'hour'].map((view) => (<li key={view}>
+              <span
+                className={`matrix-select${matrix === view ? ' selected' : ''}`}
+                onClick={() => this.onMatrixViewChanged(view)}>
+              By {view} </span>
+          </li>))}
+        </ul>}
+
+        { category === 'none' && <div className="matrix-legend">
+          <span>0</span>
+          <span className="gradation"></span>
+          <span>{max} tweets</span>
+        </div>}
+
         <svg
-          width={this.dim.w + this.margin.left + this.margin.right}
-          height={this.dim.h + this.margin.top + this.margin.bottom}
+          width={dim.w + margin.left + margin.right}
+          height={dim.h + margin.top + margin.bottom}
         >
-          <g transform={`translate(${this.margin.left}, ${this.margin.right})`}>
-            { (this.props.view === 'all' || this.props.matrix === 'day') && <g>{days}</g> }
-            { (this.props.view === 'all' || this.props.matrix === 'hour') && <g>{hours}</g> }
-            { this.props.view === 'all' && squares }
-            <g id="matrix-category"></g>
+          <g transform={`translate(${margin.left}, ${margin.top})`}>
+            { (category === 'none' || matrix === 'day') &&
+              <g className="axis">
+                {days}
+              </g> }
+            { (category === 'none' || matrix === 'hour') &&
+              <g className="axis">
+                {hours}
+              </g> }
+            <g id="matrix-none" />
+            <g id="matrix-category" />
+            { category !== 'none' && matrix === 'day' && <g>
+              <Axis x={this.x} dim={dim} id="matrix-day"/>
+              <line x1="0" x2="0" y1="0" y2={dim.h} />
+              <text x={dim.w / 2} y={dim.h + margin.bottom} className="day-tweets">TWEETS</text>
+            </g> }
+            { category !== 'none' && matrix === 'hour' && <g>
+              <Axis y={this.y} dim={dim} id="matrix-hour" pos="bottom"/>
+              <line x1="0" x2={dim.w} y1={dim.h} y2={dim.h} />
+              <text x={-dim.h / 2} y={-margin.left} className="hour-tweets" transform="rotate(-90)">TWEETS</text>
+            </g>}
           </g>
         </svg>
+
       </div>
-    )
+    </div></div>)
   }
 }
 

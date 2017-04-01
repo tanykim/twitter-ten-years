@@ -38,7 +38,7 @@ export const getRangeText = (range) => {
   const em = moment(range[1], 'YYYY-MM-DD');
   const diff = em.diff(sm, 'days');
 
-  return `From ${sm.format('ddd MMM DD YYYY')} to ${em.format('ddd MMM DD YYYY')} (${diff} days)`;
+  return `from <strong>${sm.format('ddd MMM DD YYYY')}</strong> to <strong>${em.format('ddd MMM DD YYYY')}</strong> (<strong>${diff} days</strong>)`;
 }
 
 //MUST be the same order as python code

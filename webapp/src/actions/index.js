@@ -45,11 +45,11 @@ export const getTweets = (range) => {
   }
 }
 
-export const changeTimelineView = (data) => {
-  return (dispatch) => {
-    dispatch({ type: 'SET_TIMELINE_VIEW', data })
-  }
-}
+// export const changeTimelineView = (data) => {
+//   return (dispatch) => {
+//     dispatch({ type: 'SET_TIMELINE_VIEW', data })
+//   }
+// }
 
 export const changeTimelineCategory = (data) => {
   return (dispatch) => {

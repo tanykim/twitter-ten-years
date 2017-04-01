@@ -3,22 +3,21 @@ import {
   fetchDataIfNeeded,
   selectRange,
   getTweets,
-  changeTimelineView,
   changeTimelineCategory,
   changeTimelineMatrixView } from '../actions'
 import TimelineWrapper from '../components/Timeline/wrapper'
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
     isFetching: state.isFetching,
     range: state.timeRange,
     data: state.dataByPage.timeline,
-    view: state.view,
     category: state.category,
     matrix: state.matrix,
     selectedRange: state.selectedRange,
     isFetchingTweets: state.isFetchingTweets,
     tweets: state.tweets,
+    isHidden: ownProps.isHidden
   }
 }
 
@@ -28,9 +27,7 @@ const mapDispatchToProps = (dispatch) => (
       dispatch(fetchDataIfNeeded('timeline'));
       dispatch(selectRange());
     },
-    //selectRange: () => dispatch(selectRange()),
     getTweets: (range) => dispatch(getTweets(range)),
-    changeView: (view) => dispatch(changeTimelineView(view)),
     changeCategory: (category) => dispatch(changeTimelineCategory(category)),
     changeMatrixView: (view) => dispatch(changeTimelineMatrixView(view))
   }

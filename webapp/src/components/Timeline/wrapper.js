@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import TweetsWrapper from './TweetsWrapper'
+import Loading from '../common/Loading'
 
 class TimelineWrapper extends Component {
 
   constructor(props) {
     super();
-    this.onViewChanged = this.onViewChanged.bind(this);
     this.onCategoryChanged = this.onCategoryChanged.bind(this);
   }
 
@@ -14,42 +14,30 @@ class TimelineWrapper extends Component {
     this.props.onMountFunc()
   }
 
-  onViewChanged(e) {
-    this.props.changeView(e.currentTarget.value);
-  }
-
-  onCategoryChanged(e) {
-    this.props.changeCategory(e.currentTarget.value);
+  onCategoryChanged(category) {
+    this.props.changeCategory(category);
   }
 
   render () {
     const { isFetching, data } = this.props;
-    return (<div className="container">
-      { isFetching && <h1> Loading... </h1> }
-      { !isFetching && data && <div className="row">
-        <div>
-          { ['all', 'category'].map((view) => <span key={view}>
-              <input
-                type="radio"
-                name="view"
-                value={view}
-                checked={this.props.view === view}
-                onChange={this.onViewChanged}
-              /> { view === 'all' ? 'All Tweets' : 'Tweets by Category'}
-          </span>) }
-          { this.props.view === 'category' && <div>
-            { ['interaction', 'media', 'language', 'source'].map((category) => <span key={category}>
-                <input
-                  type="radio"
-                  name="category"
-                  value={category}
-                  checked={this.props.category === category}
-                  onChange={this.onCategoryChanged}
-                /> {category}
-            </span>)}
-          </div> }
+    return (<div>
+      { isFetching && <Loading /> }
+      { !isFetching && data && <div>
+        <div className="container-fluid header">
+          <div className="desc">Explore tweets by categories in a certain range of time</div>
+          <ul className={`list-inline${this.props.isHidden ? ' fixed' : ''}`}>
+            { ['interaction', 'media', 'language', 'source', 'none'].map((category) => (
+              <li
+                key={category}
+                onClick={() => this.onCategoryChanged(category)}
+                className={`link ${this.props.category === category ? 'selected' : 'normal'}`}
+              >
+                {category === 'none' ? 'No Category' : category}
+              </li>)
+            )}
+          </ul>
         </div>
-        <div className="col-xs-12">
+        <div className="container">
           <TweetsWrapper {...this.props} />
         </div>
       </div>}

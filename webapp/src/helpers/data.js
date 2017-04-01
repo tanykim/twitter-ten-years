@@ -31,7 +31,7 @@ const getTweetTypeData = (types, tweets, total) => {
     return [type, counts[i]];
   });
   //remove if the value is 0
-  _.remove(array, (d) => d[1] === 0);
+  // _.remove(array, (d) => d[1] === 0);
   //reverse order
   const ordered = _.sortBy(array, (d) => -d[1]);
   //add the rest count at the end

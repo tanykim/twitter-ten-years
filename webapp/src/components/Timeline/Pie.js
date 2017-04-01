@@ -1,13 +1,21 @@
 import React, { Component } from 'react'
 import * as d3 from 'd3'
 import _ from 'lodash'
-import { Colors, Grey } from '../../helpers/colors'
 
 class Pie extends Component {
 
+  constructor(props) {
+    super();
+    this.onCategoryChanged = this.onCategoryChanged.bind(this);
+  }
+
+  onCategoryChanged(val) {
+    this.props.changeCategory(val);
+  }
+
   componentWillMount () {
     const containerW = document.getElementById('graph-qt').clientWidth - 30;
-    const w = containerW;
+    const w = containerW * 0.8;
     const h = w;
     this.dim = { w, h, r: w / 2 };
   }
@@ -17,13 +25,17 @@ class Pie extends Component {
       //change old pie to grey scale
       if (this.props.category === this.props.label) {
         _.forEach(this.props.data, (d, i) =>
-          d3.select(`#g-pie-${this.props.category}`).select(`.arc-${i}`).style('fill', Grey[i])
+          d3.select(`#g-pie-${this.props.category}`).select(`.js-arc-${i}`)
+            .classed(`elm-grey-${i === nextProps.data.length - 1 ? 'rest' : i}`, true)
+            .classed(`elm-${d[0].split(' ')[0]}`, false)
         );
       }
       //change new pie to color scale
       if (nextProps.category === nextProps.label) {
         _.forEach(nextProps.data, (d, i) =>
-          d3.select(`#g-pie-${nextProps.category}`).select(`.arc-${i}`).style('fill', Colors[d[0]])
+            d3.select(`#g-pie-${nextProps.category}`).select(`.js-arc-${i}`)
+              .classed(`elm-grey-${i === nextProps.data.length - 1 ? 'rest' : i}`, false)
+              .classed(`elm-${d[0].split(' ')[0]}`, true)
         );
       }
     }
@@ -49,33 +61,35 @@ class Pie extends Component {
     arc.append('path')
         .attr('d', path)
         //d[0] is the label of type, e.g., mention
-        .style('fill', (d, i) =>
-          this.props.category === this.props.label ?
-          Colors[d.data[0]] :
-          Grey[i]
-        )
-        .attr('class', (d, i) => `arc-${i}`);
+        .attr('class', (d, i) => {
+          return `js-arc-${i} elm-${this.props.category === this.props.label ?
+            d.data[0].split(' ')[0] :
+            'grey-' + (i === data.length - 1 ? 'rest' : i)}`
+        });
 
     //label of category e.g., interaction
     g.append('text')
       .attr('x', 0)
       .attr('y', 0)
       .text(this.props.label)
-      .attr('class', 'label');
+      .attr('class', 'label')
+      .on('click', () => this.onCategoryChanged(this.props.label));
   }
 
   render () {
 
     //put legend except "rest"
     const legends = this.props.data.slice(0, this.props.data.length - 1)
-      .map((d, i) => <div key={d[0]} className="pie-legend">
-        <div
-          className="type-label"
-          style={ { backgroundColor: (this.props.category === this.props.label ?
-            Colors[d[0]] :
-            Grey[i] ) } } />
-        <div>{d[0]} ({d[1]}, {(d[1] / this.props.total * 100).toFixed(1)}%)</div>
-      </div>);
+      .map((d, i) => <tr key={d[0]} className="pie-legend">
+        <td>
+          <div className={`type-color legend-${this.props.category === this.props.label ?
+            d[0].split(' ')[0] :
+            'grey-' + i}`} />
+        </td>
+        <td className="type-label">{d[0]}</td>
+        <td className="type-percent">{(d[1] / this.props.total * 100).toFixed(1)}%</td>
+        <td>({d[1]} tweet{d[1] > 1 ? 's' : ''})</td>
+      </tr>);
 
     return (
       <div className="pie-wrapper">
@@ -89,9 +103,9 @@ class Pie extends Component {
             transform={`translate(${this.dim.r}, ${this.dim.r})`}
           />
         </svg>
-        <div className="legend-wrapper">
-          {legends}
-        </div>
+        <table className="legend-wrapper">
+          <tbody>{legends}</tbody>
+        </table>
       </div>
     );
   }
