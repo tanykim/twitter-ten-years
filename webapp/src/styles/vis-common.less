@@ -1,0 +1,109 @@
+@import '_settings';
+
+.vis-bg {
+  background-color: @white;
+  border-radius: 6px;
+  margin-left: -15px;
+  margin-right: -15px;
+  padding: 15px;
+  -webkit-box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.1);
+  box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.1);
+  /* need this to nest svg without werid padding */
+  overflow: hidden;
+  .svg-bar {
+    float: left;
+  }
+  .elm-none {
+    fill: fade(@tweet-0, 90%);
+  }
+  .elm-Mention, .elm-Photo, .elm-Korean, .elm-Big {
+    fill: @tweet-1;
+  }
+  .elm-Quote, .elm-Video, .elm-English, .elm-Small {
+    fill: @tweet-2;
+  }
+  .elm-Retweet {
+    fill: @tweet-3;
+  }
+  .elm-Others, .elm-No {
+    fill: @w-grey-3;
+  }
+  .elm-grey-0 {
+    fill: @w-grey-6;
+  }
+  .elm-grey-1 {
+    fill: @w-grey-5;
+  }
+  .elm-grey-2 {
+    fill: @w-grey-4;
+  }
+  .elm-grey-3, .elm-grey-rest {
+    fill: @w-grey-3;
+  }
+  .elm-friend-0 {
+    fill: @friend-0;
+  }
+  .elm-friend-1 {
+    fill: @friend-1;
+  }
+  .elm-friend-2 {
+    fill: @friend-2;
+  }
+  .elm-friend-3, .elm-friend-4 {
+    fill: @w-grey-6;
+  }
+}
+
+.option {
+  .title {
+    height: 20px;
+    margin-bottom: 12px;
+  }
+  .number {
+    color: @white;
+    background-color: @w-grey-7;
+    padding: 2px 10px;
+    border-radius: 4px;
+    margin-right: 6px;
+    font-size: 12px;
+  }
+  .desc {
+    margin-top: 6px;
+    height: 20px;
+  }
+  .desc-right {
+    float: right;
+  }
+}
+
+.axis {
+  line {
+    stroke: fade(@w-grey-7, 10%);
+  }
+  path {
+    stroke: none;
+  }
+  text {
+    font-family: Avenir, 'Lato' !important;
+    fill: @w-grey-7;
+  }
+}
+
+.all-pies-wrapper, .flow-wrapper, .matrix-wrapper, .network-wrapper, .select-wrapper, .scatterPlot-wrapper, .histogram-wrapper {
+  margin-top: 15px;
+}
+
+.select-wrapper {
+  background-color: @white;
+  border-radius: 6px;
+  margin-left: -15px;
+  margin-right: -15px;
+  padding: 15px;
+  -webkit-box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.1);
+  box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.1);
+}
+rect {
+  shape-rendering: geometricPrecision;
+}

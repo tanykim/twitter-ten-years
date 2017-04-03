@@ -41,11 +41,37 @@ export const getRangeText = (range) => {
   return `from <strong>${sm.format('ddd MMM DD YYYY')}</strong> to <strong>${em.format('ddd MMM DD YYYY')}</strong> (<strong>${diff} days</strong>)`;
 }
 
+export const getSinceText = (duration) => {
+  let number = duration;
+  let unit = 'day';
+  if (duration > 31 && duration < 365) {
+    number = Math.ceil(duration / 12);
+    unit = 'month';
+  } else {
+    number = Math.ceil(duration / 365);
+    unit = 'year';
+  }
+  if (number === 0) {
+    return 'only once';
+  } else {
+    return `for <strong>${number} ${unit}${number > 1 ? 's' : ''}</strong>`;
+  }
+}
+
 //MUST be the same order as python code
 const TypeList = {
-  interaction: ['Mention', 'Quote', 'Retweet'],
-  media: ['Photo', 'Video'],
-  language: ['Korean', 'English'],
-  source: ['Big Screen', 'Small Screen']
+  interaction: ['Mention', 'Quote', 'Retweet', 'No Interaction'],
+  media: ['Photo', 'Video', 'No Media'],
+  language: ['Korean', 'English', 'Others'],
+  source: ['Big Screen', 'Small Screen', 'Others']
 }
 export { TypeList }
+
+//MUST be the same order as python code
+const FriendTypes = [
+  'Met in person first',
+  'Never met in person',
+  'Met on Twitter then met in person',
+  'Celebrities or non-human'
+]
+export { FriendTypes }

@@ -1,0 +1,68 @@
+@import '_settings';
+
+.menu-header {
+  background-color: @white;
+  text-align: center;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  text-align: center;
+  .border {
+    padding-top: 12px;
+    padding-bottom: 8px;
+    margin: 0px -15px 4px -15px;
+    border-bottom: 1px dashed @w-grey-2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  a {
+    color: @w-grey-7;
+    text-decoration: none;
+    &:hover {
+      color: @text-link;
+    }
+  }
+  .active {
+    color: @text-link;
+    font-weight: bold;
+  }
+  .tweets, .home, .friends {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}
+.menu-header-min {
+  position: fixed;
+  z-index: 1000;
+  .ribbon {
+    background-color: @w-grey-9;
+    padding-right: 5px;
+    padding-left: 5px;
+    width: 100%;
+    a {
+      color: @w-grey-4;
+      text-decoration: none;
+      &:hover {
+        color: @white;
+      }
+    }
+    .active {
+      color: @white !important;
+    }
+    -webkit-box-shadow: 0px 2px 1px 1px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 2px 1px 1px rgba(0,0,0,0.2);
+    box-shadow: 0px 2px 1px 1px rgba(0,0,0,0.2);
+  }
+  .links-wrapper {
+    list-style: none;
+    margin: 0;
+    padding: 10px 15px 7px 15px;
+    border-right: 1px dashed @w-grey-7;
+    border-left: 1px dashed @w-grey-7;
+    text-align: center;
+    li {
+      margin-bottom: 4px;
+    }
+  }
+}

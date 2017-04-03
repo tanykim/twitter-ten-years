@@ -13,7 +13,10 @@ const mapStateToProps = (state, ownProps) => (
 
 const mapDispatchToProps = (dispatch) => (
   {
-    onMountFunc: () => dispatch(fetchDataIfNeeded('flow')),
+    onMountFunc: () => {
+      dispatch({ type: 'SET_FLOW_FRIEND', data: {} });
+      dispatch(fetchDataIfNeeded('flow'));
+    },
     selectFriend: (id) => dispatch(selectFriend(id))
   }
 )

@@ -1,0 +1,62 @@
+@import '_settings';
+
+.matrix-wrapper {
+  text-align: center;
+  .matrix-select {
+    display: inline-block;
+    padding: 0 6px 3px 6px;
+    text-transform: capitalize;
+    cursor: pointer;
+    color: @w-grey-7;
+  }
+  .matrix-select.selected {
+    border-bottom: 2px solid @w-grey-7;
+    font-weight: 700;
+    color: @w-grey-9;
+  }
+  .matrix-legend {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: @w-grey-7;
+    .gradation {
+      display: inline-block;
+      border: 1px solid @w-grey-7;
+      margin-right: 10px;
+      margin-left: 10px;
+      width: 200px;
+      height: 20px;
+      background: -webkit-linear-gradient(left, @white , @tweet-0);
+      background: -o-linear-gradient(right, @white, @tweet-0);
+      background: -moz-linear-gradient(right, @white, @tweet-0);
+      background: linear-gradient(to right, @white , @tweet-0);
+    }
+  }
+  .square {
+    fill: @tweet-0;
+    stroke: fade(@w-grey-7, 10%);
+  }
+  .weekday {
+    font-size: 10px;
+    text-anchor: end;
+  }
+  .hour {
+    font-size: 10px;
+    text-anchor: middle;
+    alignment-baseline: hanging;
+  }
+  .day-tweets {
+    font-size: 10px;
+    text-anchor: middle;
+    fill: @w-grey-7;
+  }
+  .hour-tweets {
+    font-size: 10px;
+    text-anchor: middle;
+    alignment-baseline: hanging;
+    fill: @w-grey-7;
+  }
+}

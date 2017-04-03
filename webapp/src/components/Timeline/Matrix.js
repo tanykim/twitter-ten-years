@@ -84,6 +84,8 @@ class Matrix extends Component {
   getStackedBarData(props) {
     const category = props.category;
     const types = TypeList[category];
+    const validTypes = types.slice(0, types.length - 1);
+    const lastType = types[types.length - 1];
     const view = props.matrix;
 
     //make stack data
@@ -92,31 +94,29 @@ class Matrix extends Component {
         //original data keys are only in the first letter
         //if the key does not exist, return 0
         let sum = 0;
-        _.forEach(types, (t) => {
+        _.forEach(validTypes, (t) => {
           const val = d[1][t.charAt(0).toLowerCase()] || 0;
           obj[t] = val;
           sum += val
         });
         //substract all key values from the total and add
         //for the stacked bar with length of total value
-        return _.assignIn({rest: props.sum[view][d[0]] - sum }, obj);
+        return _.assignIn({[lastType]: props.sum[view][d[0]] - sum }, obj);
       }
     );
 
-    //add more type for stacked graph
-    const allTypes = _.concat(types, 'rest');
-    return { allTypes, data };
+    return { types, data };
   }
 
   componentWillReceiveProps(nextProps) {
     if ((this.props.matrix !== nextProps.matrix) ||
         (nextProps.category !== 'none' && this.props.category !== nextProps.category)) {
-      const { allTypes, data } = this.getStackedBarData(nextProps);
+      const { types, data } = this.getStackedBarData(nextProps);
       d3.select('#matrix-none').html('');
       if (nextProps.matrix === 'day') {
-        this.showDayBars(allTypes, data);
+        this.showDayBars(types, data);
       } else {
-        this.showHourBars(allTypes, data);
+        this.showHourBars(types, data);
       }
     } else if (this.props.category !== 'none' && nextProps.category === 'none') {
       this.drawMatrix(nextProps);
@@ -127,11 +127,11 @@ class Matrix extends Component {
     if (this.props.category === 'none') {
       this.drawMatrix(this.props);
     } else {
-      const { allTypes, data } = this.getStackedBarData(this.props);
+      const { types, data } = this.getStackedBarData(this.props);
       if (this.props.matrix === 'day') {
-        this.showDayBars(allTypes, data);
+        this.showDayBars(types, data);
       } else {
-        this.showHourBars(allTypes, data);
+        this.showHourBars(types, data);
       }
     }
   }

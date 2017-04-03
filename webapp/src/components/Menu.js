@@ -16,8 +16,7 @@ class Menu extends Component {
         <div className="row menu-header-min">
           <div className="col-xs-4 col-lg-1 ribbon">
             <ul className="links-wrapper">
-              <li><span className="heart"></span></li>
-              <li className="home"><Link to="/"><span className="home">Home</span></Link></li>
+              <li><Link to="/"><span className="heart"></span></Link></li>
               <li className="tweets"><Link to="/tweets" activeClassName="active"><span className="tweets">Tweets</span></Link></li>
               <li className="friends"><Link to="/friends" activeClassName="active"><span className="friends">Friends</span></Link></li>
             </ul>

@@ -1,0 +1,43 @@
+@import '_settings';
+
+.flow-wrapper {
+  .flow-lines {
+    .normal, .normal0, .normal1, .normal2 {
+      fill: none;
+      opacity: 0.4;
+    }
+    .normal {
+      stroke: @w-grey-6;
+    }
+    .normal0 {
+      stroke: @friend-0;
+    }
+    .normal1 {
+      stroke: @friend-1;
+    }
+    .normal2 {
+      stroke: @friend-2;
+    }
+    .selected, .hovered {
+      fill: none;
+      opacity: 1;
+    }
+    .hovered {
+      stroke-width: 2px;
+    }
+  }
+  .flow-dots {
+    stroke: @w-grey-9;
+    stroke-width: 2;
+  }
+  .selected {
+    fill: none;
+    stroke: @w-grey-9;
+    stroke-width: 2px;
+  }
+  .option {
+    .title {
+      margin-bottom: 12px;
+    }
+  }
+}

@@ -5,11 +5,11 @@ import * as d3 from 'd3'
 class Histogram extends Component {
 
   componentWillMount () {
-    const containerW = document.getElementById('graph-half').clientWidth - 30;
-    this.margin = {top: 10, right: 10, bottom: 40, left: 20};
+    const containerW = document.getElementById('graph-half').clientWidth - 60;
+    this.margin = {top: 10, right: 20, bottom: 40, left: 20};
     this.dim = {
       w: containerW - this.margin.left - this.margin.right,
-      h: 300 - this.margin.top - this.margin.bottom
+      h: 200 - this.margin.top - this.margin.bottom
     };
   }
 
@@ -39,7 +39,7 @@ class Histogram extends Component {
       .data(bins)
       .enter()
       .append('rect')
-      .attr('class', `js-flow-histogram-${self.props.type}-bars`)
+      .attr('class', `js-flow-histogram-${self.props.type}-bars elm-grey-rest`)
       .attr('x', function(d) {
         return x(d.x0) + 1;
       })
@@ -53,7 +53,7 @@ class Histogram extends Component {
 
     //curve
     const line = d3.line()
-      .x(function(d) { return x(d.x1) - barW / 2; })
+      .x(function(d) { return x(d.x0); })
       .y(function(d) { return y(d.length); })
       .curve(d3.curveMonotoneX)
     g.append('path')
@@ -78,7 +78,7 @@ class Histogram extends Component {
     this.x = x;
   }
 
-  componentWillUpdate(nextProps) {
+  componentWillReceiveProps(nextProps) {
     //show friend status line over the histogram
     if (!_.isEmpty(nextProps.friend)) {
       const f = nextProps.friend;
@@ -92,15 +92,17 @@ class Histogram extends Component {
 
   render () {
     return (
-      <svg
-        width={this.dim.w + this.margin.left + this.margin.right}
-        height={this.dim.h + this.margin.top + this.margin.bottom}
-      >
-        <g
-          transform={`translate(${this.margin.left}, ${this.margin.top})`}
-          id={`flow-histogram-${this.props.type}`}
-        />
-      </svg>
+      <div className="vis-bg histogram-wrapper">
+        <svg
+          width={this.dim.w + this.margin.left + this.margin.right}
+          height={this.dim.h + this.margin.top + this.margin.bottom}
+        >
+          <g
+            transform={`translate(${this.margin.left}, ${this.margin.top})`}
+            id={`flow-histogram-${this.props.type}`}
+          />
+        </svg>
+      </div>
     );
   }
 }

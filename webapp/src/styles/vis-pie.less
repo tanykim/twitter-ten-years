@@ -1,0 +1,68 @@
+@import '_settings';
+
+.pie-wrapper {
+  text-align: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  .label {
+    font-size: 12px;
+    text-anchor: middle;
+    alignment-baseline: central;
+    text-transform: uppercase;
+    fill: @w-grey-6;
+    cursor: pointer;
+    &:hover {
+      fill: @w-grey-9;
+    }
+  }
+  .legend-wrapper {
+    margin: 0;
+    padding: 0;
+    margin: 10px auto 0;
+    text-align: center;
+  }
+}
+.pie-legend {
+  text-align: left;
+  font-size: 12px;
+  .type-color {
+    border-width: 5px;
+    border-radius: 8px;
+    width: 16px;
+    height: 16px;
+    border-style: solid;
+    margin: 2px 6px 6px 0;
+  }
+  .type-label, .type-percent {
+    font-weight: 700;
+    padding-right: 8px;
+  }
+  .legend-Mention, .legend-Photo, .legend-Korean, .legend-Big {
+    border-color: @tweet-1;
+  }
+  .legend-Quote, .legend-Video, .legend-English, .legend-Small {
+    border-color: @tweet-2;
+  }
+  .legend-Retweet {
+    border-color: @tweet-3;
+  }
+  .legend-No, .legend-Others, .legend-grey-3 {
+    border-color: @w-grey-3;
+  }
+  .legend-grey-0 {
+    border-color: @w-grey-6;
+  }
+  .legend-grey-1 {
+    border-color: @w-grey-5;
+  }
+  .legend-grey-2 {
+    border-color: @w-grey-4;
+  }
+}
+.category-selected {
+  background-color: @w-grey-0;
+  border-radius: 6px;
+  .label {
+    fill: @w-grey-9;
+  }
+}

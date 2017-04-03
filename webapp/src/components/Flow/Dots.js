@@ -5,29 +5,42 @@ import moment from 'moment'
 
 class Dots extends Component {
 
-  componentWillUpdate(nextProps) {
-    let self = this;
+  componentWillReceiveProps(nextProps) {
+
     if (!_.isEmpty(nextProps.friend)) {
-      d3.selectAll('.js-flow-dots').remove();
+
+      const { x, y, friend } = nextProps;
+
       const g = d3.select('#flow-dots');
-      g.selectAll('.js-flow-dots')
-        .data(nextProps.friend.points)
+      g.html('');
+
+      const points = friend.points;
+
+      const line = d3.line()
+        .x((d) => x(moment(d[0], 'YYYY-MM')))
+        .y((d) => y(d[1]))
+        .curve(d3.curveMonotoneX)
+
+      //draw selected line
+      g.append('path')
+        .datum(points)
+        .attr('d', line)
+        .attr('class', 'selected')
+
+      g.selectAll('circle')
+        .data(points)
         .enter()
         .append('circle')
-        .attr('cx', function(d) {
-          return self.props.x(moment(d[0], 'YYYY-MM'));
-        })
-        .attr('cy', function(d) {
-          return self.props.y(d[1])
-        })
+        .attr('cx', (d) => x(moment(d[0], 'YYYY-MM')))
+        .attr('cy', (d) => y(d[1]))
         .attr('r', 3)
-        .attr('class', 'flow-dots js-flow-dots');
+        .attr('class', `flow-dots elm-friend-${nextProps.friend.category}`);
     }
   }
 
   render() {
     return (
-      <g className="dots" id="flow-dots"></g>
+      <g id="flow-dots"></g>
     );
   }
 }

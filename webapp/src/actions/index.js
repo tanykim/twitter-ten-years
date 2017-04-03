@@ -66,8 +66,8 @@ export const changeTimelineMatrixView = (data) => {
 /* Flow */
 export const selectFriend = (id) => {
   return (dispatch, getState) => {
-    const { mentions, ranking } = getState().dataByPage.flow;
-    const data = getFriendObj(mentions, ranking, id)
+    const { mentions, ranking, network, category } = getState().dataByPage.flow;
+    const data = getFriendObj(mentions, ranking, id, category[id], network.involvedFriends)
     dispatch({ type: 'SET_FLOW_FRIEND', data })
   }
 }

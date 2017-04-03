@@ -31,14 +31,16 @@ class Bars extends Component {
   showStackedBars(props) {
     const category = props.category;
     const types = TypeList[category];
+    const validTypes = types.slice(0, types.length - 1);
+    const lastType = types[types.length - 1];
     const data = this.props[category].map((d) => {
         const obj = { month: d[0] };
         let sum = 0;
-        _.forEach(types, (t, i) => {
+        _.forEach(validTypes, (t, i) => {
           sum += d[1][i];
           obj[t] = d[1][i];
         });
-        return _.assignIn({rest: this.all[d[0]] - sum}, obj);
+        return _.assignIn({[lastType]: this.all[d[0]] - sum}, obj);
       }
     );
 
@@ -47,7 +49,7 @@ class Bars extends Component {
     d3.select('#timeline-category').html('')
       .selectAll('g')
       //order types descending
-      .data(d3.stack().keys(_.concat(types, 'rest'))(data))
+      .data(d3.stack().keys(types)(data))
       .enter()
       .append('g')
         .attr('class', (d) => `elm-${d.key.split(' ')[0]}`)
@@ -118,16 +120,6 @@ class Bars extends Component {
   render () {
     return (<div className="row"><div className="col-xs-12">
       <div className="vis-bg bar-wrapper">
-
-        <div className="bar-legend">
-          { this.props.category !== 'none' && TypeList[this.props.category].map((t, i) =>
-            (<span key={t} className="item">
-              <span className={`item-color type-${i}`} />
-              <span className="item-label">{t}</span>
-            </span>)
-          ) }
-        </div>
-
         <svg
           className="svg-bar"
           width={this.dim.w + this.margin.left + this.margin.right}
@@ -141,7 +133,6 @@ class Bars extends Component {
           <g id='timeline-brush'
             transform={`translate(${this.margin.left}, ${this.margin.top})`} />
         </svg>
-
       </div>
     </div></div>);
   }

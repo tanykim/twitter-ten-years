@@ -2,14 +2,30 @@ import React, { Component } from 'react'
 import Select from 'react-select'
 
 class SelectFriend extends Component {
- render() {
+
+  constructor(props) {
+    super();
+    this.state = {value: ''};
+    this.changeOption = this.changeOption.bind(this);
+  }
+
+  changeOption(e) {
+    this.setState({value: e.value});
+    this.props.selectFriend(e.value);
+  }
+
+  //when friend is changed via other options
+  componentWillReceiveProps(nextProps) {
+    this.setState({value: nextProps.friend.id});
+  }
+
+  render() {
     return (
       <Select
         name="form-field-name"
         options={this.props.friends}
-        onChange={(e) => {
-          this.props.selectFriend(e.value)
-        }}
+        value={this.state.value}
+        onChange={this.changeOption}
         clearable={false}
       />
     )

@@ -1,6 +1,6 @@
 //props triggered by user interaction
 
-export const selectedRange = (state = ['2016-01-01', '2016-02-28'], action) => {
+export const selectedRange = (state = ['2016-01-01', '2016-12-31'], action) => {
   if (action.type === 'SET_TIMELINE_RANGE') {
     return action.range || state
   } else {

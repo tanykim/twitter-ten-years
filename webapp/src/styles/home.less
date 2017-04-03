@@ -1,0 +1,84 @@
+@import '_settings';
+
+.logo-wrapper {
+  height: 360px;
+  background: url(/assets/images/logo-bg.svg) repeat-x center;
+  .logo {
+    background: url(/assets/images/logo.svg) no-repeat center center;
+    height: 100%;
+    background-size: 84.34% 83.34%;
+  }
+  .wing-wrapper {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    .menu-name {
+      cursor: pointer;
+      font-weight: 700;
+      font-size: @large;
+      letter-spacing: 0.1em;
+      a {
+        text-decoration: none;
+        color: @text-link;
+      }
+    }
+    .menu-name.left {
+      margin-right: -15px;
+      padding-left: 5px;
+    }
+    .menu-name.right {
+      margin-left: -15px;
+      padding-right: 5px;
+    }
+    .icon {
+      width: 20%;
+      height: 100%;
+      position: relative;
+      span {
+        position: absolute;
+        top: 50%;
+        margin-top: -10px;
+        margin-left: -5px;
+        color: @w-grey-4;
+      }
+      span.pie {
+        margin-left: -2px;
+      }
+    }
+  }
+  .wing-wrapper.left {
+    flex-direction: row-reverse;
+    background: url(/assets/images/ribbon-left.svg) no-repeat left center;
+  }
+  .wing-wrapper.right {
+    background: url(/assets/images/ribbon-right.svg) no-repeat right center;
+  }
+}
+
+.home-content-wrapper {
+  .main, .powered, .copyright {
+    text-align: center;
+    a {
+      color: @text-link;
+    }
+  }
+  .main {
+    border-top: 2px solid @w-grey-7;
+    border-bottom: 2px solid @w-grey-7;
+    font-size: @large;
+    line-height: 160%;
+    .border {
+      margin: 5px -15px;
+      padding-top: 25px;
+      padding-bottom: 25px;
+      border-top: 1px dashed @w-grey-4;
+      border-bottom: 1px dashed @w-grey-4;
+      background-color: @white;
+    }
+  }
+  .powered {
+    padding-top: 60px;
+    font-size: @small;
+    color: @w-grey-7;
+  }
+}

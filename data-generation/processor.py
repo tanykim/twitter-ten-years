@@ -42,6 +42,7 @@ def get_friends_network(tweets, friends):
         if 'friends' in t.keys():
             for subset in itertools.combinations(t['friends'], 2):
                 pair = sorted(list(subset))
+                #check both are in friends list
                 if pair[0] in friends.keys() and pair[1] in friends.keys() and pair[0] != pair[1]:
                     pairs.append('-'.join(pair))
                     allNodes.append(pair[0])
@@ -52,12 +53,28 @@ def get_friends_network(tweets, friends):
         nodes.append(dict(id=n, name=friends[n][1]))
 
     links = []
+    involvedFriends = {}
     for k, v in Counter(pairs).items():
         ids = k.split('-')
-        result = dict(source=ids[0], target=ids[1], value=v)
+        #since source and target are mutated during d3 calculation, set strings (f1, f2) for class names
+        result = dict(source=ids[0], target=ids[1], f1=ids[0], f2=ids[1], value=v)
         links.append(result)
 
-    return dict(nodes=nodes, links=links)
+        if ids[0] in involvedFriends.keys():
+            involvedFriends[ids[0]].append(ids[1])
+        else:
+            involvedFriends[ids[0]] = [ids[1]]
+
+        if ids[1] in involvedFriends.keys():
+            involvedFriends[ids[1]].append(ids[0])
+        else:
+            involvedFriends[ids[1]] = [ids[0]]
+
+    #update nodes with involved friend info
+    for n in nodes:
+        n.update({'linked': involvedFriends[n['id']]})
+
+    return dict(nodes=nodes, links=links, involvedFriends=involvedFriends)
 
 def get_tweet_data(s, isDirectAPI):
 

@@ -64,7 +64,7 @@ class Pie extends Component {
         .attr('class', (d, i) => {
           return `js-arc-${i} elm-${this.props.category === this.props.label ?
             d.data[0].split(' ')[0] :
-            'grey-' + (i === data.length - 1 ? 'rest' : i)}`
+            'grey-' + i}`
         });
 
     //label of category e.g., interaction
@@ -79,7 +79,7 @@ class Pie extends Component {
   render () {
 
     //put legend except "rest"
-    const legends = this.props.data.slice(0, this.props.data.length - 1)
+    const legends = this.props.data
       .map((d, i) => <tr key={d[0]} className="pie-legend">
         <td>
           <div className={`type-color legend-${this.props.category === this.props.label ?
