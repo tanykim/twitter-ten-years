@@ -93,7 +93,7 @@ class Network extends Component {
       d3.selectAll(`.js-link-${oldFriend}`).classed('linked', false);
       const oldLinked = this.involvedFriends[oldFriend];
       if (oldLinked) {
-        oldLinked.map((l) => d3.select(`.js-node-${l}`).classed('linked-node', false));
+        oldLinked.map((l) => d3.select(`.js-node-${l[0]}`).classed('linked-node', false));
       }
 
       //highlight new node and links
@@ -107,7 +107,7 @@ class Network extends Component {
     d3.selectAll(`.js-link-${id}`).classed('linked', true);
     const newLinked = this.involvedFriends[id];
     if (newLinked) {
-      newLinked.map((l) => d3.select(`.js-node-${l}`).classed('linked-node', true));
+      newLinked.map((l) => d3.select(`.js-node-${l[0]}`).classed('linked-node', true));
     }
   }
 

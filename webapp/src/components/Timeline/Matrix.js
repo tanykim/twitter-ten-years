@@ -142,11 +142,11 @@ class Matrix extends Component {
     const { dim, margin } = this;
 
     const days = _.range(7).map((i) => (
-      <text x="-6" y={i * this.sq + this.sq / 2} className="weekday" key={i}>{getWeekday(i)}</text>
+      <text x="-6" y={i * this.sq + this.sq / 2} className="axis-label-x" key={i}>{getWeekday(i)}</text>
     ));
 
     const hours = _.range(25).map((i) => (
-      <text x={i * this.sq} y={dim.h} dy={6} className="hour" key={i}>{getAmPm(i)}</text>
+      <text x={i * this.sq} y={dim.h} dy={6} className="axis-label-y" key={i}>{getAmPm(i)}</text>
     ));
 
     return (<div className="row matrix-wrapper"><div className="col-xs-12">
@@ -185,12 +185,12 @@ class Matrix extends Component {
             { category !== 'none' && matrix === 'day' && <g>
               <Axis x={this.x} dim={dim} id="matrix-day"/>
               <line x1="0" x2="0" y1="0" y2={dim.h} />
-              <text x={dim.w / 2} y={dim.h + margin.bottom} className="day-tweets">TWEETS</text>
+              <text x={dim.w / 2} y={dim.h + margin.bottom} className="label-x">TWEETS</text>
             </g> }
             { category !== 'none' && matrix === 'hour' && <g>
               <Axis y={this.y} dim={dim} id="matrix-hour" pos="bottom"/>
               <line x1="0" x2={dim.w} y1={dim.h} y2={dim.h} />
-              <text x={-dim.h / 2} y={-margin.left} className="hour-tweets" transform="rotate(-90)">TWEETS</text>
+              <text x={-dim.h / 2} y={-margin.left} className="label-y" transform="rotate(-90)">TWEETS</text>
             </g>}
           </g>
         </svg>

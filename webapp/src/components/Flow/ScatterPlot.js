@@ -7,7 +7,7 @@ class ScatterPlot extends Component {
 
   componentWillMount () {
     const containerW = document.getElementById('graph-half').clientWidth - 60;
-    this.margin = {top: 20, right: 20, bottom: 40, left: 40};
+    this.margin = {top: 20, right: 10, bottom: 40, left: 60};
     this.dim = {
       w: containerW - this.margin.left - this.margin.right,
       h: containerW - this.margin.top - this.margin.bottom
@@ -18,6 +18,7 @@ class ScatterPlot extends Component {
     const dRange = d3.extent(histogram.duration);
     this.x = d3.scaleLinear().range([0, this.dim.w]).domain(cRange);
     this.y = d3.scaleLinear().range([this.dim.h, 0]).domain(dRange);
+    this.dRange = dRange;
   }
 
   componentDidMount() {
@@ -81,10 +82,18 @@ class ScatterPlot extends Component {
     g.append('g')
       .attr('class', 'axis')
       .attr('transform', 'translate(0,' + this.dim.h + ')')
-      .call(d3.axisBottom(this.x));
+      .call(d3.axisBottom(this.x).tickSize(-this.dim.h).tickPadding(9));
+    // console.log(this.y.domain);
+
+    const yearCount = Math.ceil(this.dRange[1] / 365);
     g.append('g')
       .attr('class', 'axis')
-      .call(d3.axisLeft(this.y));
+      .call(d3.axisLeft(this.y)
+        .tickValues(_.range(yearCount).map((i) => i * 365))
+        .tickFormat((d) => d / 365)
+        .tickSize(-this.dim.w)
+        .tickPadding(9)
+      );
 
     //if friend is selected
     if (friend.id) {
@@ -146,7 +155,10 @@ class ScatterPlot extends Component {
             transform={`translate(${this.margin.left}, ${this.margin.top})`}
             id="flow-scatterPlot"
             ref="scatterPlot"
-          />
+          >
+            <text x={this.dim.w / 2} y={this.dim.h + this.margin.bottom} className="label-x">MENTIONS</text>
+            <text x={-this.dim.h / 2} y="-40" className="label-y" transform="rotate(-90)">YEARS</text>
+          </g>
         </svg>
       </div>
     );

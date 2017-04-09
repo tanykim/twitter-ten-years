@@ -61,14 +61,14 @@ def get_friends_network(tweets, friends):
         links.append(result)
 
         if ids[0] in involvedFriends.keys():
-            involvedFriends[ids[0]].append(ids[1])
+            involvedFriends[ids[0]].append([ids[1], v])
         else:
-            involvedFriends[ids[0]] = [ids[1]]
+            involvedFriends[ids[0]] = [[ids[1], v]]
 
         if ids[1] in involvedFriends.keys():
-            involvedFriends[ids[1]].append(ids[0])
+            involvedFriends[ids[1]].append([ids[0], v])
         else:
-            involvedFriends[ids[1]] = [ids[0]]
+            involvedFriends[ids[1]] = [[ids[0], v]]
 
     #update nodes with involved friend info
     for n in nodes:
@@ -208,20 +208,23 @@ def get_time_diff(tweets):
 def get_flow_data(friends, network):
     mentions = []
     max_vals = []
+    involvedFriends = network['involvedFriends']
     for id, d in friends.items():
         points = get_points_by_month(d[0])
         max_vals.append(max(map(lambda x: x[1], points)))
         mentions.append(dict(
             name=d[1],
             points=points,
-            first=d[0][len(d[0]) - 1],
+            first=datetime.strftime(datetime.strptime(d[0][len(d[0]) - 1], '%Y-%m-%d %H %w'), '%b %e, %Y'),
             count=len(d[0]),
             duration=get_time_diff(d[0]),
-            id=id
+            id=id,
+            commonRatio=sum(map(lambda x: x[1], involvedFriends[id])) / len(d[0])
         ))
 
     count = list(map(lambda x: x['count'], mentions))
     duration = list(map(lambda x: x['duration'], mentions))
+    commonRatio = list(map(lambda x: x['commonRatio'], mentions))
 
     friends_list = map(lambda x: dict(value=x['id'], label='@'+x['name'], count=x['count']), mentions)
     friends_sorted = sorted(friends_list, key=itemgetter('count'),reverse=True)
@@ -229,12 +232,13 @@ def get_flow_data(friends, network):
     # sort by count/duration first, then make list from only necessary elements
     r_count = list(map(lambda x: [x['id'], x['name'], x['count']], sorted(mentions, key=itemgetter('count'), reverse=True)))
     r_duration = list(map(lambda x: [x['id'], x['name'], x['duration']], sorted(mentions, key=itemgetter('duration'), reverse=True)))
+    r_common = list(map(lambda x: [x['id'], x['name'], x['commonRatio']], sorted(mentions, key=itemgetter('commonRatio'), reverse=True)))
 
     return dict(
         mentions=mentions,
         max=max(max_vals),
-        histogram=dict(count=count, duration=duration),
+        histogram=dict(count=count, duration=duration, common=commonRatio),
         friends=friends_sorted,
-        ranking=dict(count=r_count, duration=r_duration),
+        ranking=dict(count=r_count, duration=r_duration, common=r_common),
         network=network
     )

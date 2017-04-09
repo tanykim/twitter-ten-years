@@ -7,6 +7,7 @@ import Graph from './Graph'
 import Friend from './Friend'
 import Network from './Network'
 import ScatterPlot from './ScatterPlot'
+import Histogram from './Histogram'
 import { FriendTypes } from '../../helpers/formatter'
 
 class FlowWrapper extends Component {
@@ -46,21 +47,15 @@ class FlowWrapper extends Component {
         <div className="container">
           <div className="row">
             <div className="col-xs-12 col-lg-4">
-              { !_.isEmpty(selectedFriend) &&
-                <Friend
-                  friend={selectedFriend}
-                /> }
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-xs-12 col-lg-4">
               <div className="select-wrapper option">
                 <div className="title"><span className="number">Option 1</span> Search by Twitter ID</div>
                 <SelectFriend {...data} selectFriend={this.props.selectFriend} friend={selectedFriend} />
               </div>
             </div>
-            <div className="col-xs-12 col-lg-8">
-              Look into friends in four ways
+            <div className="col-xs-12 col-lg-8 friend-wrapper">
+              { _.isEmpty(selectedFriend) ?
+                <div className="intro">Look into friends in four ways</div> :
+                <Friend friend={selectedFriend} /> }
             </div>
           </div>
           <div className="row">
@@ -71,7 +66,33 @@ class FlowWrapper extends Component {
               <Network {...data} friend={selectedFriend} selectFriend={this.props.selectFriend} />
             </div>
             <div className="col-xs-12 col-lg-6">
-              <ScatterPlot {...data} friend={selectedFriend} selectFriend={this.props.selectFriend}/>
+              <ScatterPlot
+                mentions={data.mentions}
+                histogram={data.histogram}
+                category={data.category}
+                friend={selectedFriend}
+                selectFriend={this.props.selectFriend}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-xs-12 col-lg-4">
+              <Histogram
+                ranking={data.ranking.count}
+                data={data.histogram.count}
+                type="count"
+                friend={selectedFriend}
+              />
+            </div>
+            <div className="col-xs-12 col-lg-4">
+              <Histogram
+                ranking={data.ranking.duration}
+                data={data.histogram.duration}
+                type="duration"
+                friend={selectedFriend}
+              />
+            </div>
+            <div className="col-xs-12 col-lg-4">
             </div>
           </div>
           <Footer/>
@@ -82,10 +103,6 @@ class FlowWrapper extends Component {
 }
 
 export default FlowWrapper
-
-            // <div className="col-xs-12 col-lg-6">
-            //   <Histogram {...data} type="count" friend={selectedFriend}/>
-            // </div>
-            // <div className="col-xs-12 col-lg-6">
-            //   <Histogram {...data} type="duration" friend={selectedFriend}/>
+            // <div className="col-xs-12 col-lg-4">
+            //   <Histogram {...data} type="common" friend={selectedFriend}/>
             // </div>

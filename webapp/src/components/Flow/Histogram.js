@@ -5,7 +5,7 @@ import * as d3 from 'd3'
 class Histogram extends Component {
 
   componentWillMount () {
-    const containerW = document.getElementById('graph-half').clientWidth - 60;
+    const containerW = document.getElementById('graph-third').clientWidth - 60;
     this.margin = {top: 10, right: 20, bottom: 40, left: 20};
     this.dim = {
       w: containerW - this.margin.left - this.margin.right,
@@ -15,7 +15,8 @@ class Histogram extends Component {
 
   componentDidMount() {
     let self = this;
-    const data = self.props.histogram[self.props.type];
+    const data = self.props.data;
+    // console.log(self.props.ranking);
     const dataRange = d3.extent(data);
     const x = d3.scaleLinear().range([0, self.dim.w]).domain(dataRange);
     const bins = d3.histogram()
@@ -91,6 +92,7 @@ class Histogram extends Component {
   }
 
   render () {
+    // console.log(this.props);
     return (
       <div className="vis-bg histogram-wrapper">
         <svg
@@ -102,6 +104,10 @@ class Histogram extends Component {
             id={`flow-histogram-${this.props.type}`}
           />
         </svg>
+        <div>Top Friends</div>
+        <div>
+          {this.props.ranking.slice(0, 10).map((f, i) => <div key={i}>{i + 1}. {f[1]} - {f[2]}</div>)}
+        </div>
       </div>
     );
   }

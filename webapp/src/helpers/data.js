@@ -1,6 +1,5 @@
 /* data generation for visualization triggered by action */
 import _ from 'lodash'
-import moment from 'moment'
 import Tweets from '../data/tweets.json'
 import { TypeList } from './formatter'
 
@@ -148,25 +147,36 @@ export const getFriendObj = (mentions, ranking, id, category, involvedFriends) =
   const count = findRank(ranking.count, id);
   const duration = findRank(ranking.duration, id);
 
-  //convert object to array
-  const involvedList = _.map(involvedFriends, (v, k) => [k, null, v.length]);
+  //convert object to array with value of total mentions involved with other friends
+  const getMentionCount = (v) => {
+    let count = 0;
+    v.forEach((d) => {
+      count += d[1];
+    });
+    return count;
+  };
+  // console.log(mentions, involvedFriends);
+  const involvedList = _.map(involvedFriends, (v, k) => [k, null, getMentionCount(v) / selected.count]);
 
-  //defaul values when there's no common friends
+  //default values when there's no common friends
   let common = '-';
   let commonFriends = [];
+  let totalCount = 0;
+  // console.log(involvedList);
   if (involvedFriends[id]) {
     //sort the list first then get rank
     common = findRank(_.sortBy(involvedList, (d) => -d[2]), id);
     //get friends name list from ids
-    commonFriends = _.filter(mentions, (d) => involvedFriends[id].indexOf(d.id) > -1)
-      .map((f) => f.name);
+    const friendsIds = involvedFriends[id].map((d) => d[0]);
+    commonFriends = _.filter(mentions, (d) => friendsIds.indexOf(d.id) > -1)
+     .map((f) => f.name);
+    involvedFriends[id].forEach((d) => { totalCount += d[1] });
   }
 
   //add more keys to the selected friend object
-  selected.ranking = { count, duration, common, total: mentions.length, totalWithCommon: involvedList.length };
+  selected.ranking = { count, duration, common, total: mentions.length };
   selected.category = category;
-  selected.commonFriends = commonFriends;
-  selected.first = moment(selected.first.slice(0, 10), 'YYYY-MM-DD').format('MMM D, YYYY');
+  selected.commonFriends = { names: commonFriends, totalCount };
 
   return selected;
 }

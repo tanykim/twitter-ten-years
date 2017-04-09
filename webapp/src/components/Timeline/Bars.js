@@ -115,6 +115,28 @@ class Bars extends Component {
       .attr('class', 'brush')
       .call(brush)
       .call(brush.move, brushRange);
+
+    //edit axis
+    d3.select('#timeline-axis-x').selectAll('text')
+      .attr('y', 0)
+      .attr('x', this.dim.h)
+      .attr('dy', -4)
+      .attr('transform', 'rotate(90)')
+      .style('text-anchor', 'end');
+    d3.select(`#timeline-axis-y`).selectAll('text')
+      .attr('y', 0)
+      .attr('x', 0)
+      .attr('dy', 4)
+      .style('text-anchor', 'start')
+      .style('alignment-baseline', 'hanging');
+    d3.select('#timeline-axis-y')
+      .append('text')
+      .attr('x', 12)
+      .attr('y', 0)
+      .text('TWEETS')
+      .attr('dy', 4)
+      .style('text-anchor', 'start')
+      .style('alignment-baseline', 'hanging');
   }
 
   render () {

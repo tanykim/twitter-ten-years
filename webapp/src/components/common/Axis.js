@@ -13,15 +13,6 @@ class Axis extends Component {
           pos === 'bottom' ?
           d3.axisBottom(x).tickSize(-dim.h).tickPadding(6) :
           d3.axisBottom(x).tickSize(dim.h).tickPadding(6));
-      //rotate axis label
-      if (id === 'timeline') {
-        d3.select(`#${id}-axis-x`).selectAll('text')
-          .attr('y', 0)
-          .attr('x', dim.h)
-          .attr('dy', -4)
-          .attr('transform', 'rotate(90)')
-          .style('text-anchor', 'end');
-      }
     }
     if (y) {
       d3.select(`#${id}-axis-y`)
@@ -29,16 +20,7 @@ class Axis extends Component {
           .ticks(5)
           .tickSize(-dim.w)
           .tickPadding(6)
-          .tickFormat((d, i) => `${d} ${i === 0 && pos !== 'bottom' ? ' TWEETS': ''}`)
         );
-      if (id === 'timeline') {
-        d3.select(`#${id}-axis-y`).selectAll('text')
-          .attr('y', 0)
-          .attr('x', 0)
-          .attr('dy', 4)
-          .style('text-anchor', 'start')
-          .style('alignment-baseline', 'hanging');
-      }
     }
   }
 
