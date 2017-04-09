@@ -1,55 +1,24 @@
 @import '_settings';
 
 .footer {
-  .copyright {
-    a {
-      color: @white !important;
-    }
-    text-align: center;
-    text-align: center;
-    background-color: @w-grey-7;
-    padding-top: 0.8em;
-    padding-bottom: 0.8em;
-    margin-top: 45px;
-    margin-bottom: 30px;
-    position: relative;
-    color: @w-grey-5;
-    .dashed {
-      position: absolute;
-      width: 100%;
-      top: 50%;
-      margin-left: -1em;
-      border-top: 1px dashed @w-grey-6;
-    }
-    .text {
-      padding-left: 1em;
-      padding-right: 1em;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      span {
-        background-color: @w-grey-7;
-        padding: 0 10px;
-      }
-    }
+  text-align: center;
+  border-top: 1px dashed @w-grey-4;
+  border-bottom: 1px dashed @w-grey-4;
+  color: @w-grey-5;
+  margin-top: 45px;
+  margin-bottom: 4px;
+  padding-top: 15px;
+  padding-bottom: 12px;
+  a {
+    color: @w-grey-7 !important;
+    font-weight: bold;
   }
-  .copyright:before, .copyright:after {
-   content: "";
-   position: absolute;
-   display: block;
-   bottom: 0;
-   border: 1.5em solid @w-grey-7;
-   z-index: -1;
-  }
-  .copyright:before {
-   left: -2em;
-   border-right-width: 1.8em;
-   border-left-color: transparent;
-  }
-  .copyright:after {
-   right: -2em;
-   border-left-width: 1.8em;
-   border-right-color: transparent;
+  .heart {
+    display: inline-block;
+    background: url(/assets/images/heart.svg) no-repeat center top;
+    background-size: 1em;
+    width: 1em;
+    height: 1em;
+    margin: 0 12px;
   }
 }

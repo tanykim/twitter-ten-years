@@ -55,6 +55,17 @@
   }
 }
 
+.all-pies-wrapper,
+.flow-wrapper,
+.matrix-wrapper,
+.network-wrapper,
+.select-wrapper,
+.scatterPlot-wrapper,
+.histograms-wrapper,
+.friend-wrapper {
+  margin-top: 15px;
+}
+
 .option {
   .title {
     height: 20px;
@@ -77,6 +88,10 @@
   }
 }
 
+
+rect {
+  shape-rendering: geometricPrecision;
+}
 .axis {
   line {
     stroke: fade(@w-grey-7, 10%);
@@ -89,96 +104,15 @@
     fill: @w-grey-7;
   }
 }
-
-.all-pies-wrapper, .flow-wrapper, .matrix-wrapper, .network-wrapper, .select-wrapper, .scatterPlot-wrapper, .histogram-wrapper, .friend-wrapper {
-  margin-top: 15px;
+.axis-label-x {
+  font-size: 10px;
+  text-anchor: end;
 }
-
-.summary-wrapper {
-  text-align: center;
-  .name {
-    display: inline-block;
-    padding: 0 20px;
-    border-radius: 4px;
-    color: @white;
-  }
-  .name-0 {
-    background-color: @friend-0;
-  }
-  .name-1 {
-    background-color: @friend-1;
-  }
-  .name-2 {
-    background-color: @friend-2;
-  }
+.axis-label-y {
+  font-size: 10px;
+  text-anchor: middle;
+  alignment-baseline: hanging;
 }
-
-.ranking-wrapper {
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  .friend-summary {
-    display: inline-block;
-    font-size: 12px;
-    &:not(:last-child) {
-      margin-right: 15px;
-    }
-    .ranking-title, .ranking-wrapper {
-      padding: 5px 15px;
-    }
-    .ranking-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-top: 1px solid @w-grey-4;
-    }
-    .percentage, .ranking, .ranking-graph {
-      display: inline-block;
-    }
-    .ranking {
-      margin-right: 8px;
-      margin-left: 12px;
-      div {
-        width: 100%;
-        &:first-child {
-          border-bottom: 1px solid @w-grey-4;
-          margin-bottom: 2px;
-        }
-      }
-    }
-    .ranking-graph {
-      margin-left: 3px;
-      padding-left: 3px;
-      .line, .line-filled {
-        width: 18px;
-        height: 2px;
-        margin-bottom: 1px;
-      }
-      .line {
-        background-color: @w-grey-4;
-      }
-      .line-filled {
-        background-color: @w-grey-9;
-      }
-    }
-  }
-}
-
-.select-wrapper {
-  background-color: @white;
-  border-radius: 6px;
-  margin-left: -15px;
-  margin-right: -15px;
-  padding: 15px;
-  -webkit-box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.1);
-  -moz-box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.1);
-  box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.1);
-}
-rect {
-  shape-rendering: geometricPrecision;
-}
-
 .label-x {
   font-size: 10px;
   text-anchor: middle;
@@ -189,33 +123,4 @@ rect {
   text-anchor: middle;
   alignment-baseline: hanging;
   fill: @w-grey-7;
-}
-.axis-label-x {
-  font-size: 10px;
-  text-anchor: end;
-}
-.axis-label-y {
-  font-size: 10px;
-  text-anchor: middle;
-  alignment-baseline: hanging;
-}
-
-.friend-wrapper {
-  .intro {
-    text-align: center;
-    padding-top: 36px;
-    font-size: @large;
-  }
-}
-.histogram-wrapper {
-  margin-left: -15px;
-  margin-right: 0px;
-  .histogram-curve {
-    fill: none;
-    stroke: @pink;
-  }
-  .histogram-selected {
-    stroke-width: 2;
-    stroke: @w-grey-9;
-  }
 }

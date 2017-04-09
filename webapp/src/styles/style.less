@@ -12,66 +12,6 @@
 @import 'vis-common';
 @import 'vis-pie';
 @import 'vis-matrix';
+@import 'vis-friends';
 @import 'vis-flow';
-
-/* page content elements */
-.summary {
-  padding-top: 30px;
-  padding-bottom: 30px;
-  text-align: center;
-  i {
-    color: @w-grey-7;
-    font-style: normal;
-  }
-}
-
-.brush {
-  .selection {
-    fill: fade(@w-grey-9, 40%) !important;
-    stroke: @w-grey-9;
-  }
-}
-
-.network-wrapper {
-  margin-right: 0px;
-  .network-link {
-    stroke: @w-grey-9;
-    stroke-opacity: 0.1;
-  }
-  .linked {
-    stroke-opacity: 1;
-  }
-  .linked-node {
-    stroke: @w-grey-9;
-    stroke-width: 2px;
-    fill-opacity: 1;
-  }
-}
-
-.scatterPlot-wrapper {
-  margin-left: 0px;
-  .friend-line {
-    stroke-width: 1;
-    stroke: @w-grey-9;
-  }
-  .friend-area {
-    fill: fade(@w-grey-9, 10%);
-  }
-}
-
-.network-wrapper, .scatterPlot-wrapper {
-  /*margin-right: 15px;*/
-  .dot {
-    fill-opacity: 0.5;
-  }
-  .selected {
-    stroke-width: 4px;
-    stroke: @w-grey-9;
-    fill-opacity: 1;
-  }
-  .hovered {
-    stroke-width: 4px;
-    stroke: @w-grey-9;
-    fill-opacity: 1;
-  }
-}
+@import 'vis-histogram';

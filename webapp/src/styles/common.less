@@ -1,5 +1,17 @@
 @import '_settings';
 
+@font-face {
+  font-family: 'open-arrow';
+  src: url('/assets/fonts/OpenArrow-Regular.eot') format('embedded-opentype'),
+       url('/assets/fonts/OpenArrow-Regular.woff2') format('woff2'),
+       url('/assets/fonts/OpenArrow-Regular.woff') format('woff'),
+       url('/assets/fonts/OpenArrow-Regular.otf') format('opentype'),
+       url('/assets/fonts/OpenArrow-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  unicode-range: U+2190-21ff;
+}
+
 body {
   background-color: @w-grey-0;
   font-family: Avenir, 'Lato', 'Helvetica Neue', Helvetica, Arial;
@@ -17,12 +29,4 @@ ul.list-inline {
 
 .link {
   cursor: pointer;
-}
-
-.heart {
-  display: inline-block;
-  background: url(/assets/images/heart.svg) no-repeat center top;
-  background-size: 1.1em 1em;
-  width: 1.1em;
-  height: 1em;
 }

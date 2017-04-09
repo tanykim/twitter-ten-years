@@ -57,9 +57,12 @@ class TimelineWrapper extends Component {
 
         <div className="container">
           <TweetsWrapper {...this.props} />
-          <Footer/>
         </div>
       </div>}
+
+      <div className="container-fluid">
+        <Footer/>
+      </div>
     </div>)
   }
 }

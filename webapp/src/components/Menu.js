@@ -12,14 +12,15 @@ class Menu extends Component {
           <span className="heart"></span>
           <Link to="/friends" activeClassName="active"><span className="friends">FRIENDS</span></Link>
         </div>
-      </div> : <div className="container">
+      </div> : <div className="container-fluid">
         <div className="row menu-header-min">
-          <div className="col-xs-4 col-lg-1 ribbon">
-            <ul className="links-wrapper">
-              <li><Link to="/"><span className="heart"></span></Link></li>
-              <li className="tweets"><Link to="/tweets" activeClassName="active"><span className="tweets">Tweets</span></Link></li>
-              <li className="friends"><Link to="/friends" activeClassName="active"><span className="friends">Friends</span></Link></li>
-            </ul>
+          <div className="ribbon">
+            <div className="links-wrapper">
+              <Link to="/"><span className="home" dangerouslySetInnerHTML={{__html: '&#x2190'}}/></Link>
+              <Link to="/tweets" activeClassName="active"><span className="tweets">Tweets</span></Link>
+              <span className="heart"></span>
+              <Link to="/friends" activeClassName="active"><span className="friends">Friends</span></Link>
+            </div>
           </div>
         </div>
       </div>}

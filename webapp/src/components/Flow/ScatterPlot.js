@@ -7,7 +7,7 @@ class ScatterPlot extends Component {
 
   componentWillMount () {
     const containerW = document.getElementById('graph-half').clientWidth - 60;
-    this.margin = {top: 20, right: 10, bottom: 40, left: 60};
+    this.margin = {top: 20, right: 10, bottom: 40, left: 50};
     this.dim = {
       w: containerW - this.margin.left - this.margin.right,
       h: containerW - this.margin.top - this.margin.bottom

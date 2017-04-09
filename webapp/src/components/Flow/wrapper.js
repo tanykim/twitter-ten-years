@@ -52,9 +52,9 @@ class FlowWrapper extends Component {
                 <SelectFriend {...data} selectFriend={this.props.selectFriend} friend={selectedFriend} />
               </div>
             </div>
-            <div className="col-xs-12 col-lg-8 friend-wrapper">
+            <div className="col-xs-12 col-lg-8">
               { _.isEmpty(selectedFriend) ?
-                <div className="intro">Look into friends in four ways</div> :
+                <div className="friend-intro">Look into friends in four ways</div> :
                 <Friend friend={selectedFriend} /> }
             </div>
           </div>
@@ -75,13 +75,15 @@ class FlowWrapper extends Component {
               />
             </div>
           </div>
-          <div className="row">
+          <div className="row vis-bg histograms-wrapper">
             <div className="col-xs-12 col-lg-4">
               <Histogram
                 ranking={data.ranking.count}
                 data={data.histogram.count}
                 type="count"
                 friend={selectedFriend}
+                label="Number of Mentions"
+                unit="mentions"
               />
             </div>
             <div className="col-xs-12 col-lg-4">
@@ -90,19 +92,29 @@ class FlowWrapper extends Component {
                 data={data.histogram.duration}
                 type="duration"
                 friend={selectedFriend}
+                label="Days of Conversation"
+                unit="days"
               />
             </div>
             <div className="col-xs-12 col-lg-4">
+              <Histogram
+                ranking={data.ranking.common}
+                data={data.histogram.common}
+                type="common"
+                friend={selectedFriend}
+                label="Number of Involved Friends in Conversation"
+                unit="Involved Friends"
+              />
             </div>
           </div>
-          <Footer/>
         </div>
       </div>}
+
+      <div className="container-fluid">
+        <Footer/>
+      </div>
     </div>)
   }
 }
 
 export default FlowWrapper
-            // <div className="col-xs-12 col-lg-4">
-            //   <Histogram {...data} type="common" friend={selectedFriend}/>
-            // </div>

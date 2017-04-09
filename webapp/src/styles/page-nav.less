@@ -31,17 +31,23 @@
     padding-right: 15px;
     padding-left: 15px;
   }
+  .heart {
+    display: inline-block;
+    background: url(/assets/images/heart.svg) no-repeat center top;
+    background-size: 1em;
+    width: 1em;
+    height: 1em;
+  }
 }
 .menu-header-min {
   position: fixed;
   z-index: 1000;
   .ribbon {
     background-color: @w-grey-9;
-    padding-right: 5px;
-    padding-left: 5px;
+    padding: 8px 10px 8px 15px;
     width: 100%;
     a {
-      color: @w-grey-4;
+      color: @w-grey-5;
       text-decoration: none;
       &:hover {
         color: @white;
@@ -50,19 +56,35 @@
     .active {
       color: @white !important;
     }
-    -webkit-box-shadow: 0px 2px 1px 1px rgba(0,0,0,0.2);
-    -moz-box-shadow: 0px 2px 1px 1px rgba(0,0,0,0.2);
-    box-shadow: 0px 2px 1px 1px rgba(0,0,0,0.2);
   }
-  .links-wrapper {
-    list-style: none;
-    margin: 0;
-    padding: 10px 15px 7px 15px;
-    border-right: 1px dashed @w-grey-7;
-    border-left: 1px dashed @w-grey-7;
-    text-align: center;
-    li {
-      margin-bottom: 4px;
-    }
+  .links-wrapper:after {
+    content: "";
+    position: absolute;
+    display: block;
+    bottom: 0;
+    border: 1.3em solid @w-grey-9;
+    z-index: -1;
+    right: -1.5em;
+    border-left-width: 1.3em;
+    border-right-color: transparent;
+  }
+  .home {
+    font-family: 'open-arrow';
+  }
+  .tweets, .friends {
+    margin-right: 6px;
+  }
+  .tweets {
+    margin-left: 12px;
+  }
+  .friends {
+    margin-left: 6px;
+  }
+  .heart {
+    display: inline-block;
+    background: url(/assets/images/heart.svg) no-repeat center bottom;
+    background-size: 0.8em;
+    width: 1em;
+    height: 1em;
   }
 }

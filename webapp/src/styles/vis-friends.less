@@ -1,0 +1,90 @@
+@import '_settings';
+
+.select-wrapper {
+  background-color: @white;
+  border-radius: 6px;
+  margin-left: -15px;
+  margin-right: -15px;
+  padding: 15px;
+  -webkit-box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.1);
+  box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.1);
+}
+
+.friend-intro {
+  font-size: @large;
+  text-align: center;
+  padding-top: 46px;
+}
+.friend-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 4px;
+  .name {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 4px;
+    color: @white;
+    font-size: @large;
+    margin-right: 15px;
+  }
+  .name-0 {
+    background-color: @friend-0;
+  }
+  .name-1 {
+    background-color: @friend-1;
+  }
+  .name-2 {
+    background-color: @friend-2;
+  }
+  .friend-summary {
+    padding: 4px 12px;
+    &:not(:last-child) {
+      border-bottom: 1px solid @w-grey-2;
+    }
+  }
+}
+
+.network-wrapper, .scatterPlot-wrapper {
+  .dot {
+    fill-opacity: 0.5;
+  }
+  .selected {
+    stroke-width: 4px;
+    stroke: @w-grey-9;
+    fill-opacity: 1;
+  }
+  .hovered {
+    stroke-width: 4px;
+    stroke: @w-grey-9;
+    fill-opacity: 1;
+  }
+}
+
+.network-wrapper {
+  margin-right: 0px;
+  .network-link {
+    stroke: @w-grey-9;
+    stroke-opacity: 0.1;
+  }
+  .linked {
+    stroke-opacity: 1;
+  }
+  .linked-node {
+    stroke: @w-grey-9;
+    stroke-width: 2px;
+    fill-opacity: 1;
+  }
+}
+
+.scatterPlot-wrapper {
+  margin-left: 0px;
+  .friend-line {
+    stroke-width: 1;
+    stroke: @w-grey-9;
+  }
+  .friend-area {
+    fill: fade(@w-grey-9, 10%);
+  }
+}

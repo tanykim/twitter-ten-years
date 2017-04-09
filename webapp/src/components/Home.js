@@ -18,7 +18,7 @@ class Home extends Component {
   }
 
   render() {
-    return (
+    return (<div>
       <div className="container">
         <div className="row logo-wrapper">
           <div className="col-lg-4 wing-wrapper left">
@@ -74,9 +74,11 @@ class Home extends Component {
             Not affiliated or endorsed by Twitter.
           </div>
         </div>
+      </div>
+      <div className="container-fluid">
         <Footer />
       </div>
-    );
+    </div>);
   }
 }
 

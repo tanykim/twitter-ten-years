@@ -23,10 +23,11 @@ class Pie extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.category !== nextProps.category) {
       //change old pie to grey scale
+      console.log(this.props.data);
       if (this.props.category === this.props.label) {
         _.forEach(this.props.data, (d, i) =>
           d3.select(`#g-pie-${this.props.category}`).select(`.js-arc-${i}`)
-            .classed(`elm-grey-${i === nextProps.data.length - 1 ? 'rest' : i}`, true)
+            .classed(`elm-grey-${i === this.props.data.length - 1 ? 'rest' : i}`, true)
             .classed(`elm-${d[0].split(' ')[0]}`, false)
         );
       }
@@ -64,7 +65,7 @@ class Pie extends Component {
         .attr('class', (d, i) => {
           return `js-arc-${i} elm-${this.props.category === this.props.label ?
             d.data[0].split(' ')[0] :
-            'grey-' + i}`
+            'grey-' + (i === data.length - 1 ? 'rest' : i)}`
         });
 
     //label of category e.g., interaction
@@ -84,7 +85,7 @@ class Pie extends Component {
         <td>
           <div className={`type-color legend-${this.props.category === this.props.label ?
             d[0].split(' ')[0] :
-            'grey-' + i}`} />
+            'grey-' + (i === this.props.data.length - 1 ? 'rest' : i)}`} />
         </td>
         <td className="type-label">{d[0]}</td>
         <td className="type-percent">{(d[1] / this.props.total * 100).toFixed(1)}%</td>

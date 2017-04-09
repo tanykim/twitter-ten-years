@@ -26,7 +26,7 @@ class SelectFriend extends Component {
         options={this.props.friends}
         value={this.state.value}
         onChange={this.changeOption}
-        clearable={true}
+        clearable={false}
       />
     )
   }

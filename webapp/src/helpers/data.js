@@ -142,41 +142,15 @@ function findRank(list, id) {
   return rankedNo + 1;
 }
 
-export const getFriendObj = (mentions, ranking, id, category, involvedFriends) => {
+export const getFriendObj = (mentions, ranking, id, category) => {
   const selected = _.filter(mentions, ['id', id])[0];
+
   const count = findRank(ranking.count, id);
   const duration = findRank(ranking.duration, id);
+  const common = selected.commonRatio === 0 ? '-' : findRank(ranking.common, id);
 
-  //convert object to array with value of total mentions involved with other friends
-  const getMentionCount = (v) => {
-    let count = 0;
-    v.forEach((d) => {
-      count += d[1];
-    });
-    return count;
-  };
-  // console.log(mentions, involvedFriends);
-  const involvedList = _.map(involvedFriends, (v, k) => [k, null, getMentionCount(v) / selected.count]);
-
-  //default values when there's no common friends
-  let common = '-';
-  let commonFriends = [];
-  let totalCount = 0;
-  // console.log(involvedList);
-  if (involvedFriends[id]) {
-    //sort the list first then get rank
-    common = findRank(_.sortBy(involvedList, (d) => -d[2]), id);
-    //get friends name list from ids
-    const friendsIds = involvedFriends[id].map((d) => d[0]);
-    commonFriends = _.filter(mentions, (d) => friendsIds.indexOf(d.id) > -1)
-     .map((f) => f.name);
-    involvedFriends[id].forEach((d) => { totalCount += d[1] });
-  }
-
-  //add more keys to the selected friend object
   selected.ranking = { count, duration, common, total: mentions.length };
   selected.category = category;
-  selected.commonFriends = { names: commonFriends, totalCount };
 
   return selected;
 }

@@ -1,0 +1,170 @@
+@import '_settings';
+
+.histograms-wrapper {
+  padding: 30px 0 30px 30px;
+}
+.histogram-wrapper {
+  padding: 6px 30px 0 0;
+  .histogram-title {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  .histogram-curve {
+    fill: none;
+    stroke: @w-grey-9;
+    stroke-width: 2px;
+  }
+  .l-selected {
+    stroke-width: 2;
+    stroke: @w-grey-9;
+    opacity: 0;
+  }
+  .l-selected.c-0 {
+    stroke: @friend-0;
+  }
+  .l-selected.c-1 {
+    stroke: @friend-1;
+  }
+  .l-selected.c-2 {
+    stroke: @friend-2;
+  }
+  .a-selected {
+    stroke: none;
+    opacity: 0.1;
+  }
+  .a-selected.c-0 {
+    fill: @friend-0;
+  }
+  .a-selected.c-1 {
+    fill: @friend-1;
+  }
+  .a-selected.c-2 {
+    fill: @friend-2;
+  }
+  .t-selected {
+    text-anchor: middle;
+    font-size: @small;
+    alignment-baseline: hanging;
+  }
+  .t-selected.c-0 {
+    fill: @friend-0;
+  }
+  .t-selected.c-1 {
+    fill: @friend-1;
+  }
+  .t-selected.c-2 {
+    fill: @friend-2;
+  }
+  table {
+    width: 100%;
+    font-size: @small;
+    margin-top: 15px;
+    thead {
+      th {
+        border-bottom: 2px solid @w-grey-2;
+        border-top: 2px solid @w-grey-2;
+        padding: 10px 8px 8px 8px;
+        background-color: @w-grey-0;
+      }
+      th.rank {
+        text-align: right;
+        width: 40px;
+        padding-right: 12px;
+      }
+      th.number {
+        width: 120px;
+        text-transform: capitalize;
+        text-align: right;
+        padding-right: 12px;
+      }
+    }
+    tbody {
+      tr:nth-child(even) {
+        background-color: @w-grey-0;
+      }
+      .selected {
+        color: @white;
+      }
+      .selected.c-0 {
+        background-color: @friend-0;
+      }
+      .selected.c-1 {
+        background-color: @friend-1;
+      }
+      .selected.c-2 {
+        background-color: @friend-2;
+      }
+      th, td {
+        border-bottom: 1px solid @w-grey-2;
+      }
+      td {
+        padding: 4px 8px;
+      }
+      th {
+        text-align: right;
+        padding-right: 12px;
+      }
+      td.number {
+        text-align: right;
+        padding-right: 12px;
+      }
+    }
+  }
+}
+.histogram-wrapper.count, .histogram-wrapper.duration {
+  border-right: 1px solid @w-grey-2;
+}
+.ranking-wrapper {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: @small;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  .ranking-title, .ranking-graph {
+    padding: 5px 15px;
+  }
+  .percentage, .ranking, .ranking-graph {
+    display: inline-block;
+  }
+  .ranking {
+    margin-right: 8px;
+    margin-left: 12px;
+    div {
+      width: 100%;
+      &:first-child {
+        border-bottom: 1px solid @w-grey-4;
+        margin-bottom: 2px;
+      }
+    }
+  }
+  .ranking-graph {
+    margin-left: 3px;
+    padding-left: 3px;
+    .line, .line-filled {
+      width: 18px;
+      height: 2px;
+      margin-bottom: 1px;
+    }
+    .line {
+      background-color: @w-grey-4;
+    }
+    .line-filled {
+      background-color: @w-grey-9;
+    }
+  }
+}
+.ranking-wrapper.c-0 {
+  background-color: fade(@friend-0, 10%);
+}
+.ranking-wrapper.c-1 {
+  background-color: fade(@friend-1, 10%);
+}
+.ranking-wrapper.c-2 {
+  background-color: fade(@friend-2, 10%);
+}
