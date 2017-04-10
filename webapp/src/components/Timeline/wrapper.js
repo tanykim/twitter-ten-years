@@ -26,7 +26,7 @@ class TimelineWrapper extends Component {
       { isFetching && <Loading /> }
       { !isFetching && data && <div>
         <div className="container-fluid page-top">
-          <div className="desc">Explore {data.count.toLocaleString()} tweets by categories in a certain range of time</div>
+          <div className="desc">Explore {data.count.toLocaleString()} tweets by categories in a time range</div>
           <div className={this.props.isHidden ? 'fixed' : ''}>
             <div className="row tweets-top">
               <ul className="list-inline">

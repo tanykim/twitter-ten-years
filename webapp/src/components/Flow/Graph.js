@@ -7,7 +7,9 @@ import Dots from './Dots'
 class Graph extends Component {
 
   componentWillMount () {
-    const containerW = document.getElementById('graph-full').clientWidth - 30;
+    let containerW = document.getElementById('graph-full').clientWidth - 30;
+    containerW = Math.max(containerW, 1000);
+
     this.margin = {top: 20, right: 20, bottom: 10, left: 20};
     const timeDomain = this.props.range.map((t) => t.startOf('month'));
     const countDomain = [0, this.props.max];
@@ -49,16 +51,18 @@ class Graph extends Component {
           <span><span className="number">Option 2</span> Select a friend as line</span>
           <span id="flow-stats" className="desc-right"></span>
         </div>
-        <svg
-          width={this.dim.w + this.margin.left + this.margin.right}
-          height={this.dim.h + this.margin.top + this.margin.bottom}
-        >
-          <g transform={`translate(${this.margin.left}, ${this.margin.top})`}>
-            <Axis x={this.x} y={this.y} dim={this.dim} {...this.props} pos="bottom" id="flow"/>
-            <Lines x={this.x} y={this.y} {...this.props} />
-            <Dots x={this.x} y={this.y} friend={this.props.friend} />
-          </g>
-        </svg>
+        <div className="svg-wrapper-scrolled">
+          <svg
+            width={this.dim.w + this.margin.left + this.margin.right}
+            height={this.dim.h + this.margin.top + this.margin.bottom}
+          >
+            <g transform={`translate(${this.margin.left}, ${this.margin.top})`}>
+              <Axis x={this.x} y={this.y} dim={this.dim} {...this.props} pos="bottom" id="flow"/>
+              <Lines x={this.x} y={this.y} {...this.props} />
+              <Dots x={this.x} y={this.y} friend={this.props.friend} />
+            </g>
+          </svg>
+        </div>
       </div>
     );
   }

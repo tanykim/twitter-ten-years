@@ -25,10 +25,8 @@ class FlowWrapper extends Component {
 
       { !isFetching && data && <div>
         <div className="container-fluid page-top">
-          <div className="desc">Explore what @tanyofish has been doing with {data.mentions.length} Twitter friends.</div>
+          <div className="desc">Explore @tanyofish's {data.mentions.length} Twitter friends.</div>
           <div className={this.props.isHidden ? 'fixed' : ''}>
-            <div className="row friends-top">
-            </div>
             <div className="row friends-legend">
               <div className="legend-wrapper">
                 { //legends
@@ -46,16 +44,16 @@ class FlowWrapper extends Component {
 
         <div className="container">
           <div className="row">
-            <div className="col-xs-12 col-lg-4">
+            <div className="col-xs-12 col-lg-8 col-lg-push-4">
+              { _.isEmpty(selectedFriend) ?
+                <div className="friend-intro">Look into friends in four ways</div> :
+                <Friend friend={selectedFriend} /> }
+            </div>
+            <div className="col-xs-12 col-lg-4 col-lg-pull-8">
               <div className="select-wrapper option">
                 <div className="title"><span className="number">Option 1</span> Search by Twitter ID</div>
                 <SelectFriend {...data} selectFriend={this.props.selectFriend} friend={selectedFriend} />
               </div>
-            </div>
-            <div className="col-xs-12 col-lg-8">
-              { _.isEmpty(selectedFriend) ?
-                <div className="friend-intro">Look into friends in four ways</div> :
-                <Friend friend={selectedFriend} /> }
             </div>
           </div>
           <div className="row">

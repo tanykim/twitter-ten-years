@@ -8,7 +8,7 @@ class Menu extends Component {
         <div className="border">
           <Link to="/tweets" activeClassName="active"><span className="tweets">TWEETS</span></Link>
           <span className="heart"></span>
-          <Link to="/"><span className="home">@tanyofish's 10 Years of Twitter</span></Link>
+          <Link to="/"><span className="home">@tanyofish<span className="home-lg">'s 10 Years of Twitter</span></span></Link>
           <span className="heart"></span>
           <Link to="/friends" activeClassName="active"><span className="friends">FRIENDS</span></Link>
         </div>

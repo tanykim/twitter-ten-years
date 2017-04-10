@@ -16,7 +16,9 @@ class Matrix extends Component {
   }
 
   componentWillMount () {
-    const containerW = document.getElementById('graph-qt').clientWidth * 3 - 30;
+    let containerW = document.getElementById('graph-3qt').clientWidth - 30;
+    containerW = Math.max(containerW, 800);
+
     this.margin = { top: 15, right: 20, bottom: 32, left: 60 };
     const w = containerW - this.margin.left - this.margin.right;
     //width and height of square
@@ -166,35 +168,35 @@ class Matrix extends Component {
           <span className="gradation"></span>
           <span>{max} tweets</span>
         </div>}
-
-        <svg
-          width={dim.w + margin.left + margin.right}
-          height={dim.h + margin.top + margin.bottom}
-        >
-          <g transform={`translate(${margin.left}, ${margin.top})`}>
-            { (category === 'none' || matrix === 'day') &&
-              <g className="axis">
-                {days}
+        <div className="svg-wrapper-scrolled">
+          <svg
+            width={dim.w + margin.left + margin.right}
+            height={dim.h + margin.top + margin.bottom}
+          >
+            <g transform={`translate(${margin.left}, ${margin.top})`}>
+              { (category === 'none' || matrix === 'day') &&
+                <g className="axis">
+                  {days}
+                </g> }
+              { (category === 'none' || matrix === 'hour') &&
+                <g className="axis">
+                  {hours}
+                </g> }
+              <g id="matrix-none" />
+              <g id="matrix-category" />
+              { category !== 'none' && matrix === 'day' && <g>
+                <Axis x={this.x} dim={dim} id="matrix-day"/>
+                <line x1="0" x2="0" y1="0" y2={dim.h} />
+                <text x={dim.w / 2} y={dim.h + margin.bottom} className="label-x">TWEETS</text>
               </g> }
-            { (category === 'none' || matrix === 'hour') &&
-              <g className="axis">
-                {hours}
-              </g> }
-            <g id="matrix-none" />
-            <g id="matrix-category" />
-            { category !== 'none' && matrix === 'day' && <g>
-              <Axis x={this.x} dim={dim} id="matrix-day"/>
-              <line x1="0" x2="0" y1="0" y2={dim.h} />
-              <text x={dim.w / 2} y={dim.h + margin.bottom} className="label-x">TWEETS</text>
-            </g> }
-            { category !== 'none' && matrix === 'hour' && <g>
-              <Axis y={this.y} dim={dim} id="matrix-hour" pos="bottom"/>
-              <line x1="0" x2={dim.w} y1={dim.h} y2={dim.h} />
-              <text x={-dim.h / 2} y={-margin.left} className="label-y" transform="rotate(-90)">TWEETS</text>
-            </g>}
-          </g>
-        </svg>
-
+              { category !== 'none' && matrix === 'hour' && <g>
+                <Axis y={this.y} dim={dim} id="matrix-hour" pos="bottom"/>
+                <line x1="0" x2={dim.w} y1={dim.h} y2={dim.h} />
+                <text x={-dim.h / 2} y={-margin.left} className="label-y" transform="rotate(-90)">TWEETS</text>
+              </g>}
+            </g>
+          </svg>
+        </div>
       </div>
     </div></div>)
   }

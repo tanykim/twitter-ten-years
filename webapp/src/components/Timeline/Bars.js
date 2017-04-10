@@ -8,7 +8,9 @@ import { TypeList } from '../../helpers/formatter'
 class Bars extends Component {
 
   componentWillMount () {
-    const containerW = document.getElementById('graph-full').clientWidth - 30;
+    let containerW = document.getElementById('graph-full').clientWidth - 30;
+    containerW = Math.max(containerW, 1000);
+
     this.margin = {top: 10, right: 15, bottom: 10, left: 15};
     const timeDomain = [this.props.range[0].startOf('month'),
       this.props.range[1].add(1, 'month').startOf('month')];
@@ -142,19 +144,21 @@ class Bars extends Component {
   render () {
     return (<div className="row"><div className="col-xs-12">
       <div className="vis-bg bar-wrapper">
-        <svg
-          className="svg-bar"
-          width={this.dim.w + this.margin.left + this.margin.right}
-          height={this.dim.h + this.margin.top + this.margin.bottom}
-        >
-          <g transform={`translate(${this.margin.left}, ${this.margin.top})`}>
-            <g id="timeline-none" />
-            <g id="timeline-category" />
-            <Axis x={this.x} y={this.y} dim={this.dim} id="timeline" />
-          </g>
-          <g id='timeline-brush'
-            transform={`translate(${this.margin.left}, ${this.margin.top})`} />
-        </svg>
+        <div className="svg-wrapper-scrolled">
+          <svg
+            className="svg-bar svg-scrolled"
+            width={this.dim.w + this.margin.left + this.margin.right}
+            height={this.dim.h + this.margin.top + this.margin.bottom}
+          >
+            <g transform={`translate(${this.margin.left}, ${this.margin.top})`}>
+              <g id="timeline-none" />
+              <g id="timeline-category" />
+              <Axis x={this.x} y={this.y} dim={this.dim} id="timeline" />
+            </g>
+            <g id='timeline-brush'
+              transform={`translate(${this.margin.left}, ${this.margin.top})`} />
+          </svg>
+        </div>
       </div>
     </div></div>);
   }
