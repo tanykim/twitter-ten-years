@@ -21,7 +21,7 @@ class Home extends Component {
     return (<div>
       <div className="container">
         <div className="row logo-wrapper">
-          <div className="col-lg-4 wing-wrapper left">
+          <div className="col-lg-4 hidden-xs hidden-sm wing-wrapper left">
             <div
               className="menu-name left"
               onMouseOver={() => this.onMouseFunc('tweets', true)}
@@ -40,8 +40,8 @@ class Home extends Component {
                 )
             }
           </div>
-          <div className="col-lg-4 logo" />
-          <div className="col-lg-4 wing-wrapper right">
+          <div className="col-lg-4 col-xs-12 logo" />
+          <div className="col-lg-4 hidden-xs hidden-sm wing-wrapper right">
             <div
               className="menu-name right"
               onMouseOver={() => this.onMouseFunc('friends', true)}

@@ -45,13 +45,13 @@ class TweetsWrapper extends Component {
 
       { !isFetchingTweets && tweets.total > 0 && category !== 'none' &&
         <div className="row vis-bg all-pies-wrapper">
-          {tweets.byType.map((value, i) =>
-            <div className={`col-lg-3 ${category === value[0] ? 'category-selected' : ''}`} key={i}>
+          {tweets.byType.map((value, i) => (
+            <div className={`col-lg-3 col-sm-6 ${category === value[0] ? 'category-selected' : ''}`} key={i}>
               <Pie
                 label={value[0]} data={value[1]} total={tweets.total}
                 category={category}
                 changeCategory={changeCategory} />
-            </div>
+            </div>)
           )}
         </div> }
 

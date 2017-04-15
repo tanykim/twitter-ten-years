@@ -2,17 +2,9 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import { getSinceText } from '../../helpers/formatter'
 
-const RankBar = (props) => {
-  const ratio = Math.floor(props.data[props.type] / props.data.total * 10);
-  return (<div className="ranking-graph">
-    {_.range(10).map((i) => <div className={`line${i >= ratio ? '-filled' : ''}`} key={i}></div>)}
-  </div>)
-}
-
 class Friend extends Component {
   render () {
     const friend = this.props.friend;
-    const ranking = friend.ranking;
     const common = friend.common;
     const since = getSinceText(friend.duration);
     return (<div className="friend-wrapper">

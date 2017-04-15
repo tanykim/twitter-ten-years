@@ -61,7 +61,7 @@ export const getSinceText = (duration) => {
 //MUST be the same order as python code
 const TypeList = {
   interaction: ['Mention', 'Quote', 'Retweet', 'No Interaction'],
-  media: ['Photo', 'Video', 'No Media'],
+  media: ['Photo', 'Video', 'URL', 'No Media'],
   language: ['Korean', 'English', 'Others'],
   source: ['Big Screen', 'Small Screen', 'Others']
 }

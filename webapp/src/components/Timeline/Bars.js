@@ -11,18 +11,19 @@ class Bars extends Component {
     let containerW = document.getElementById('graph-full').clientWidth - 30;
     containerW = Math.max(containerW, 1000);
 
-    this.margin = {top: 10, right: 15, bottom: 10, left: 15};
+    this.margin = {top: 20, right: 15, bottom: 20, left: 15};
     const timeDomain = [this.props.range[0].startOf('month'),
       this.props.range[1].add(1, 'month').startOf('month')];
     const countDomain = [0, _.max(this.props.all.map((d) => d[1]))];
     this.dim = {
       w: containerW - this.margin.left - this.margin.right,
-      h: 260 - this.margin.top - this.margin.bottom
+      h: 300 - this.margin.top - this.margin.bottom
     };
     this.x = d3.scaleTime().domain(timeDomain).range([0, this.dim.w]);
     this.y = d3.scaleLinear().domain(countDomain).range([0, this.dim.h]);
     //make the total tweets by month to objects, to calculate Rest count later
     this.all = _.fromPairs(this.props.all);
+    this.tooltip = d3.select('#tooltip');
   }
 
   getBarWidth(x, p) {
@@ -97,7 +98,7 @@ class Bars extends Component {
       this.showStackedBars(this.props);
     }
     const brush = d3.brushX()
-      .extent([[0, -15], [this.dim.w, this.dim.h + 15]])
+      .extent([[0, -this.margin.top], [this.dim.w, this.dim.h + this.margin.bottom]])
       .on('end', () => {
         if (!d3.event.sourceEvent) return; // Only transition after input.
         if (!d3.event.selection) return; // Ignore empty selections.

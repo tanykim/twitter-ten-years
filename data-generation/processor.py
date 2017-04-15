@@ -140,6 +140,8 @@ def minimized_tweets(new_time_list, tweets):
             props.append('p')
         if t['media'] is not 'none' and 'video' in t['media']:
             props.append('v')
+        if t['urls'] > 0 and t['is_retweet'] is False and t['is_quote'] is False and t['media'] == 'none':
+            props.append('u')
         if t['favorite_count'] > 0:
             props.append('f')
         if t['lang'] == 'ko':
@@ -155,16 +157,16 @@ def minimized_tweets(new_time_list, tweets):
 
 def get_tweets_by_month(tweets):
     # months = []
-    months = dict(all=[], m=[], r=[], q=[], p=[], v=[], k=[], e=[], b=[], s=[])
+    months = dict(all=[], m=[], r=[], q=[], p=[], v=[], u=[], k=[], e=[], b=[], s=[])
     for t in tweets:
         created_at = datetime.strptime(t[0], '%Y-%m-%d %H %w')
         month = datetime.strftime(created_at, '%Y-%m')
         months['all'].append(month)
-        for prop in ['m', 'r', 'q', 'p', 'v', 'k', 'e', 'b', 's']:
+        for prop in ['m', 'r', 'q', 'p', 'v', 'u', 'k', 'e', 'b', 's']:
             if prop in t[1]:
                 months[prop].append(month)
     results = {}
-    for prop in ['all', 'm', 'r', 'q', 'p', 'v', 'k', 'e', 'b', 's']:
+    for prop in ['all', 'm', 'r', 'q', 'p', 'v', 'u', 'k', 'e', 'b', 's']:
         results[prop] = dict(list(Counter(months[prop]).items()))
 
     interaction = []
@@ -180,7 +182,8 @@ def get_tweets_by_month(tweets):
         ]])
         media.append([k, [
             results['p'][k] if k in results['p'] else 0,
-            results['v'][k] if k in results['v'] else 0
+            results['v'][k] if k in results['v'] else 0,
+            results['u'][k] if k in results['u'] else 0
         ]])
         language.append([k, [
             results['k'][k] if k in results['k'] else 0,

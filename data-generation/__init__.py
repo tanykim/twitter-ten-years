@@ -16,7 +16,7 @@ import finalize
 # 3 - get new tweets via API, process and append them to the result of 2.
 # 4 - already get new tweets, just finalize
 
-current = 4
+current = 3
 
 # Twitter credentials
 with open('settings.json', encoding='utf-8') as setting_file:

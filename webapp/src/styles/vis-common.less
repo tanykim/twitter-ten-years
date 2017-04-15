@@ -23,7 +23,7 @@
   .elm-Quote, .elm-Video, .elm-English, .elm-Small {
     fill: @tweet-2;
   }
-  .elm-Retweet {
+  .elm-Retweet, .elm-URL {
     fill: @tweet-3;
   }
   .elm-Others, .elm-No {
@@ -52,6 +52,10 @@
   }
   .elm-friend-3, .elm-friend-4 {
     fill: @w-grey-6;
+  }
+  .elm-hover {
+    stroke: @w-grey-9;
+    stroke-width: 2px;
   }
 }
 
@@ -128,4 +132,10 @@ rect {
   text-anchor: middle;
   alignment-baseline: hanging;
   fill: @w-grey-7;
+}
+.brush {
+  .selection {
+    fill: fade(@w-grey-9, 40%) !important;
+    stroke: @w-grey-9;
+  }
 }
