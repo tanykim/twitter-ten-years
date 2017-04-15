@@ -3,7 +3,6 @@ from datetime import datetime
 from operator import itemgetter
 import itertools
 from collections import Counter
-import math
 
 def get_mentioned_users(new_time_list, tweets):
     mentioned_users = {}
@@ -197,6 +196,16 @@ def get_tweets_by_month(tweets):
     return dict(all=list(results['all'].items()), interaction=interaction, media=media, language=language, source=source)
 
 def get_points_by_month(tweets):
+
+    # from datetime import datetime
+    # from dateutil.relativedelta import relativedelta
+    #
+    # date_after_month = datetime.today() + relativedelta(months=1)
+    # print
+    # 'Today: ', datetime.today().strftime('%d/%m/%Y')
+    # print
+    # 'After Month:', date_after_month.strftime('%d/%m/%Y')
+    #
     months = []
     for t in tweets:
         created_at = datetime.strptime(t, '%Y-%m-%d %H %w')

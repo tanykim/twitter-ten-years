@@ -23,7 +23,6 @@ class Pie extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.category !== nextProps.category) {
       //change old pie to grey scale
-      console.log(this.props.data);
       if (this.props.category === this.props.label) {
         _.forEach(this.props.data, (d, i) =>
           d3.select(`#g-pie-${this.props.category}`).select(`.js-arc-${i}`)
@@ -61,7 +60,6 @@ class Pie extends Component {
 
     arc.append('path')
         .attr('d', path)
-        //d[0] is the label of type, e.g., mention
         .attr('class', (d, i) => {
           return `js-arc-${i} elm-${this.props.category === this.props.label ?
             d.data[0].split(' ')[0] :

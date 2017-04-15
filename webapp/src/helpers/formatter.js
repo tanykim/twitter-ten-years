@@ -1,5 +1,6 @@
 /* shared functions to calculate props/states */
 import moment from 'moment'
+import _ from 'lodash'
 
 export const getMoment = (d) => {
   return moment(d.substr(0, 19), 'YYYY-MM-DD HH:mm:ss')
@@ -75,3 +76,16 @@ const FriendTypes = [
   'Celebrities or non-human'
 ]
 export { FriendTypes }
+
+export const fillBlankMonths = (points) => {
+  //make an object with points [month, val]
+  const byMonth = _.fromPairs(points);
+  let newMonth = points[0][0]; //newest month
+  let months = [[newMonth, points[0][1]]];
+  //substract 1 month while it's newer than the first month
+  while (newMonth > points[points.length - 1][0]) {
+    newMonth = moment(newMonth, 'YYYY-MM').add(-1, 'months').format('YYYY-MM');
+    months.push([newMonth, byMonth[newMonth] || 0]);
+  }
+  return months;
+}

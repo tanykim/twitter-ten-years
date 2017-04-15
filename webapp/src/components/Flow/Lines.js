@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import * as d3 from 'd3'
-import _ from 'underscore'
+import _ from 'lodash'
 import moment from 'moment'
+import { fillBlankMonths } from '../../helpers/formatter'
 
 class Lines extends Component {
 
@@ -17,9 +18,13 @@ class Lines extends Component {
 
     //show lines
     mentions.map((l, i) => {
+
+      const points = fillBlankMonths(l.points);
+
+      //add point 0 when there's no data
       return d3.select('#flow-lines')
         .append('path')
-        .datum(l.points)
+        .datum(points)
         .attr('d', line)
         .attr('class', `normal${category[l.id] < 3 ? category[l.id] : ''} js-line-${l.id}`)
         .on('mouseover', function() {

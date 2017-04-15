@@ -45,6 +45,35 @@
   }
   .square {
     fill: @tweet-0;
-    stroke: fade(@w-grey-7, 10%);
+    stroke: @w-grey-7;
+    stroke-opacity: 0.1;
+  }
+  .elm-hover {
+    stroke: @w-grey-7;
+    stroke-opacity: 1 !important;
+    stroke-width: 2px;
+  }
+  .vis-bg {
+    position: relative;
+  }
+}
+.tooltip-matrix {
+  position: absolute;
+  background-color: @w-grey-9;
+  color: @white;
+  font-size: @small;
+  border-radius: 4px;
+  .tooltip-arrow-wrapper {
+    display: none;
+  }
+  .tooltip-arrow {
+    margin-left: -5px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 8px 0 8px;
+    border-color: @w-grey-9 transparent transparent transparent;
+    display: inline-block;
+    margin-top: 8px;
   }
 }

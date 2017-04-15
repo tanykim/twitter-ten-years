@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import * as d3 from 'd3'
 import moment from 'moment'
+import { fillBlankMonths } from '../../helpers/formatter'
 
 class Dots extends Component {
 
@@ -14,7 +15,7 @@ class Dots extends Component {
       const g = d3.select('#flow-dots');
       g.html('');
 
-      const points = friend.points;
+      const points = fillBlankMonths(friend.points);
 
       const line = d3.line()
         .x((d) => x(moment(d[0], 'YYYY-MM')))
@@ -27,8 +28,9 @@ class Dots extends Component {
         .attr('d', line)
         .attr('class', 'selected')
 
+      //show dots only with valid data points
       g.selectAll('circle')
-        .data(points)
+        .data(friend.points)
         .enter()
         .append('circle')
         .attr('cx', (d) => x(moment(d[0], 'YYYY-MM')))
