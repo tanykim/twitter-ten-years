@@ -24,12 +24,12 @@ class Network extends Component {
 
     //elaborate setting should be needed depending on the shape of network
     const simulation = d3.forceSimulation()
-      .force('link', d3.forceLink().id((d) => d.id).distance(17))
+      .force('link', d3.forceLink().id((d) => d.id).distance(15))
       .force('collide', d3.forceCollide(4))
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(this.dim.w / 2, this.dim.w / 2))
-      .force('x', d3.forceX().strength(0.065))
-      .force('y', d3.forceY().strength(0.065))
+      .force('x', d3.forceX().strength(0.08))
+      .force('y', d3.forceY().strength(0.08))
 
     const link = d3.select('#flow-network').append('g')
       .attr('class', 'links')
