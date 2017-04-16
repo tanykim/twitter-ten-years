@@ -26,6 +26,7 @@
     "redux-thunk": "^2.2.0",
     "underscore": "^1.8.3"
   },
+  "homepage": "http://tany.kim/twitter",
   "scripts": {
     "build-css": "lessc src/styles/style.less src/styles/style.css",
     "watch-css": "npm run build-css && less-watch-compiler src/styles src/styles style.less",

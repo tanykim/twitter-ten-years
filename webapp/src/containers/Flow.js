@@ -7,7 +7,8 @@ const mapStateToProps = (state, ownProps) => (
     isFetching: state.isFetching,
     range: state.timeRange,
     data: state.dataByPage.flow,
-    selectedFriend: state.selectedFriend
+    selectedFriend: state.selectedFriend,
+    isHidden: state.isHidden
   }
 )
 

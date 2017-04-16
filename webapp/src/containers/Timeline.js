@@ -17,7 +17,7 @@ const mapStateToProps = (state, ownProps) => {
     selectedRange: state.selectedRange,
     isFetchingTweets: state.isFetchingTweets,
     tweets: state.tweets,
-    isHidden: ownProps.isHidden
+    isHidden: state.isHidden
   }
 }
 

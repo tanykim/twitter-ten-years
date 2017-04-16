@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { browserHistory, Link } from 'react-router'
+import { hashHistory, Link } from 'react-router'
 import _ from 'lodash'
 import Footer from './Footer'
 
@@ -28,7 +28,7 @@ class Home extends Component {
         className="icon"
         onMouseOver={() => this.onMouseFunc(key, true)}
         onMouseOut={() => this.onMouseFunc(key, false)}
-        onClick={() => browserHistory.push('/' + key)}
+        onClick={() => hashHistory.push('/' + key)}
         style={{ background:
           `url(/assets/images/${c}${this.state[key] ? '-c' : ''}.svg) no-repeat center center` }}>
         { ((key === 'friends' && i > 0) || (key === 'tweets' && i < 2)) &&

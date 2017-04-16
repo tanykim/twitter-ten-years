@@ -32,8 +32,16 @@ const dataByPage = (state = {}, action) => {
   }
 }
 
+const isHidden = (state = false, action) => {
+  if (action.type === 'SET_SCROLL_STATUS') {
+    return action.value;
+  } else {
+    return state
+  }
+}
 export default combineReducers({
   isFetching,
+  isHidden,
   timeRange,
   dataByPage,
   selectedRange, isFetchingTweets, tweets, category, matrix,

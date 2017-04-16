@@ -17,16 +17,14 @@ class FlowWrapper extends Component {
   }
 
   render () {
-    const { isFetching, data, selectedFriend } = this.props;
+    const { isFetching, data, selectedFriend, isHidden } = this.props;
 
     return (<div>
-
       { isFetching && <Loading /> }
-
       { !isFetching && data && <div>
         <div className="container-fluid page-top">
-          <div className="desc">Explore @tanyofish's {data.mentions.length} Twitter friends.</div>
-          <div className={this.props.isHidden ? 'fixed' : ''}>
+          <div className="desc friends">Explore @tanyofish's {data.mentions.length} Twitter friends.</div>
+          <div className={isHidden ? 'fixed' : ''}>
             <div className="row friends-legend">
               <div className="legend-wrapper">
                 { //legends

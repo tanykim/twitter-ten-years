@@ -27,6 +27,12 @@ export const fetchDataIfNeeded = (page) => {
   }
 }
 
+export const showScrolledPage = (value) => {
+  return (dispatch) => {
+    dispatch({ type: 'SET_SCROLL_STATUS', value })
+  }
+}
+
 /* Timeline */
 
 export const selectRange = (range) => ({
@@ -44,12 +50,6 @@ export const getTweets = (range) => {
     }, 1000)
   }
 }
-
-// export const changeTimelineView = (data) => {
-//   return (dispatch) => {
-//     dispatch({ type: 'SET_TIMELINE_VIEW', data })
-//   }
-// }
 
 export const changeTimelineCategory = (data) => {
   return (dispatch) => {
