@@ -25,12 +25,13 @@ class Home extends Component {
     }
     const iconRender = _.map(icons, (vals, key) => vals.map((c, i) =>
       <div key={c}
-        className="icon"
+        className={`icon ${c}${this.state[key] ? '-c' : ''}`}
         onMouseOver={() => this.onMouseFunc(key, true)}
         onMouseOut={() => this.onMouseFunc(key, false)}
         onClick={() => hashHistory.push('/' + key)}
-        style={{ background:
-          `url(/assets/images/${c}${this.state[key] ? '-c' : ''}.svg) no-repeat center center` }}>
+        // style={{ background:
+        //   `url(${process.env.PUBLIC_URL}/assets/images/${c}${this.state[key] ? '-c' : ''}.svg) no-repeat center center` }}
+      >
         { ((key === 'friends' && i > 0) || (key === 'tweets' && i < 2)) &&
           <span span className={c}>x</span> }
             </div>
@@ -67,6 +68,9 @@ class Home extends Component {
               Data Visualization of <a href="https://www.twitter.com/tanyofish" target="_blank">@tanyofish</a>'s <br/>
               <Link to="/tweets">Tweets</Link> and <Link to="/friends">Friends</Link> since April 2007
             </div>
+          </div>
+          <div className="hidden-lg warning">
+          Bigger screen is recommended for the full functionality of visualizations
           </div>
           <div className="col-xs-12 col-md-8 col-md-offset-2 hidden-lg main">
             <div className="border">

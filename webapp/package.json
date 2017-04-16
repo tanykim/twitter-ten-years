@@ -8,6 +8,7 @@
     "enzyme": "^2.4.1",
     "less": "^2.7.2",
     "react-addons-test-utils": "^15.3.0",
+    "react-dev-utils": "^0.5.2",
     "react-scripts": "^0.6.0"
   },
   "dependencies": {
@@ -26,7 +27,7 @@
     "redux-thunk": "^2.2.0",
     "underscore": "^1.8.3"
   },
-  "homepage": "http://tany.kim/twitter",
+  "homepage": "http://twitter.tany.kim",
   "scripts": {
     "build-css": "lessc src/styles/style.less src/styles/style.css",
     "watch-css": "npm run build-css && less-watch-compiler src/styles src/styles style.less",

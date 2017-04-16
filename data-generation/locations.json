@@ -6,71 +6,192 @@
     "city": "San Francisco Bay Area",
     "trips": [
       {
-        "start_date": "2017-02-11",
-        "end_date": "2017-02-12",
+        "start_date": "2016-12-23",
+        "end_date": "2017-01-02",
         "timezone": "America/Denver"
       },
       {
-        "start_date": "2016-10-01",
-        "end_date": "2016-10-10",
+        "start_date": "2016-09-24",
+        "end_date": "2016-10-02",
         "timezone": "Europe/Paris"
       },
       {
-        "start_date": "2016-09-23",
-        "end_date": "2016-09-30",
+        "start_date": "2016-10-07",
+        "end_date": "2016-10-11",
         "timezone": "America/Denver"
       },
       {
-        "start_date": "2016-08-15",
-        "end_date": "2016-08-20",
+        "start_date": "2016-07-28",
+        "end_date": "2016-07-31",
         "timezone": "America/Denver"
       },
       {
-        "start_date": "2016-06-01",
-        "end_date": "2016-06-10",
+        "start_date": "2016-06-10",
+        "end_date": "2016-06-19",
         "timezone": "America/New_York"
+      },
+      {
+        "start_date": "2016-03-12",
+        "end_date": "2016-03-18",
+        "timezone": "Europe/Helsinki"
       },
       {
         "start_date": "2016-02-28",
         "end_date": "2016-03-10",
         "timezone": "Pacific/Honolulu"
+      },
+      {
+        "start_date": "2015-10-12",
+        "end_date": "2015-11-01",
+        "timezone": "Asia/Seoul"
+      },
+      {
+        "start_date": "2015-08-29",
+        "end_date": "2015-09-13",
+        "timezone": "Europe/Helsinki"
+      },
+      {
+        "start_date": "2014-11-23",
+        "end_date": "2014-11-29",
+        "timezone": "Europe/London"
+      },
+      {
+        "start_date": "2014-11-15",
+        "end_date": "2014-11-22",
+        "timezone": "Europe/Helsinki"
+      },
+      {
+        "start_date": "2014-11-08",
+        "end_date": "2014-11-14",
+        "timezone": "Europe/Paris"
       }
     ]
   },
   {
-    "start_date": "2010-12-11",
+    "start_date": "2010-12-08",
     "end_date": "2013-06-07",
     "timezone": "America/New_York",
     "city": "Atlanta, GA",
     "trips": [
       {
-        "start_date": "2013-05-12",
-        "end_date": "2013-06-03",
+        "start_date": "2013-05-13",
+        "end_date": "2013-06-02",
         "timezone": "Australia/Sydney"
+      },
+      {
+        "start_date": "2012-10-12",
+        "end_date": "2012-10-22",
+        "timezone": "Europe/Paris"
+      },
+      {
+        "start_date": "2012-07-20",
+        "end_date": "2012-08-13",
+        "timezone": "Asia/Seoul"
+      },
+      {
+        "start_date": "2012-06-16",
+        "end_date": "2012-07-19",
+        "timezone": "Europe/Paris"
+      },
+      {
+        "start_date": "2012-06-03",
+        "end_date": "2012-06-15",
+        "timezone": "Europe/Dublin"
+      },
+      {
+        "start_date": "2011-12-14",
+        "end_date": "2012-01-05",
+        "timezone": "Asia/Seoul"
+      },
+      {
+        "start_date": "2011-06-04",
+        "end_date": "2011-06-13",
+        "timezone": "Europe/Helsinki"
+      },
+      {
+        "start_date": "2011-05-30",
+        "end_date": "2011-06-03",
+        "timezone": "Europe/Oslo"
+      },
+      {
+        "start_date": "2011-05-27",
+        "end_date": "2011-05-29",
+        "timezone": "Europe/Moscow"
+      },
+      {
+        "start_date": "2011-05-25",
+        "end_date": "2011-05-26",
+        "timezone": "Europe/Helsinki"
       }
     ]
   },
   {
     "start_date": "2010-07-10",
-    "end_date": "2010-12-10",
+    "end_date": "2010-12-07",
     "timezone": "Europe/Zurich",
-    "city": "Lausanne, Switzerland"
+    "city": "Lausanne, Switzerland",
+    "trips": [
+      {
+        "start_date": "2010-11-11",
+        "end_date": "2010-11-15",
+        "timezone": "Europe/Lisbon"
+      },
+      {
+        "start_date": "2010-10-08",
+        "end_date": "2010-10-09",
+        "timezone": "Europe/London"
+      },
+      {
+        "start_date": "2010-08-13",
+        "end_date": "2010-08-15",
+        "timezone": "Europe/London"
+      }
+    ]
   },
   {
-    "start_date": "2008-08-02",
+    "start_date": "2008-08-05",
     "end_date": "2010-07-09",
     "timezone": "America/New_York",
-    "city": "Atlanta, GA"
+    "city": "Atlanta, GA",
+    "trips": [
+      {
+        "start_date": "2010-06-02",
+        "end_date": "2010-06-10",
+        "timezone": "Europe/Copenhagen"
+      },
+      {
+        "start_date": "2009-12-12",
+        "end_date": "2010-01-05",
+        "timezone": "Asia/Seoul"
+      },
+      {
+        "start_date": "2008-12-16",
+        "end_date": "2009-01-05",
+        "timezone": "Asia/Seoul"
+      }
+    ]
   },
   {
     "start_date": "2007-07-02",
-    "end_date": "2008-08-01",
+    "end_date": "2008-08-04",
     "timezone": "Asia/Seoul",
-    "city": "Seoul, Korea"
+    "city": "Seoul, Korea",
+    "trips": [
+      {
+        "start_date": "2008-07-09",
+        "end_date": "2008-07-12",
+        "timezone": "Asia/Bangkok"
+      },
+      {
+        "start_date": "2008-04-02",
+        "end_date": "2008-04-13",
+        "timezone": "America/New_York"
+      }
+    ]
   },
   {
     "start_date": "2007-04-01",
-    "end_date": "2008-07-01",
+    "end_date": "2007-07-01",
     "timezone": "Asia/Shanghai",
     "city": "Beijing, China"
   }

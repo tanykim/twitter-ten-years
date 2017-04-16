@@ -12,7 +12,7 @@ class Bars extends Component {
     let containerW = document.getElementById('graph-full').clientWidth - 30;
     containerW = Math.max(containerW, 1000);
 
-    this.margin = {top: 20, right: 15, bottom: 20, left: 70};
+    this.margin = {top: 25, right: 10, bottom: 30, left: 70};
     const timeDomain = [this.props.range[0].startOf('month'),
       this.props.range[1].add(1, 'month').startOf('month')];
     const countDomain = [0, _.max(this.props.all.map((d) => d[1]))];
@@ -124,7 +124,7 @@ class Bars extends Component {
       this.showStackedBars(this.props);
     }
     const brush = d3.brushX()
-      .extent([[0, -this.margin.top], [this.dim.w, this.dim.h + this.margin.bottom]])
+      .extent([[0, -this.margin.top + 1], [this.dim.w, -1]])
       .on('end', () => {
         if (!d3.event.sourceEvent) return; // Only transition after input.
         if (!d3.event.selection) return; // Ignore empty selections.
@@ -150,7 +150,7 @@ class Bars extends Component {
       .append('text')
       .attr('x', -this.dim.h / 2)
       .attr('y', -this.margin.left + 20)
-      .text('TWEETS')
+      .text('TWEETS PER MONTH')
       .attr('class', 'label-y')
       .attr('transform', 'rotate(-90)');
 

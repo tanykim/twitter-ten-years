@@ -47,9 +47,9 @@ class Graph extends Component {
   render () {
     return (
       <div className="vis-bg flow-wrapper">
-        <div className="option">
-          <span><span className="number">Option 2</span> Select a friend as line</span>
-          <span id="flow-stats" className="desc-right"></span>
+        <div className="row option">
+          <div className="col-xs-12 col-lg-6"><span className="number">Option 2</span> Select a friend as line</div>
+          <div className="col-xs-12 col-lg-6 hidden-xs hidden-sm hidden-md desc-right" id="flow-stats">aaaaaa</div>
         </div>
         <div className="svg-wrapper-scrolled">
           <svg

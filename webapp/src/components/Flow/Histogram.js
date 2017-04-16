@@ -174,7 +174,11 @@ class Histogram extends Component {
             { this.props.ranking.slice(0, 10).map((friend, i) => (<tr key={i}
               className={f.ranking && f.ranking[t] === i + 1 ? `selected c-${f.category}` : ''}>
                 <th>{i + 1}</th>
-                <td>@{friend[1]}</td>
+                <td className="name"
+                  onClick={() => this.props.selectFriend(friend[0])}
+                >
+                  @{friend[1]}
+                </td>
                 <td className="number">{friend[2]}</td>
               </tr>)
             )}

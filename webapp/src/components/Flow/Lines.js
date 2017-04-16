@@ -39,6 +39,11 @@ class Lines extends Component {
         .on('mouseout', function() {
           d3.select(this).classed('hovered', false);
           d3.select('#flow-stats').html('');
+        })
+        .on('touchstart', () => d3.event.preventDefault())
+        .on('touchmove', () => d3.event.preventDefault())
+        .on('touchend', function() {
+          self.props.selectFriend(l.id);
         });
     });
   }

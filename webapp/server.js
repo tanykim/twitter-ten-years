@@ -5,7 +5,7 @@ var path = require('path');
 var app = express();
 
 // Define the port to run on
-app.set('port', 3000);
+app.set('port', 8081);
 app.use(express.static(path.join(__dirname, 'build')));
 
 // Listen for requests

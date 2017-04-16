@@ -6,13 +6,13 @@ class Axis extends Component {
   componentDidMount() {
 
     const { x, y, id, dim, pos } = this.props;
-
     if (x) {
       d3.select(`#${id}-axis-x`)
         .call(
           pos === 'bottom' ?
           d3.axisBottom(x).tickSize(-dim.h).tickPadding(6) :
-          d3.axisBottom(x).tickSize(dim.h).tickPadding(6));
+          d3.axisTop(x).tickSize(-dim.h).tickPadding(9)
+        );
     }
     if (y) {
       d3.select(`#${id}-axis-y`)

@@ -32,7 +32,7 @@ export const category = (state = 'interaction', action) => {
   }
 }
 
-export const matrix = (state = 'day', action) => {
+export const matrix = (state = 'hour', action) => {
   if (action.type === 'SET_TIMELINE_MATRIX_VIEW') {
     return action.data
   } else {

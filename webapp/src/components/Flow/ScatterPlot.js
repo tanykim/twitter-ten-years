@@ -60,6 +60,11 @@ class ScatterPlot extends Component {
       .on('mouseout', function(d) {
         d3.select(this).classed('hovered', false);
         d3.select('#scatterPlot-hover').html('');
+      })
+      .on('touchstart', () => d3.event.preventDefault())
+      .on('touchmove', () => d3.event.preventDefault())
+      .on('touchend', function(d) {
+        self.props.selectFriend(d.id);
       });
 
     //selected friend location
@@ -145,7 +150,7 @@ class ScatterPlot extends Component {
       <div className="vis-bg scatterPlot-wrapper">
         <div className="option">
           <div className="title"><span className="number">Option 4</span> Select a friend in count-duration plot </div>
-          <div className="desc" id="scatterPlot-hover"></div>
+          <div className="desc hidden-xs hidden-sm hidden-md" id="scatterPlot-hover"></div>
         </div>
         <svg
           width={this.dim.w + this.margin.left + this.margin.right}

@@ -80,6 +80,7 @@ class FlowWrapper extends Component {
                 friend={selectedFriend}
                 label="Number of Mentions"
                 unit="mentions"
+                selectFriend={this.props.selectFriend}
               />
             </div>
             <div className="col-xs-12 col-lg-4">
@@ -90,6 +91,7 @@ class FlowWrapper extends Component {
                 friend={selectedFriend}
                 label="Days of Conversation"
                 unit="days"
+                selectFriend={this.props.selectFriend}
               />
             </div>
             <div className="col-xs-12 col-lg-4">
@@ -100,6 +102,7 @@ class FlowWrapper extends Component {
                 friend={selectedFriend}
                 label="Number of Involved Friends in Conversation"
                 unit="Involved Friends"
+                selectFriend={this.props.selectFriend}
               />
             </div>
           </div>

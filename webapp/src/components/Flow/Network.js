@@ -59,6 +59,11 @@ class Network extends Component {
       .on('mouseout', function(d) {
         d3.select(this).classed('hovered', false);
         d3.select('#network-horver').html('');
+      })
+      .on('touchstart', () => d3.event.preventDefault())
+      .on('touchmove', () => d3.event.preventDefault())
+      .on('touchend', function(d) {
+        self.props.selectFriend(d.id);
       });
 
     node.append('title').text((d) => `@${d.name}`);
@@ -117,7 +122,7 @@ class Network extends Component {
       <div className="vis-bg network-wrapper">
         <div className="option">
           <div className="title"><span className="number">Option 3</span> Select a node in the conversation network</div>
-          <div className="desc" id="network-horver"></div>
+          <div className="desc hidden-xs hidden-sm hidden-md" id="network-horver"></div>
         </div>
         <svg
           width={this.dim.w}

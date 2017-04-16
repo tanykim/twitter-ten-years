@@ -85,6 +85,7 @@ class Matrix extends Component {
         .on('mouseout', function(d) {
           self.hideTooltip(this);
         })
+        .on('touchstart', () => d3.event.preventDefault())
   }
 
   showHourBars(types, data) {
@@ -116,6 +117,7 @@ class Matrix extends Component {
         .on('mouseout', function(d) {
           self.hideTooltip(this);
         })
+        .on('touchstart', () => d3.event.preventDefault())
   }
 
   drawMatrix(props) {
@@ -146,7 +148,8 @@ class Matrix extends Component {
           .on('mouseout', function(d) {
             self.hideTooltip(this);
           })
-      )
+          .on('touchstart', () => d3.event.preventDefault())
+        )
     )
   }
 
@@ -251,7 +254,7 @@ class Matrix extends Component {
               <g id="matrix-none" />
               <g id="matrix-category" />
               { category !== 'none' && matrix === 'day' && <g>
-                <Axis x={this.x} dim={dim} id="matrix-day"/>
+                <Axis x={this.x} dim={dim} id="matrix-day" pos="bottom"/>
                 <line x1="0" x2="0" y1="0" y2={dim.h} />
                 <text x={dim.w / 2} y={dim.h + margin.bottom} className="label-x">TWEETS</text>
               </g> }
@@ -263,7 +266,7 @@ class Matrix extends Component {
             </g>
           </svg>
         </div>
-        <div className="js-tooltip-matrix tooltip-matrix" id="tooltip-matrix">
+        <div className="js-tooltip-matrix tooltip-matrix hidden-xs hididen-sm hidden-md" id="tooltip-matrix">
           <div className="js-tooltip-matrix-count"></div>
           <div className="js-tooltip-matrix-time"></div>
           <div className="js-tooltip-arrow tooltip-arrow-wrapper">
