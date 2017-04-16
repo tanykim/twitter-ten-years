@@ -4,6 +4,7 @@ import _ from 'lodash'
 import moment from 'moment'
 import Axis from '../common/Axis'
 import { TypeList } from '../../helpers/formatter'
+import LocData from '../../data/locations.json'
 
 class Bars extends Component {
 
@@ -11,7 +12,7 @@ class Bars extends Component {
     let containerW = document.getElementById('graph-full').clientWidth - 30;
     containerW = Math.max(containerW, 1000);
 
-    this.margin = {top: 20, right: 15, bottom: 20, left: 15};
+    this.margin = {top: 20, right: 15, bottom: 20, left: 70};
     const timeDomain = [this.props.range[0].startOf('month'),
       this.props.range[1].add(1, 'month').startOf('month')];
     const countDomain = [0, _.max(this.props.all.map((d) => d[1]))];
@@ -80,6 +81,31 @@ class Bars extends Component {
       .attr('class', 'elm-none');
   }
 
+  showLocation() {
+    const self = this;
+    d3.select('#timeline-location')
+      .selectAll('text')
+      .data(LocData)
+      .enter()
+      .append('text')
+      .text((d) => d.city)
+      .attr('x', self.dim.h)
+      .attr('y', (d) => -self.x(moment(d.start_date, 'YYYY-MM-DD')))
+      .attr('dy', -4)
+      .attr('transform', 'rotate(90)')
+      .attr('class', 'location-text');
+    d3.select('#timeline-location')
+      .selectAll('line')
+      .data(LocData)
+      .enter()
+      .append('line')
+      .attr('x1', (d) => self.x(moment(d.start_date, 'YYYY-MM-DD')))
+      .attr('x2', (d) => self.x(moment(d.start_date, 'YYYY-MM-DD')))
+      .attr('y1', 0)
+      .attr('y2', self.dim.h)
+      .attr('class', 'location-line');
+  }
+
   componentWillReceiveProps(nextProps) {
     //when the view changes from all to category, and change between category
     if (nextProps.category !== 'none' && this.props.category !== nextProps.category) {
@@ -119,27 +145,17 @@ class Bars extends Component {
       .call(brush)
       .call(brush.move, brushRange);
 
-    //edit axis
-    d3.select('#timeline-axis-x').selectAll('text')
-      .attr('y', 0)
-      .attr('x', this.dim.h)
-      .attr('dy', -4)
-      .attr('transform', 'rotate(90)')
-      .style('text-anchor', 'end');
-    d3.select(`#timeline-axis-y`).selectAll('text')
-      .attr('y', 0)
-      .attr('x', 0)
-      .attr('dy', 4)
-      .style('text-anchor', 'start')
-      .style('alignment-baseline', 'hanging');
+    //add label
     d3.select('#timeline-axis-y')
       .append('text')
-      .attr('x', 12)
-      .attr('y', 0)
+      .attr('x', -this.dim.h / 2)
+      .attr('y', -this.margin.left + 20)
       .text('TWEETS')
-      .attr('dy', 4)
-      .style('text-anchor', 'start')
-      .style('alignment-baseline', 'hanging');
+      .attr('class', 'label-y')
+      .attr('transform', 'rotate(-90)');
+
+    //show location
+    this.showLocation();
   }
 
   render () {
@@ -156,7 +172,9 @@ class Bars extends Component {
               <g id="timeline-category" />
               <Axis x={this.x} y={this.y} dim={this.dim} id="timeline" />
             </g>
-            <g id='timeline-brush'
+            <g id="timeline-location"
+              transform={`translate(${this.margin.left}, ${this.margin.top})`} />
+            <g id="timeline-brush"
               transform={`translate(${this.margin.left}, ${this.margin.top})`} />
           </svg>
         </div>
