@@ -5,7 +5,7 @@ const Footer = () => (
     <div className="col-lg-8 col-lg-offset-2 copyright">
       <div className="dashed"></div>
       <div className="text">
-        <span>Made by <a href="http://tany.kim" target="_blank">Tanyoung Kim</a></span>
+        <span>Learn more about <a href="https://medium.com/@tanykim/side-project-10-years-of-twitter-8fd5724f7b1a" target="_blank">Datasets</a></span>
         <span className="heart"></span>
         <span>View code at <a href="https://github.com/tanykim/twitter-ten-years" target="_blank">GitHub</a></span>
       </div>

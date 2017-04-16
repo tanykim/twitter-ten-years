@@ -22,6 +22,7 @@ class Network extends Component {
     //involved friends later used for toggle
     this.involvedFriends = network.involvedFriends;
 
+    //elaborate setting should be needed depending on the shape of network
     const simulation = d3.forceSimulation()
       .force('link', d3.forceLink().id((d) => d.id).distance(17))
       .force('collide', d3.forceCollide(4))

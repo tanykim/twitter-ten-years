@@ -31,8 +31,9 @@
     }
     .icon {
       width: 20%;
-      height: 100%;
+      height: 20%;
       position: relative;
+      cursor: pointer;
       span {
         position: absolute;
         top: 50%;
@@ -73,11 +74,42 @@
       border-top: 1px dashed @w-grey-4;
       border-bottom: 1px dashed @w-grey-4;
       background-color: @white;
+      overflow: hidden;
     }
   }
   .powered {
     padding-top: 60px;
     font-size: @small;
     color: @w-grey-7;
+  }
+}
+
+.sm-icon-wrapper {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid @w-grey-4;
+  border-bottom: 1px solid @w-grey-4;
+  .left, .right {
+    display: flex;
+    height: 80px;
+    justify-content: center;
+  }
+  .left {
+    flex-direction: row-reverse;
+  }
+  .icon {
+    display: inline-block;
+    width: 20%;
+    height: 100%;
+    cursor: pointer;
+    position: relative;
+    span {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      margin-top: -10px;
+      margin-left: -5px;
+      color: @w-grey-4;
+    }
   }
 }
